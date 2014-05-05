@@ -1,0 +1,8 @@
+<div class="menu"><span class="title">Orders</span></div>
+<div class="views"><ul><li ng-repeat="view in views" class="{{view.view}}">{{view.name}}</li></ul></div>
+<div class="list">
+	<div class="listItem" ng-repeat="order in orders">
+		{{order.id}}
+	</div>
+	<img src="images/loading.gif">
+</div>
