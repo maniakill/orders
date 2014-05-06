@@ -1,8 +1,14 @@
 <div class="menu"><span class="title">Orders</span></div>
-<div class="views"><ul><li ng-repeat="view in views" class="{{view.view}}">{{view.name}}</li></ul></div>
+<div class="filter">
+	<input type="text" name="search" class="search" placeholder="Search" autocapitalize="off" autocorrect="off" ><input type="text" name="search" class="date" id="sdate"placeholder="Start Date" ><input type="text" name="search" class="date" id="edate"placeholder="End Date" ><input type="text" name="search" class="date" id="dsdate"placeholder="Delivery Start Date" ><input type="text" name="search" class="date" id="dedate"placeholder="Delivery End Date" ><input type="submit" value="Search" id="hit_it">
+</div>
+<div class="views">
+	<ul>
+		<li ng-repeat="view in views" class="{{view.view}} {{view.active}}"><span class="dot"></span>{{view.name}}</li><li class="search right"></li>
+	</ul>
+</div>
 <div class="list">
 	<div class="listItem" ng-repeat="order in orders">
 		{{order.id}}
 	</div>
-	<img src="images/loading.gif">
 </div>
