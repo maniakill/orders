@@ -46,7 +46,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 // orders
 app.controller('orders',['$scope','project',
 	function ($scope,project) {
-		$scope.views = [{name:'All',view:'all'},{name:'Draft',view:'draft'},{name:'Ready to deliver',view:'ready'},{name:'Fully delivered',view:'fully'}];
-		$scope.o = 'l';
+		$scope.views = [{name:'All',view:'all',active:'active'},{name:'Draft',view:'draft',active:''},{name:'Ready to deliver',view:'ready',active:''},{name:'Fully delivered',view:'fully',active:''}];
+
 	}
 ])
