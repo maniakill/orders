@@ -1,0 +1,24 @@
+<div ng-include="'layout/menu.html'" ></div>
+<div hm-swipe-left="handleGesture($event)">
+	<div class="menu"><span class="title">Orders</span><span class="right snap" ng-click="snap()"></span></div>
+	<div class="form_wrap">
+	<form>
+		<input type="text" ng-model="s_buyer_id" placeholder="Select Customer" typeahead="authors.label for authors in getLocation($viewValue,'customers_auto')"  typeahead-on-select="autos($item)" typeahead-min-length="0" typeahead-wait-ms="200" class="autocomplete margin_right" typeahead-loading="loading" typeahead-on-change="cs()">
+		<div ng-show="loading" class="loadingAuto">Loading</div>
+		<input type="text" ng-model="s_customer_id" placeholder="Select Contact" typeahead="cont.label for cont in getLocation($viewValue,'contacts_auto')"  typeahead-on-select="autosc($item)" typeahead-min-length="0" typeahead-wait-ms="200" class="autocomplete" typeahead-loading="loading1">
+		<div ng-show="loading1" class="loadingAuto">Loading</div>
+		<div>
+			<label>Language</label><select ng-model="lq">
+			<option ng-repeat="lng in language_select" value="{{lng.val}}">{{lng.name}}</option>
+			</select>
+		</div>
+		<div>
+			<label>Currency</label><select ng-model="c">
+			<option ng-repeat="cr in currency" value="{{cr.val}}">{{cr.name}}</option>
+			</select>
+		</div>
+		<button ng-click="go('order',true)">Next</button>
+		<button ng-click="go('orders')" class="right">Cancel</button>
+	</form>
+	</div>
+</div>
