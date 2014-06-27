@@ -1,0 +1,139 @@
+<div ng-include="'layout/menu.html'" ></div>
+<div ng-include="'layout/modal.html'" ></div>
+<div hm-swipe-left="handleGesture($event)">
+<div class="menu"><span class="title">Edit Order</span><span class="right snap" ng-click="snap()"></span></div>
+<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
+<alert ng-repeat="alert in alerts" class="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+<div class="orderdetails" ng-show="details">
+	<h2>Order details</h2>
+	<form>
+		<input type="hidden" value="" ng-model="order.author_id">
+		<a href="" class="edit delete closeD" ng-click="show($event,'details')">Close</a>
+		<div class="clearfix">
+			<div class="left half">
+				<label>Serial number</label>
+				<input type="text" value="" ng-model="order.in.serial_number" readonly="readonly">
+			</div>
+			<div class="left forthy">
+				<label>Show VAT on PDF</label>
+				<input type="checkbox" value="1" name="ceva" class="showVat" ng-model="order.show_vat_checked">
+			</div>
+			<div class="left forthy margines">
+				<label>Date</label>
+				<input type="text" name="search" class="date" id="date" placeholder="Start Date" autocapitalize="off" autocorrect="off" ng-model="order.in.date" datepicker-popup="{{order.pick_date_format}}" is-open="opens" datepicker-options="dateOptions" ng-click="open($event,'opens')" readonly="readonly" datepicker-append-to-body="true">
+			</div>
+			<div class="left forthy">
+				<label>Delivery Date</label>
+				<input type="text" name="search" class="date" id="sdate" placeholder="Delivery Date" autocapitalize="off" autocorrect="off" ng-model="order.in.delivery_date" datepicker-popup="{{order.pick_date_format}}" is-open="opend" datepicker-options="dateOptions" ng-click="open($event,'opend')" readonly="readonly" datepicker-append-to-body="true">
+			</div>
+			<div class="left forthy margines">
+				<label>Payment method</label>
+				<select ng-model="order.payment_type_dd">
+					<option value="0">Select type</option><option value="1">cash</option><option value="2">wire transfer</option>
+				</select>
+			</div>
+			<div class="left forthy">
+				<label>Discount</label>
+				<select ng-model="order.in.apply_discount" ng-change="change_disc()">
+					<option value="0">No Discount</option><option value="1" selected="">Apply at line level</option><option value="2">Apply at global level</option><option value="3">Apply at both levels</option>
+				</select>
+			</div>
+			<div class="left half autoC">
+				<label>Author</label>
+				<input type="text" ng-model="order.acc_manager" placeholder="Author" typeahead="authors.label for authors in getLocation($viewValue)"  typeahead-on-select="autos($item)" typeahead-min-length="0" typeahead-wait-ms="200" class="autocomplete" typeahead-loading="loading">
+				<div ng-show="loading" class="loadingAuto">Loading</div>
+			</div>
+			<div class="left forthy" ng-show="disc_global">
+				<label>&nbsp;</label>
+				<input type="text" value="" ng-model="order.in.discount" class="big_disc" ng-blur="blur_disc()">
+			</div>
+		</div>
+	</form>
+</div>
+<div class="orderdetails" ng-show="showAddress">
+	<form>
+		<a href="" class="edit delete closeD" ng-click="show($event,'showAddress')">delete</a>
+		<div class="half">
+			<label>Customer</label>
+			<input type="text" readonly="readonly" ng-model="order.customer_name">
+		</div>
+		<div class="half">
+			<label>Contact</label>
+			<input type="text" readonly="readonly" ng-model="order.contact_name">
+		</div>
+		<div class="half">
+			<label>Address Info</label>
+			<textarea ng-model="order.address_info"></textarea>
+		</div>
+		<div class="half">
+			<label>Our reference</label>
+			<input type="text" value="" ng-model="order.in.our_ref">
+		</div>
+		<div class="half">
+			<label>Your reference</label>
+			<input type="text" value="" ng-model="order.in.your_ref">
+		</div>
+		<div class="half">
+			<label>Delivery Address Info</label>
+			<textarea ng-model="order.delivery_address"></textarea>
+		</div>
+	</form>
+</div>
+<div class="orderdetail croped" ng-hide="details" ng-show="details2"><span class="darker">Order #{{order.in.serial_number}}</span> <span ng-bind-html="order.total_vat"></span><a href="" class="edit right openD" ng-click="show($event,'details')">delete</a></div>
+<div class="orderdetail croped" ng-hide="showAddress" ng-show="details2"><span class="darker" ng-bind-html="order.customer_name"></span> <span ng-bind-html="order.address_info"></span><a href="" class="edit right openD" ng-click="show($event,'showAddress')">delete</a></div>
+<div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_modal()">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go('orders')">Cancel</button><button class="croped" ng-click="save()">Save</button></div>
+<div class="lines scrolling_stuff" >
+	<div ui-sortable="sortableOptions" ng-model="order.article_line">
+	<div class="line" ng-repeat="line in order.article_line">
+		<div style="width:75%" class="first_td" ng-show="line.is_article_code">
+			<div class="clearfix full margin">
+				<div class="left colstwo">
+					<label class="article_code">{{line.article_code}}</label>
+					<textarea rows="5" ng-model="line.article"></textarea>
+				</div>
+				<div class="left colsone margin">
+					<label>Quantity</label>
+					<input type="text" value="" ng-model="line.quantity" ng-blur="calc(line,'quantity')">
+				</div>
+				<div class="left colsone" ng-show="disc_line">
+					<label>Discount</label>
+					<input type="text" value="" ng-model="line.disc" ng-blur="calc(line,'discount_line')">
+				</div>
+			</div>
+			<div class="clearfix full margin">
+				<div class="left colsones colsonef">
+					<label>Unit price</label>
+					<input type="text" value="" ng-model="line.price" ng-blur="calc(line,'price')">
+				</div>
+				<div class="left colsones" ng-hide="order.remove_vat">
+					<label>VAT</label>
+					<input type="text" value="" disabled="disabled" ng-model="line.percent_x">
+				</div>
+				<div class="left colsones">
+					<label>Unit price + VAT</label>
+					<input type="text" value="" ng-model="line.price_vat" ng-blur="calc(line,'price_vat')">
+				</div>
+			</div>
+			<div class="clearfix full margin">
+				<div class="left colsones colsonef pack" ng-show="order.allow_article_packing">
+					<span class="labeled">Pack./S.U.:</span>
+					<span>{{line.packing}}</span><span ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</span>
+				</div>
+				<div class="left colstwo line_amount">
+					<span class="labeled">Amount:</span>
+					<span>{{line.line_total}}</span>
+				</div>
+			</div>
+		</div>
+		<div style="width:75%" class="first_td" ng-hide="line.is_article_code">
+			<div class="margin">
+				<textarea ng-bind-html="line.article" class="line_content"></textarea>
+			</div>
+		</div>
+		<div style="width:25%" class="last_td">
+			<div class="move_line"><span class="move_icon"></span></div><div class="remove_line"><span class="close_icon" ng-click="removeLine($index)"></span></div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
