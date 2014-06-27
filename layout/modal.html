@@ -1,0 +1,44 @@
+<div class="main_menu2" ng-controller="modal">
+	<div class="omain_menu"></div>
+	<div class="m_wrapper">
+		<div class="modal_wrap">
+			<div class="option_btns" ng-show="choice">
+				<button class="first_btn" ng-click="show_art_list()">Add from list</button>
+				<button>Scan article</button>
+			</div>
+			<div ng-show="article_list" class="articles_list">
+				<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
+				<div class="scrolling_stuff">
+					<form ng-submit="submit()">
+						<input type="text" name="search" class="search" placeholder="Search" autocapitalize="off" autocorrect="off" ng-model="serch">
+						<input type="submit" value="Search" id="hit_it" class="right" >
+					</form>
+					<table cellspacing="0" cellpadding="0" border="0" width="100%" class="atr_list">
+						<thead>
+							<tr>
+								<th width="20%">Code</th>
+								<th width="35%">Name</th>
+								<th width="30%">Base price</th>
+								<th width="15%" class="last">Add</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="art in articles">
+								<td>{{art.code}}</td>
+								<td ng-bind-html="art.name2"></td>
+								<td>{{art.price}}</td>
+								<td class="last"><button ng-click="add_article(art)">+</button></td>
+							</tr>
+						</tbody>
+					</table>
+					<ul class="pagination" ng-show="is_pagination">
+						<!-- <li ng-click="page(first_link)">First</li> -->
+						<li ng-click="page(backlink)">Previous</li><li ng-repeat="pag in pagg" ng-click="page(pag.pag - 1)" class="{{pag.active}}">{{pag.pag}}</li><li ng-click="page(nextlink)">Next</li>
+						<!-- <li ng-click="page(last_link)">Last</li> -->
+					</ul>
+				</div>
+			</div>	
+			<button ng-click="snap_back()" class="close_btn">Close</button>
+		</div>
+	</div>
+</div>
