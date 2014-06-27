@@ -1,14 +1,54 @@
-<div class="menu"><span class="title">Orders</span></div>
-<div class="filter">
-	<input type="text" name="search" class="search" placeholder="Search" autocapitalize="off" autocorrect="off" ><input type="text" name="search" class="date" id="sdate"placeholder="Start Date" ><input type="text" name="search" class="date" id="edate"placeholder="End Date" ><input type="text" name="search" class="date" id="dsdate"placeholder="Delivery Start Date" ><input type="text" name="search" class="date" id="dedate"placeholder="Delivery End Date" ><input type="submit" value="Search" id="hit_it">
-</div>
-<div class="views">
-	<ul>
-		<li ng-repeat="view in views" class="{{view.view}} {{view.active}}"><span class="dot"></span>{{view.name}}</li><li class="search right"></li>
+<div ng-include="'layout/menu.html'" ></div>
+<div hm-swipe-left="handleGesture($event)">
+	<div class="menu"><span class="title">Orders</span><span class="right snap" ng-click="snap()"></span></div>
+	<div class="filter" ng-show="search">
+		<form ng-submit="submit()">
+		<input type="text" name="search" class="search" placeholder="Search" autocapitalize="off" autocorrect="off" ng-model="serch"><input type="text" name="search" class="date" id="sdate"placeholder="Start Date" autocapitalize="off" autocorrect="off" ng-model="sdate" datepicker-popup="{{format}}" is-open="openeds" datepicker-options="dateOptions" ng-click="open($event,'openeds')" readonly="readonly"><input type="text" name="search" class="date" id="edate"placeholder="End Date" autocapitalize="off" autocorrect="off" ng-model="edate" datepicker-popup="{{format}}" is-open="openede" datepicker-options="dateOptions" ng-click="open($event,'openede')" readonly="readonly"><input type="text" name="search" class="date" id="dsdate"placeholder="Delivery Start Date" autocapitalize="off" autocorrect="off" ng-model="ddate" datepicker-popup="{{format}}" is-open="openedds" datepicker-options="dateOptions" ng-click="open($event,'openedds')" readonly="readonly"><input type="text" name="search" class="date" id="dedate"placeholder="Delivery End Date" autocapitalize="off" autocorrect="off" ng-model="dedate"	 datepicker-popup="{{format}}" is-open="openedde" datepicker-options="dateOptions" ng-click="open($event,'openedde')" readonly="readonly"><input type="submit" value="Search" id="hit_it" >
+	</form>
+	</div>
+	<div class="views">
+		<ul>
+			<li ng-repeat="view in views" class="{{view.view}} {{view.active}}" ng-click="fil(view.p)"><span class="dot"></span>{{view.name}}</li><li class="search {{cancel}} right" ng-click="showSearch()"></li>
+		</ul>
+	</div>
+	<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
+	<div class="loaded scrolling_stuff">
+	<ul class="pagination" ng-show="is_pagination">
+		<!-- <li ng-click="page(first_link)">First</li> -->
+		<li ng-click="page(backlink)">Previous</li>
+		<li ng-repeat="pag in pagg" ng-click="page(pag.pag - 1)" class="{{pag.active}}">{{pag.pag}}</li>
+		<li ng-click="page(nextlink)">Next</li>
+		<!-- <li ng-click="page(last_link)">Last</li> -->
 	</ul>
-</div>
-<div class="list">
-	<div class="listItem" ng-repeat="order in orders">
-		{{order.id}}
+	<table class="list" width="100%" cellspacing="0" cellpadding="0">
+		<tbody>
+			<tr class="listItem" ng-repeat="order in orders">
+				<td width="7%" class="{{order.status}}"><span class="dot"></span></td>
+				<td width="20%">
+					<p>{{order.serial_number}}</p>
+					<div class="pd1"><label>Date:</label> <strong>{{order.created}}</strong></div>
+					<div ng-show="order.our_ref"><label>Ref:</label> <strong>{{order.our_ref}}</strong></div>
+				</td>
+				<td width="20%">
+					<div class="delLabel">Delivery Date</div>
+					<div class="delDate">{{order.delivery_date}}</div>
+				</td>
+				<td width="34%">
+					<div class="delLabel">{{order.buyer_name}}</div>
+					<div class="delDate" ng-bind-html="order.amount" ></div>
+				</td>
+				<td width="19%" class="center">
+					<a href="#order/{{order.id}}" class="edit">edit</a><a href="" ng-click="delete_order(order.id)" class="edit delete">delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<ul class="pagination" ng-show="is_pagination">
+		<!-- <li ng-click="page(first_link)">First</li> -->
+		<li ng-click="page(backlink)">Previous</li>
+		<li ng-repeat="pag in pagg" ng-click="page(pag.pag - 1)" class="{{pag.active}}">{{pag.pag}}</li>
+		<li ng-click="page(nextlink)">Next</li>
+		<!-- <li ng-click="page(last_link)">Last</li> -->
+	</ul>
 	</div>
 </div>
