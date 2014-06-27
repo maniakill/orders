@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget
-    id="eu.salesassist.crm"
+    id="eu.salesassist.erp"
     version="0.0.1"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:gap = "http://phonegap.com/ns/1.0"
     xmlns:android   = "http://schemas.android.com/apk/res/android"
     >
-    <name>SalesAssist CRM</name>
+    <name>SalesAssist ERP</name>
     <preference name="DisallowOverscroll" value="true" />
     <preference name="LogLevel" value="ERROR"/>
     <preference name="android-minSdkVersion" value="5" />
@@ -36,7 +36,7 @@
     <gap:platform name="ios" />
     <gap:platform name="android" />
     <description>
-        SalesAssist CRM application
+        SalesAssist ERP application
     </description>
     <author email="marius@medeeaweb.com" href="http://salesassist.eu">
         ArkWeb Team
