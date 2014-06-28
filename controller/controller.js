@@ -57,7 +57,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.pagg = '';
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params).then(function(res){
-			console.log(res);
 			$scope.pagg = res.pagin;
 			$scope.backlink = res.backlink;
 			$scope.nextlink = res.nextlink;
@@ -166,7 +165,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		},function(){project.stopLoading();});
 	}
 	$scope.doIt('get',getparams,function(res){
-		console.log(res);
 		$scope.order = res;
 		$scope.style = res.style;
 		if(!$scope.order.article_line){ $scope.order.article_line = []; }
@@ -185,7 +183,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   $scope.addLine = function(){
   	var random = new Date().getTime();
     var line = {"tr_id":"tmp" + random,"article":"","article_code":"","is_article_code":false,"article_id":"","tax_for_article_id":"0","is_tax":0,"quantity_old":"1","quantity":"1","price_vat":"","price":"","percent_x":"","percent":"","vat_value_x":"","vat_value":"","sale_unit_x":"1","packing_x":"1","sale_unit":"1","stock":"","pending_articles":0,"threshold_value":0,"packing":"1","content":"1","colspan":"","disc":"0","content_class":"","line_total":"0","th_width":"","td_width":"","input_width":""};
-    console.log($scope.order.article_line);
     $scope.order.article_line.push(line);
   }
   $scope.addArticle = function(item){
@@ -205,7 +202,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   							"tax_for_article_id":"0",
   							"is_tax":0,
   							"quantity_old":"1",
-  							"quantity":"1",
+  							"quantity":display_value(1),
   							"price_vat":display_value(p_vat),
   							"price": display_value(item.price),
   							"percent_x": display_value(item.vat),
@@ -301,7 +298,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   			l.disc = display_value(return_value(l.disc));
   			break;
   	}
-  	console.log(pack,sale);
   	var p = return_value(l.price) - return_value(l.price)*ldisc/100;
   	l.line_total = display_value(p * return_value(l.quantity) * ( pack / sale ));
   	$scope.calcTotal();
@@ -324,11 +320,9 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	});
   	tdiscount = total * gdisc / 100;
   	$scope.order.total_vat = display_value( vtotal + total - tdiscount );
-  }
-  $scope.test = function(){ console.log("test"); }
+  }  
   $scope.sortableOptions = { handle: ".move_line", axis: 'y' };
-  $scope.save = function(){
-  	console.log($scope.order_id);
+  $scope.save = function(){  	
   	if($scope.order_id && $scope.order_id !=0){ $scope.order.do = 'orders--order-update_order'; }
   	else{ $scope.order.do = 'orders--order-add_order'; }
   	var data = $.param($scope.order);
@@ -351,7 +345,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	var getparams = { 'do':'orders-xproducts_list' };
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params,'.modal_wrap ').then(function(res){
-			console.log(res);
 			$scope.pagg = res.pagin;
 			$scope.backlink = res.backlink;
 			$scope.nextlink = res.nextlink;
@@ -415,7 +408,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	if(check === true){
   		if($scope.buyer_id || $scope.contact_id){
   			h += '/buyer_id='+$scope.buyer_id+'&s_buyer_id='+$scope.s_buyer_id+'&contact_id='+$scope.contact_id+'&s_customer_id='+$scope.s_customer_id+'&currency_type='+$scope.c+'&languages='+$scope.lq;
-  			console.log(h);
   			$location.path(h);
   		}
   		return false;

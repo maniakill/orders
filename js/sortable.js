@@ -38,7 +38,7 @@ angular.module('ui.sortable', [])
                 if (!!element.data('ui-sortable')) { element.sortable('refresh'); }
               });
             });
-            callbacks.start = function(e, ui) {
+            callbacks.start = function(e, ui) {console.log('start');
               ui.item.sortable = {
                 index: ui.item.index(),
                 cancel: function () { ui.item.sortable._isCanceled = true; },
