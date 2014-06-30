@@ -89,15 +89,15 @@
 			<div class="clearfix full margin">
 				<div class="left colstwo">
 					<label class="article_code">{{line.article_code}}</label>
-					<textarea rows="5" ng-model="line.article"></textarea>
+					<textarea rows="1" ng-model="line.article"></textarea>
 				</div>
-				<div class="left colsone margin">
+				<div class="left colsone smalest">
 					<label>Quantity</label>
 					<input type="text" value="" ng-model="line.quantity" ng-blur="calc(line,'quantity')">
 				</div>
-				<div class="left colsone" ng-show="disc_line">
-					<label>Discount</label>
-					<input type="text" value="" ng-model="line.disc" ng-blur="calc(line,'discount_line')">
+				<div class="left colsone smalest">
+					<label>Pack./S.U.:</label>
+					<span>{{line.packing}}</span><span ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</span>
 				</div>
 			</div>
 			<div class="clearfix full margin">
@@ -105,23 +105,17 @@
 					<label>Unit price</label>
 					<input type="text" value="" ng-model="line.price" ng-blur="calc(line,'price')">
 				</div>
-				<div class="left colsones" ng-hide="order.remove_vat">
+				<div class="left colsones smalest" ng-hide="order.remove_vat">
 					<label>VAT</label>
-					<input type="text" value="" disabled="disabled" ng-model="line.percent_x">
+					<input type="text" value="" disabled="disabled" ng-model="line.percent_x" class="smalest">
+				</div>
+				<div class="left colsones smalest" ng-show="disc_line">
+					<label>Discount</label>
+					<input type="text" value="" ng-model="line.disc" ng-blur="calc(line,'discount_line')">
 				</div>
 				<div class="left colsones">
 					<label>Unit price + VAT</label>
 					<input type="text" value="" ng-model="line.price_vat" ng-blur="calc(line,'price_vat')">
-				</div>
-			</div>
-			<div class="clearfix full margin">
-				<div class="left colsones colsonef pack" ng-show="order.allow_article_packing">
-					<span class="labeled">Pack./S.U.:</span>
-					<span>{{line.packing}}</span><span ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</span>
-				</div>
-				<div class="left colstwo line_amount">
-					<span class="labeled">Amount:</span>
-					<span>{{line.line_total}}</span>
 				</div>
 			</div>
 		</div>
@@ -131,7 +125,10 @@
 			</div>
 		</div>
 		<div style="width:25%" class="last_td">
-			<div class="move_line"><span class="move_icon"></span></div><div class="remove_line"><span class="close_icon" ng-click="removeLine($index)"></span></div>
+			<div class="move_line"><span class="move_icon"></span></div><div class="remove_line"><span class="close_icon" ng-click="removeLine($index)"></span></div><div class="left colstwo line_amount">
+					<span class="labeled">Amount:</span>
+					<span class="croped">{{line.line_total}}</span>
+				</div>
 		</div>
 	</div>
 </div>
