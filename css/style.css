@@ -109,30 +109,34 @@ button:hover { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; }
 .openD { position: absolute; top: 10px; right: 2.865%; }
 .darker { color: #252525; }
 .full { width: 100%; }
+	.line .full span { font-size: 16px; display: inline-block; margin-top: 18px; }
 .line { border-bottom: 1px solid #e7e7e7; position: relative; background: #fff; }
-	.line label { font-size: 18px; font-weight: bold; color: #999; display: block; text-overflow: ellipsis; -o-text-overflow: ellipsis;overflow: hidden;white-space: nowrap; }
+	.line label { font-size: 12px; font-weight: bold; color: #999; display: block; text-overflow: ellipsis; -o-text-overflow: ellipsis;overflow: hidden;white-space: nowrap; }
 	.line .left { margin-left: 3.822%; }
-	.line .left input { width: 79.14%; margin-top: 10px; }
+	.line .left input { width: 79.14%; margin-top: 5px; }
 	.line .colsone input { width: 79.14%; }
-	.line .left textarea { width: 93.75%; margin-top: 10px; }
+	.line .left textarea { width: 93.75%; margin-top: 5px; height: 42px; }
 	.line .colstwo { width: 61.112%; }
 	.line .colsone { width: 31.593%; margin-left: 3.473%; }
 	.line .colsones { width: 28.82%; margin-left: 3.473%; }
+	.line .smalest { width: 12.676%; }
 	.line .colsones input { width: 86.75%; }
+	.line .smalest input { width: 69.87%; }
 	.line .colsonef { margin-left: 3.822%; }
-  .line .left span { font-size: 18px; font-weight: bold; color: #252525; }
-	.line .left .labeled { color: #999; }
+  .line .line_amount span { font-size: 14px; font-weight: bold; color: #252525; padding: 14px 10px 14px 0px; border-radius: 5px; display: inline-block; margin-top: 5px; width: 91%; }
+	.line .line_amount .labeled { color: #999; font-size: 12px; padding: 0px; background: none; margin-top: 0px; }
   .line .line_amount { padding: 10px; background: #eef4f8; border-radius: 5px; width: 57.64%; margin-left: 3.473%; }
+  .line .last_td .line_amount { width: 58%; margin-left: 0; padding: 0; background: none; }
   .line .pack { padding: 10px 0; width: 28.82%; }
-.first_td { padding: 18px 0 0; }
+.first_td { padding: 8px 0 0; }
 .last_td { position: absolute; z-index: 1; top: 0; right: 0px; height: 100%; }
 .wrap_last { height: 100%; position: absolute; top: 0; width: 100%; left: 0; z-index: 1; }
-.move_line { float: right; height: 100%; width: 90px; background: #f3f3f3; position: relative;}
-.remove_line{ float: right; width: 85px; height: 100%; position: relative; }
+.move_line { float: right; height: 100%; width: 80px; background: #f3f3f3; position: relative;}
+.remove_line{ float: right; width: 58.34%; position: relative;  height: 79px; }
 .move_icon, .close_icon{ background: url('../images/icons.png') no-repeat -3px -992px; display: block; padding: 14px 11px; width: 0px; top: 50%; position: absolute; margin-top: -14px; left: 50%; margin-left: -11px; }
-.close_icon { background-position: 0px -908px; padding: 22px; margin-top: -22px; margin-left: -22px; }
-.margin { margin-bottom: 20px; }
-	.line label.article_code { color: #5d97b9;}
+.close_icon { background-position: 0px -908px; padding: 22px; margin-top: 26px; margin-left: -22px; top: 0px; }
+.margin { margin-bottom: 1	0px; }
+	.line label.article_code { color: #5d97b9 !important;}
 .order_b { padding:10px 2.865% 10px 2.865% }
 .lines { position: fixed; overflow: auto; top: 256px; bottom: 0px; -webkit-overflow-scrolling: touch; z-index: 1; width: 100%; }
 .autoC { position: relative; }
