@@ -1,4 +1,6 @@
 app.controller('login',['$scope','$http','$templateCache','$location','$timeout','project',function ($scope,$http,$templateCache,$location,$timeout,project) {
+	var token = localStorage.getItem('Otoken');
+	if(token){ $location.path('/orders'); }	
 	$scope.method = 'POST';
 	$scope.url = 'https://app.salesassist.eu/pim/mobile/admin/';
 	$scope.params = [];
@@ -70,7 +72,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			project.stopLoading();
 		},function(){project.stopLoading();});
 	}
-	$scope.doIt('get',getparams);
 	$scope.submit = function() {
 		getparams.offset=0;
 		getparams.search = $scope.serch;
@@ -132,6 +133,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     $scope[type] = true;
   };
   $scope.dateOptions = { 'starting-day': 1 };
+  $timeout( function(){ $scope.doIt('get',getparams); });
 /* datepicker */
 }]).controller('order', ['$scope','project','$http','$timeout','$routeParams','$location', function ($scope,project,$http,$timeout,$routeParams,$location){
 	$scope.order_id = isNaN($routeParams.id) === false ? $routeParams.id : 0;
@@ -164,15 +166,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   		project.stopLoading();
 		},function(){project.stopLoading();});
 	}
-	$scope.doIt('get',getparams,function(res){
-		$scope.order = res;
-		$scope.style = res.style;
-		if(!$scope.order.article_line){ $scope.order.article_line = []; }
-		if(angular.isString($scope.order.show_vat_checked)){ if($scope.order.show_vat_checked == '1'){ $scope.order.show_vat_checked = true; }else{ $scope.order.show_vat_checked = false; } }
-		if($scope.order.acc_manager){ $scope.autorul_puli = project.utf8_encode($scope.order.acc_manager); }
-		if($scope.order.in.apply_discount > 1){ $scope.disc_global = true; }
-		if($scope.order.in.apply_discount == 1 || $scope.order.in.apply_discount == 3){ $scope.disc_line = true;  }
-	});
   $scope.getLocation = function(val) {
     return $http.get('https://app.salesassist.eu/pim/mobile/admin/',{params:{'do':'orders-authors',api_key:localStorage.Otoken,username:localStorage.Ousername,term:val}}).then(function(res){
       var authors = [];
@@ -328,6 +321,17 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	var data = $.param($scope.order);
   	$scope.doIt('post',data,function(res){ $scope.order_id=res.response; });
   }
+  $timeout( function(){ 
+  	$scope.doIt('get',getparams,function(res){
+			$scope.order = res;
+			$scope.style = res.style;
+			if(!$scope.order.article_line){ $scope.order.article_line = []; }
+			if(angular.isString($scope.order.show_vat_checked)){ if($scope.order.show_vat_checked == '1'){ $scope.order.show_vat_checked = true; }else{ $scope.order.show_vat_checked = false; } }
+			if($scope.order.acc_manager){ $scope.autorul_puli = project.utf8_encode($scope.order.acc_manager); }
+			if($scope.order.in.apply_discount > 1){ $scope.disc_global = true; }
+			if($scope.order.in.apply_discount == 1 || $scope.order.in.apply_discount == 3){ $scope.disc_line = true;  }
+		});
+  });
 }]).controller('menu',['$scope','project','$timeout','$location',function ($scope,project,$timeout,$location){
 	$scope.snap_back = function(){
 		$timeout(function(){ angular.element('.cmain_menu').addClass('slide_right'); });
@@ -420,8 +424,10 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   		project.stopLoading();
 		},function(){project.stopLoading();});
 	}
-	$scope.doIt('get',getparams,function(r){
-		$scope.language_select = r.l;
-		$scope.currency = r.c;
-	});
+	$timeout(function(){
+		$scope.doIt('get',getparams,function(r){
+			$scope.language_select = r.l;
+			$scope.currency = r.c;
+		});	
+	})	
 }]);
