@@ -59,9 +59,11 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .delLabel { color: #9ca1a4; font-size: 18px; font-weight: bold; padding-bottom: 2px; }
 .delDate	{ font-size: 24px; color: #252525; }
 .edit { display: inline-block; padding: 22px 22px; background: url('../images/icons.png') no-repeat 0px -301px #fff; text-indent: -99999px; margin-left: 15px; line-height: 0; }
-.edit:hover, .edit:focus { background-position: 0px -571px; }
+.edit:hover, .edit:active { background-position: 0px -571px; }
 .delete { background-position: 0px -484px }
-.delete:hover, .delete:focus { background-position: 0px -751px; }
+.delete:hover, .delete:active { background-position: 0px -751px; }
+.view{ background-position: 0 -392px;  margin-left: 0px; }
+.view:hover, .view:active { background-position: 0 -659px; }
 .pd1 { padding-bottom: 4px; }
 .gray .dot { border: 1px solid #bbb; }
 .orange .dot { border: 1px solid #eaa92a; }
@@ -110,7 +112,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .darker { color: #252525; }
 .full { width: 100%; }
 	.line .full span { font-size: 16px; display: inline-block; margin-top: 18px; }
-.line { border-bottom: 1px solid #e7e7e7; position: relative; background: #fff; }
+.line { border-bottom: 1px solid #ccc; position: relative; background: #fff; }
 	.line label { font-size: 12px; font-weight: bold; color: #999; display: block; text-overflow: ellipsis; -o-text-overflow: ellipsis;overflow: hidden;white-space: nowrap; }
 	.line .left { margin-left: 3.822%; }
 	.line .left input { width: 79.14%; margin-top: 5px; }
@@ -123,7 +125,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 	.line .colsones input { width: 86.75%; }
 	.line .smalest input { width: 69.87%; }
 	.line .colsonef { margin-left: 3.822%; }
-  .line .line_amount span { font-size: 14px; font-weight: bold; color: #252525; padding: 14px 10px 14px 0px; border-radius: 5px; display: inline-block; margin-top: 5px; width: 91%; }
+  .line .line_amount span { font-size: 16px; font-weight: bold; color: #5d97b9; padding: 32px 10px 14px 0px; border-radius: 5px; display: inline-block; margin-top: 5px; width: 91%; }
 	.line .line_amount .labeled { color: #999; font-size: 12px; padding: 0px; background: none; margin-top: 0px; }
   .line .line_amount { padding: 10px; background: #eef4f8; border-radius: 5px; width: 57.64%; margin-left: 3.473%; }
   .line .last_td .line_amount { width: 58%; margin-left: 0; padding: 0; background: none; }
@@ -188,3 +190,26 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 	.form_wrap label { font-size: 14px; color: #252525; font-weight: bold; display: inline-block; width: 20.605%; margin-right: 22px; }
 	.form_wrap select{ background: none repeat scroll 0 0 #fff; border: 1px solid #9dabb3; border-radius: 5px; font-size: 18px; height: 44px; margin-top: 20px; padding: 10px; width: 38.463%; }
 	.form_wrap button { margin-top: 20px; }
+.ord_detail { padding: 20px 0px; background: #f5fafd; border-bottom: 1px solid #dadada; width: 100%; }
+	.three_cols { width: 29.428%;  margin-left: 2.865%; }
+		.three_cols h3 { border-bottom: 4px solid #a5c6d9; color: #252525; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+		.three_cols p { font-size: 14px; color: #727a7f; line-height: 24px; }
+.block { display: block; }
+	.vline { padding: 10px 0px; width: 100%; border-bottom: 1px solid #ccc; }
+		.vdesc { width: 30.21%; padding-left: 2.865%; }
+		.vline span { display: block; font-size: 16px; color: #a9a9a9; font-weight: bold; }
+		.vline p { color: #252525; font-size: 16px; }
+		.vdesc p { color: #5d97b9; }
+.seventy{ width: 9.115%; margin-left: 1.304%; }
+.vvat { width: 6.512%; }
+.vpack { width: 7.813%; }
+.vamount { padding-right: 2.865%; margin-left: 1.304%; width: 14.324%; }
+.specialspan { margin: 10px 60px }
+.btns { white-space: nowrap; padding-top: 10px; }
+	.btns button { text-align: left; }
+	.btns button span { display: inline-block; padding: 12px 13px; background: url('../images/icons.png') no-repeat 0px -1499px; vertical-align: top; margin-right: 10px; }
+	.btns button #mark_as_ready { background-position: 0px -1626px; }
+	.btns button #edito { background-position: 0px -1766px; }
+	.btns button #deleteo { background-position: 0px -1827px; }
+.show_btns, .show_btns:hover, .show_btns:active { background-position: 0px -1963px; }
+.hide_btns, .hide_btns:hover, .hide_btns:active { background-position: 0px -2392px; }
