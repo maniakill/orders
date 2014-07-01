@@ -1,6 +1,6 @@
 app.controller('login',['$scope','$http','$templateCache','$location','$timeout','project',function ($scope,$http,$templateCache,$location,$timeout,project) {
 	var token = localStorage.getItem('Otoken');
-	if(token){ $location.path('/orders'); }	
+	if(token){ $location.path('/orders'); }
 	$scope.method = 'POST';
 	$scope.url = 'https://app.salesassist.eu/pim/mobile/admin/';
 	$scope.params = [];
@@ -59,16 +59,19 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.pagg = '';
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params).then(function(res){
-			$scope.pagg = res.pagin;
-			$scope.backlink = res.backlink;
-			$scope.nextlink = res.nextlink;
-			$scope.last_link = res.last_link;
-			$scope.first_link = res.first_link;
-			$scope.is_pagination = res.is_pagination;
-			$scope.orders.length = 0;
-			angular.forEach(res.order_row,function(value,key){ $scope.orders.push(value); });
-			if (callback && typeof(callback) === "function") { callback(); }
-  		$scope.pick_date_format = res.pick_date_format;
+			if(res.code!='error'){
+				console.log(res);
+				$scope.pagg = res.pagin;
+				$scope.backlink = res.backlink;
+				$scope.nextlink = res.nextlink;
+				$scope.last_link = res.last_link;
+				$scope.first_link = res.first_link;
+				$scope.is_pagination = res.is_pagination;
+				$scope.orders.length = 0;
+				angular.forEach(res.order_row,function(value,key){ $scope.orders.push(value); });
+				if (callback && typeof(callback) === "function") { callback(); }
+	  		$scope.pick_date_format = res.pick_date_format;
+	  	}
 			project.stopLoading();
 		},function(){project.stopLoading();});
 	}
@@ -162,7 +165,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   };
   $scope.doIt = function(method,params,callback){
   	project.doGet(method,params).then(function(res){
-  		if (callback && typeof(callback) === "function") { callback(res); }
+  		if (callback && typeof(callback) === "function" && res.code!='error') { callback(res); }
   		project.stopLoading();
 		},function(){project.stopLoading();});
 	}
@@ -313,15 +316,15 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	});
   	tdiscount = total * gdisc / 100;
   	$scope.order.total_vat = display_value( vtotal + total - tdiscount );
-  }  
+  }
   $scope.sortableOptions = { handle: ".move_line", axis: 'y' };
-  $scope.save = function(){  	
+  $scope.save = function(){
   	if($scope.order_id && $scope.order_id !=0){ $scope.order.do = 'orders--order-update_order'; }
   	else{ $scope.order.do = 'orders--order-add_order'; }
   	var data = $.param($scope.order);
-  	$scope.doIt('post',data,function(res){ $scope.order_id=res.response; });
+  	$scope.doIt('post',data,function(res){ $scope.order_id=res.response; $location.path('/vorder/'+$scope.order_id); });
   }
-  $timeout( function(){ 
+  $timeout( function(){
   	$scope.doIt('get',getparams,function(res){
 			$scope.order = res;
 			$scope.style = res.style;
@@ -349,15 +352,17 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	var getparams = { 'do':'orders-xproducts_list' };
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params,'.modal_wrap ').then(function(res){
-			$scope.pagg = res.pagin;
-			$scope.backlink = res.backlink;
-			$scope.nextlink = res.nextlink;
-			$scope.last_link = res.last_link;
-			$scope.first_link = res.first_link;
-			$scope.is_pagination = res.is_pagination;
-			$scope.articles.length = 0;
-			angular.forEach(res.articles_row,function(value,key){ $scope.articles.push(value); });
-			if (callback && typeof(callback) === "function") { callback(); }
+			if(res.code != 'error'){
+				$scope.pagg = res.pagin;
+				$scope.backlink = res.backlink;
+				$scope.nextlink = res.nextlink;
+				$scope.last_link = res.last_link;
+				$scope.first_link = res.first_link;
+				$scope.is_pagination = res.is_pagination;
+				$scope.articles.length = 0;
+				angular.forEach(res.articles_row,function(value,key){ $scope.articles.push(value); });
+				if (callback && typeof(callback) === "function") { callback(); }
+			}
   		project.stopLoading();
 		},function(){project.stopLoading();});
 	}
@@ -420,7 +425,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   }
   $scope.doIt = function(method,params,callback){
 		project.doGet(method,params,'.modal_wrap ').then(function(res){
-			if (callback && typeof(callback) === "function") { callback(res); }
+			if (callback && typeof(callback) === "function" && res.code != 'error') { callback(res); }
   		project.stopLoading();
 		},function(){project.stopLoading();});
 	}
@@ -428,6 +433,42 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.doIt('get',getparams,function(r){
 			$scope.language_select = r.l;
 			$scope.currency = r.c;
-		});	
-	})	
+		});
+	});
+}]).controller('vorder', ['$scope','project','$routeParams','$location','$timeout', function ($scope,project,$routeParams,$location,$timeout){
+	if(isNaN($routeParams.id)){ $location.path('/orders'); }
+	var getparams = { 'do':'orders-order','order_id': $routeParams.id };
+	$scope.order = {};
+	$scope.details = false;
+	$scope.doIt = function(method,params,callback){
+		project.doGet(method,params,'.modal_wrap ').then(function(res){
+			if (callback && typeof(callback) === "function" && res.code != 'error') { callback(res); }
+  		project.stopLoading();
+		},function(){project.stopLoading();});
+	}
+	$scope.snap = function(){
+		angular.element('.main_menu').show(0,function(){
+			var _this = angular.element('.cmain_menu'), width = _this.outerWidth();
+			_this.removeClass('slide_right slide_left').css({'right':'-'+width+'px'});
+			$timeout(function(){ _this.addClass('slide_left'); });
+		});
+	}
+	$scope.handleGesture = function($event){ $scope.snap();	}
+	$timeout(function(){
+		$scope.doIt('get',getparams,function(res){
+			$scope.order = res;
+			console.log($scope.order);
+		});
+	});
+	$scope.show = function(t,f){
+		$scope[t] = !$scope[t];
+		angular.element('.show_btns').toggleClass('hide_btns');
+	}
+	$scope.go = function(h,check){ $location.path(h); }
+	$scope.delete_order = function(item){
+		var params = {};
+		params.do = 'orders--order-archive_order';
+		params.order_id = item;
+		$scope.doIt('get',params,function(){ $location.path('orders'); });
+	}
 }]);
