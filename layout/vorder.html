@@ -1,0 +1,63 @@
+<div ng-include="'layout/menu.html'" ></div>
+<div ng-include="'layout/modal.html'" ></div>
+<div hm-swipe-left="handleGesture($event)">
+	<div class="menu"><span class="title">Edit Order</span><span class="right snap" ng-click="snap()"></span></div>
+	<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
+	<alert ng-repeat="alert in alerts" class="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+	<div class="ord_detail clearfix">
+		<div class="three_cols left">
+			<h3>Order Details</h3>
+			<p><span>Date: {{order.factur_date}}</span></p>
+			<p><span>Delivery Date: {{order.factur_del_date}}</span></p>
+			<p><span>Ref: {{order.ref}}</span></p>
+			<p><span>Author: {{order.order_author}}</span></p>
+		</div>
+		<div class="three_cols left">
+			<h3>{{order.order_buyer_name}}</h3>
+			<p ng-bind-html="order.address_info"></p>
+			<p>{{order_buyer_vat}}</p>
+      <p>{{buyer_email}}</p>
+      <p>{{buyer_phone}}</p>
+      <p>{{buyer_fax}}</p>
+		</div>
+		<div class="three_cols left">
+			<h3>Deliveries</h3>
+			deliveries
+		</div>
+	</div>
+	<div class="orderdetail clearfix block order_b" ><a href="" class="edit right openD show_btns" ng-click="show('details',$event)">delete</a><span class="right specialspan">Order Options</span>
+		<div class="clear btns" ng-show="details" ><button class="croped" ng-click="snap_modal()"><span></span>Send by email</button><button class="croped" ng-click="addLine()"><span id="mark_as_ready"></span>Mark as ready to delivery</button><button class="croped" ng-click="go('order/'+order.order_id)"><span id="edito"></span>Edit</button><button class="croped" ng-click="delete_order(order.order_id)"><span id="deleteo"></span>Delete</button></div>
+	</div>
+	<div class="vlines">
+		<div class="vline clearfix" ng-repeat="line in order.order_row">
+			<div class="vdesc left">
+				<span>{{line.article_code}}</span>
+				<p>{{line.article}}</p>
+			</div>
+			<div class="vamount right">
+				<span>Amount</span>
+				<p>{{line.price_vat}}</p>
+			</div>
+			<div class="vdisv seventy right">
+				<span>Discount</span>
+				<p>{{line.disc}}</p>
+			</div>
+			<div class="vpack seventy right">
+				<span>Pack</span>
+				<p>{{line.packing}}/{{line.sale_unit}}</p>
+			</div>
+			<div class="vvat seventy right">
+				<span>VAT</span>
+				<p>{{line.percent}}</p>
+			</div>
+			<div class="vprice seventy right">
+				<span>Price</span>
+				<p>{{line.price}}</p>
+			</div>
+			<div class="vqt seventy right">
+				<span>Quantity</span>
+				<p>{{line.quantity}}</p>
+			</div>
+		</div>
+	</div>
+</div>
