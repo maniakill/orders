@@ -65,6 +65,7 @@ app.config(function ($routeProvider) {
     .when('/add_order',{controller: 'add_order',templateUrl: 'layout/add_order.html'})
     .when('/order',{controller: 'order',templateUrl: 'layout/order.html'})
     .when('/order/:id',{controller: 'order',templateUrl: 'layout/order.html'})
+    .when('/vorder/:id',{controller: 'vorder',templateUrl: 'layout/vorder.html'})
     .when('/menu',{controller: 'menu',templateUrl: 'layout/menu.html'})
     .otherwise({ redirectTo: '/' });
 }).factory('project', ['$http','$location','$rootScope','$q', function ($http,$location,$rootScope,$q) {
