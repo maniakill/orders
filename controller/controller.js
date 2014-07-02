@@ -435,13 +435,14 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			$scope.currency = r.c;
 		});
 	});
-}]).controller('vorder', ['$scope','project','$routeParams','$location','$timeout', function ($scope,project,$routeParams,$location,$timeout){
+}]).controller('vorder', ['$scope','project','$routeParams','$location','$timeout','$route', function ($scope,project,$routeParams,$location,$timeout,$route){
 	if(isNaN($routeParams.id)){ $location.path('/orders'); }
 	var getparams = { 'do':'orders-order','order_id': $routeParams.id };
-	$scope.order = {};
+	$scope.order = { 'order_buyer_name':'-'};
 	$scope.details = false;
+	$scope.revert = false;
 	$scope.doIt = function(method,params,callback){
-		project.doGet(method,params,'.modal_wrap ').then(function(res){
+		project.doGet(method,params).then(function(res){
 			if (callback && typeof(callback) === "function" && res.code != 'error') { callback(res); }
   		project.stopLoading();
 		},function(){project.stopLoading();});
@@ -458,8 +459,12 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.doIt('get',getparams,function(res){
 			$scope.order = res;
 			console.log($scope.order);
+			$scope.func();
 		});
 	});
+	$scope.func = function(){
+		if($scope.order.is_editable != 1 && !$scope.order.delivery ){ $scope.revert = true; }
+	}
 	$scope.show = function(t,f){
 		$scope[t] = !$scope[t];
 		angular.element('.show_btns').toggleClass('hide_btns');
@@ -471,4 +476,18 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		params.order_id = item;
 		$scope.doIt('get',params,function(){ $location.path('orders'); });
 	}
+	$scope.mark = function(p,t){
+		var params = p;
+		$scope.doIt('get',params,function(res){
+			if(res.code =='ok'){
+				$scope.order.is_editable = !$scope.order.is_editable;
+				$scope.func();
+			}
+			if(t === true){
+				$scope.order = res;
+				$scope.func();
+			}
+		});
+	}
+
 }]);
