@@ -58,7 +58,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .listItem label, .listItem strong { font-size: 14px; color: #a9a9a9; }
 .delLabel { color: #9ca1a4; font-size: 18px; font-weight: bold; padding-bottom: 2px; }
 .delDate	{ font-size: 24px; color: #252525; }
-.edit { display: inline-block; padding: 22px 22px; background: url('../images/icons.png') no-repeat 0px -301px #fff; text-indent: -99999px; margin-left: 15px; line-height: 0; }
+.edit { display: inline-block; padding: 22px 22px; background: url('../images/icons.png') no-repeat 0px -301px; text-indent: -99999px; margin-left: 15px; line-height: 0; }
 .edit:hover, .edit:active { background-position: 0px -571px; }
 .delete { background-position: 0px -484px }
 .delete:hover, .delete:active { background-position: 0px -751px; }
@@ -211,5 +211,18 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 	.btns button #mark_as_ready { background-position: 0px -1626px; }
 	.btns button #edito { background-position: 0px -1766px; }
 	.btns button #deleteo { background-position: 0px -1827px; }
-.show_btns, .show_btns:hover, .show_btns:active { background-position: 0px -1963px; }
-.hide_btns, .hide_btns:hover, .hide_btns:active { background-position: 0px -2392px; }
+.show_btns, .show_btns:hover, .show_btns:active { background-position: 0px -2099px; }
+.hide_btns, .hide_btns:hover, .hide_btns:active { background-position: 0px -2528px; }
+.totals { padding: 17px 20px; }
+.totals .total_lines { width: 350px; padding-bottom: 10px; }
+	.total_lines span { font-size: 16px; color: #a9a9a9; }
+	.total_lines span.score { font-weight: bold; float: right; }
+	.total span { font-size: 24px; color: #252525; }
+	.total span.score { font-weight: bold; float: right; }
+.deliveries span { display: inline-block; padding: 10px; color: #fff; font-weight: bold; font-size: 12px; border-radius: 3px; margin-bottom: 10px; vertical-align: top; }
+.deliveries span.active { background: #16a016; }
+.deliveries span.delivered { background: #f7d51d; }
+.deliveries a { padding: 18px; margin-left: 4%; }
+.deliveries .info { background-position: 0px -2391px; }
+.deliveries .delete { background-position: 0px -2256px; }
+.deliveries .send { background-position: 0px -2189px; }
