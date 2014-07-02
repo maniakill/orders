@@ -1,7 +1,7 @@
 <div ng-include="'layout/menu.html'" ></div>
 <div ng-include="'layout/modal.html'" ></div>
 <div hm-swipe-left="handleGesture($event)">
-<div class="menu"><span class="title">Edit Order</span><span class="right snap" ng-click="snap()"></span></div>
+<div class="menu"><span class="title">Edit Order</span><span class="left snap" ng-click="snap()"></span></div>
 <div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
 <alert ng-repeat="alert in alerts" class="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 <div class="orderdetails" ng-show="details">
@@ -81,7 +81,7 @@
 </div>
 <div class="orderdetail croped" ng-hide="details" ng-show="details2"><span class="darker">Order #{{order.in.serial_number}}</span> <span ng-bind-html="order.total_vat"></span><a href="" class="edit right openD" ng-click="show($event,'details')">delete</a></div>
 <div class="orderdetail croped" ng-hide="showAddress" ng-show="details2"><span class="darker" ng-bind-html="order.customer_name"></span> <span ng-bind-html="order.address_info"></span><a href="" class="edit right openD" ng-click="show($event,'showAddress')">delete</a></div>
-<div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_modal()">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go('orders')">Cancel</button><button class="croped" ng-click="save()">Save</button></div>
+<div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_modal()">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go(cancel_link)">Cancel</button><button class="croped" ng-click="save()">Save</button></div>
 <div class="lines scrolling_stuff" >
 	<div ui-sortable="sortableOptions" ng-model="order.article_line">
 	<div class="line" ng-repeat="line in order.article_line">

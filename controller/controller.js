@@ -140,6 +140,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 /* datepicker */
 }]).controller('order', ['$scope','project','$http','$timeout','$routeParams','$location', function ($scope,project,$http,$timeout,$routeParams,$location){
 	$scope.order_id = isNaN($routeParams.id) === false ? $routeParams.id : 0;
+	$scope.cancel_link = isNaN($routeParams.id) === false ? 'vorder/'+$scope.order_id : 'orders';
 	var s = $routeParams.id.split('&'),p = [];
 	for(x in s){
 		var a = s[x].split('=');
@@ -463,6 +464,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		});
 	});
 	$scope.func = function(){
+		$scope.revert = false;
 		if($scope.order.is_editable != 1 && !$scope.order.delivery ){ $scope.revert = true; }
 	}
 	$scope.show = function(t,f){
