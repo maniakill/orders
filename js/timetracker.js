@@ -107,9 +107,10 @@ app.config(function ($routeProvider) {
     var h = stuff.height();
     if(parent) {
       var w = stuff.width();
-      load.width(w);
+      if(w){ load.width(w); }
     }
-    load.height(h).show();
+    if(h){ load.height(h); }
+    load.show();
   }
   project.stopLoading = function(){ angular.element('.loading').hide(); }
   project.logout = function(code){
