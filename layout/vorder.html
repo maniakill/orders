@@ -20,13 +20,23 @@
       <p>{{buyer_phone}}</p>
       <p>{{buyer_fax}}</p>
 		</div>
-		<div class="three_cols left">
+		<div class="three_cols left deliveries">
 			<h3>Deliveries</h3>
-			deliveries
+			<div ng-repeat="del in order.delivery" class="clearfix block">
+				<span ng-class="del.active">{{del.delivey}}</span>
+				<a href="" class="edit send right"></a>
+				<a href="" class="edit delete right" ng-click="mark({order_id:order.order_id,'do':'orders-order-order-delete_delivery',delivery_id:del.delivery_id,del_nr:del.del_nr},true)"></a>
+				<a href="" class="edit info right"></a>
+			</div>
 		</div>
 	</div>
 	<div class="orderdetail clearfix block order_b" ><a href="" class="edit right openD show_btns" ng-click="show('details',$event)">delete</a><span class="right specialspan">Order Options</span>
-		<div class="clear btns" ng-show="details" ><button class="croped" ng-click="snap_modal()"><span></span>Send by email</button><button class="croped" ng-click="addLine()"><span id="mark_as_ready"></span>Mark as ready to delivery</button><button class="croped" ng-click="go('order/'+order.order_id)"><span id="edito"></span>Edit</button><button class="croped" ng-click="delete_order(order.order_id)"><span id="deleteo"></span>Delete</button></div>
+		<div class="clear btns" ng-show="details" >
+			<button class="croped" ng-click="snap_modal()"><span></span>Send by email</button>
+			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_sent'})" ng-show="order.is_editable"><span id="mark_as_ready"></span>Mark as ready to delivery</button>
+			<button class="croped" ng-click="go('order/'+order.order_id)" ng-show="order.is_editable"><span id="edito"></span>Edit</button>
+			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_as_draft'})" ng-show="revert"><span id="edito"></span>Revert to Draft</button>
+			<button class="croped" ng-click="delete_order(order.order_id)" ng-show="order.is_editable"><span id="deleteo"></span>Delete</button></div>
 	</div>
 	<div class="vlines">
 		<div class="vline clearfix" ng-repeat="line in order.order_row">
@@ -38,15 +48,15 @@
 				<span>Amount</span>
 				<p>{{line.price_vat}}</p>
 			</div>
-			<div class="vdisv seventy right">
+			<div class="vdisv seventy right" ng-show="order.sh_discount">
 				<span>Discount</span>
 				<p>{{line.disc}}</p>
 			</div>
-			<div class="vpack seventy right">
+			<div class="vpack seventy right" ng-show="order.allow_article_packing">
 				<span>Pack</span>
-				<p>{{line.packing}}/{{line.sale_unit}}</p>
+				<p>{{line.packing}}<em ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</em></p>
 			</div>
-			<div class="vvat seventy right">
+			<div class="vvat seventy right" ng-show="order.is_vat">
 				<span>VAT</span>
 				<p>{{line.percent}}</p>
 			</div>
@@ -57,6 +67,14 @@
 			<div class="vqt seventy right">
 				<span>Quantity</span>
 				<p>{{line.quantity}}</p>
+			</div>
+		</div>
+		<div class="totals clearfix block">
+			<div class="right">
+				<div class="total_lines" ng-hide="order.sh_vat"><span>Total without VAT</span><span class="score">{{order.total}}</span></div>
+				<div class="total_lines" ng-show="order.sh_discount1"><span>Discount {{order.discount_percent}}</span><span class="score">{{order.discount_total}}</span></div>
+				<div class="total_lines" ng-repeat="vat in order.vat_loop"  ng-show="order.is_vat"><span>VAT ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}}</span></div>
+				<div class="total"><span>Total</span><span class="score">{{order.total_vat}}</span></div>
 			</div>
 		</div>
 	</div>
