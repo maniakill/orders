@@ -1,0 +1,37 @@
+<div class="main_menu2 viewd" ng-controller="view_del">
+	<div class="m_wrapper bg_white">
+		<div class="menu"><span class="title">View delivery</span></div>
+		<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
+		<div>
+			<div><label>Delivery Date:</label><span></span></div>
+			<div><label>Contact:</label><span></span></div>
+			<div><label>Delivery Address:</label>
+				<div></div>
+			</div>
+			<table cellspacing="0" cellpadding="0" border="0" width="100%" class="atr_list">
+				<thead>
+					<tr>
+						<th width="20%">Code</th>
+						<th width="35%">Name</th>
+						<th width="30%">Base price</th>
+						<th width="15%" class="last">Add</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="art in articles">
+						<td>{{art.code}}</td>
+						<td ng-bind-html="art.name2"></td>
+						<td>{{art.price}}</td>
+						<td class="last"><button ng-click="add_article(art)">+</button></td>
+					</tr>
+				</tbody>
+			</table>
+			<div><label>Delivery Address:</label>
+				<div></div>
+			</div>
+			<div class="buttons">
+				<button ng-click="snap_back('viewd')">Cancel</button>
+			</div>
+		</div>
+ </div>
+</div>

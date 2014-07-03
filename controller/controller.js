@@ -436,12 +436,13 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			$scope.currency = r.c;
 		});
 	});
-}]).controller('vorder', ['$scope','project','$routeParams','$location','$timeout','$route', function ($scope,project,$routeParams,$location,$timeout,$route){
+}]).controller('vorder', ['$scope','project','$routeParams','$location','$timeout','$route','$rootScope', function ($scope,project,$routeParams,$location,$timeout,$route,$rootScope){
 	if(isNaN($routeParams.id)){ $location.path('/orders'); }
 	var getparams = { 'do':'orders-order','order_id': $routeParams.id };
-	$scope.order = { 'order_buyer_name':'-'};
+	$scope.order = { 'order_buyer_name':'-','languages_pdf':[{ language:"Dutch", pdf_link_loop:3},{ language:"English", pdf_link_loop:1},{ language:"French", pdf_link_loop:2}],'languages':1,'include_pdf_checked':false,'in':{copy:false}};
 	$scope.details = false;
 	$scope.revert = false;
+	$scope.ss = [];
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params).then(function(res){
 			if (callback && typeof(callback) === "function" && res.code != 'error') { callback(res); }
@@ -465,6 +466,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	});
 	$scope.func = function(){
 		$scope.revert = false;
+		$scope.order.in.copy = false;
+		if($scope.order.include_pdf_checked == "true" ){ $scope.order.include_pdf_checked = true }else{ $scope.order.include_pdf_checked = false; }
 		if($scope.order.is_editable != 1 && !$scope.order.delivery ){ $scope.revert = true; }
 	}
 	$scope.show = function(t,f){
@@ -491,5 +494,77 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			}
 		});
 	}
-
+	$scope.snap_send = function(elem,d,t){
+		if(d){ $scope.sel_del = d; }
+		angular.element('.'+elem).show(0,function(){
+			var _this = angular.element('.m_wrapper');
+			_this.removeClass('slide_right slide_left');
+			$timeout(function(){ _this.addClass('slide_left'); if(t){ $rootScope.$broadcast('do_get'); } });
+		});
+	}
+}]).controller('send_by_email', ['$scope','$timeout','$http', function ($scope,$timeout,$http){
+	$scope.send = function (){
+		var params = {};
+		params.do = 'orders--order-send';
+		params.order_id = $scope.order.order_id;
+		params.copy = $scope.order.in.copy;
+		params.recipients = [];
+		params.include_pdf = $scope.order.include_pdf_checked === true ? 1 : 0;
+		params.e_message = $scope.order.e_message;
+		params.subject = $scope.order.subject;
+		params.lid = $scope.order.languages;
+		angular.forEach($scope.ss,function(value,key){
+			if(value===true){ params.recipients.push(key); }
+		});
+		$scope.doIt('get',params,function(){ $scope.snap_back(); });
+	}
+	$scope.snap_back = function(elem){
+		$timeout(function(){ angular.element('.m_wrapper').addClass('slide_right'); });
+		$timeout(function(){ angular.element('.'+elem).hide(); },400);
+	}
+	$scope.set_model = function(m,i){ $scope[m][i] = !$scope[m][i]; }
+	$scope.set_m = function(m){ $scope[m] = !$scope[m]; }
+	$scope.set_copy = function(){ $scope.order.in.copy = !$scope.order.in.copy; }
+	$scope.set_pdf = function(){ $scope.order.include_pdf_checked = !$scope.order.include_pdf_checked; }
+	$scope.getLocation = function(val,pag) {
+		return $http.get('https://app.salesassist.eu/pim/mobile/admin/',{params:{'do':'orders-'+pag,api_key:localStorage.Otoken,username:localStorage.Ousername,term:val, customer_id:$scope.order.buyer_id}}).then(function(res){
+      var authors = [];
+      angular.forEach(res.data, function(item){ authors.push(item); });
+      return authors;
+    });
+  };
+  $scope.autosc = function(item){ $scope.del_contact_id=item.id; }
+  $scope.send_del = function (){
+  	var params = {};
+		params.do = 'orders--order-notice';
+		params.order_id = $scope.order.order_id;
+		params.copy = $scope.copy;
+		params.c_email = $scope.c_email;
+		params.send_to = $scope.send_to;
+		params.lid = $scope.order.languages;
+		params.include_pdf = $scope.order.include_pdf_checked === true ? 1 : 0;
+		params.e_message = $scope.e_message;
+		params.subject = $scope.subject;
+		params.contact_id = $scope.del_contact_id;
+		params.customer_id = $scope.order.buyer_id;
+		params.delivery_id = $scope.sel_del;
+		console.log(params);
+		$scope.doIt('get',params,function(){ $scope.snap_back(); });
+  }
+}]).controller('view_del', ['$scope','$timeout','$http', function($scope,$timeout,$http){
+	$scope.do_it = function (){
+  	var params = {};
+		params.do = 'orders-view_order_line';
+		params.order_id = $scope.order.order_id;
+		params.delivery_id = $scope.sel_del;
+		console.log(params);
+		$scope.doIt('get',params,function(){ });
+  }
+	$scope.$on('do_get', function(arg,args) {
+		$scope.do_it();
+	});
+	$scope.snap_back = function(elem){
+		$timeout(function(){ angular.element('.m_wrapper').addClass('slide_right'); });
+		$timeout(function(){ angular.element('.'+elem).hide(); },400);
+	}
 }]);

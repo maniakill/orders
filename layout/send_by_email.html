@@ -1,0 +1,33 @@
+<div class="main_menu2 sendd" ng-controller="send_by_email">
+	<div class="m_wrapper bg_white">
+		<div class="menu"><span class="title">Send by email</span></div>
+		<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
+		<alert ng-repeat="alert in alerts" class="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		<div class="send_by_email">
+			<div class="clearfix">
+				<label class="left">Recipeints</label>
+				<div class="left">
+					<p ng-repeat="row in order.recipient_row"><input type="checkbox" ng-model="ss[row.recipient_id]" > <span ng-click="set_model('ss',row.recipient_id)">{{row.recipient_name}} ( {{row.recipient_email}} )</span></p>
+					<p><input type="checkbox"  ng-model="order.in.copy"><span ng-click="set_copy()">Send me a copy</span></p>
+				</div>
+			</div>
+			<div class="clearfix">
+				<label class="left">Subject</label><input type="text" ng-model="order.subject">
+			</div>
+			<div class="clearfix">
+				<label class="left">Message</label><textarea rows="10" ng-model="order.e_message"></textarea>
+			</div>
+			<div class="clearfix">
+				<label class="left">PDF language</label><select ng-model="order.languages">
+				<option ng-repeat="lang in order.languages_pdf" value="{{lang.pdf_link_loop}}">{{lang.language}}</option>
+			</select>
+			</div>
+			<div class="clearfix">
+				<label class="left">&nbsp;</label><input type="checkbox" ng-model="order.include_pdf_checked"> <span ng-click="set_pdf()">include a PDF version of the order</span>
+			</div>
+			<div class="buttons">
+		 		<button ng-click="send()">Send</button><button ng-click="snap_back('sendd')">Cancel</button>
+		 </div>
+	 </div>
+ </div>
+</div>

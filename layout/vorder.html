@@ -1,5 +1,7 @@
 <div ng-include="'layout/menu.html'" ></div>
-<div ng-include="'layout/modal.html'" ></div>
+<div ng-include="'layout/send_by_email.html'" ></div>
+<div ng-include="'layout/send_delivery.html'" ></div>
+<div ng-include="'layout/view_delivery.html'" ></div>
 <div hm-swipe-left="handleGesture($event)">
 	<div class="menu"><span class="title">Edit Order</span><span class="left snap" ng-click="snap()"></span></div>
 	<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
@@ -24,15 +26,15 @@
 			<h3>Deliveries</h3>
 			<div ng-repeat="del in order.delivery" class="clearfix block">
 				<span ng-class="del.active">{{del.delivey}}</span>
-				<a href="" class="edit send right"></a>
+				<a href="" class="edit send right" ng-click="snap_send('editd',del.delivery_id)"></a>
 				<a href="" class="edit delete right" ng-click="mark({order_id:order.order_id,'do':'orders-order-order-delete_delivery',delivery_id:del.delivery_id,del_nr:del.del_nr},true)"></a>
-				<a href="" class="edit info right"></a>
+				<a href="" class="edit info right" ng-click="snap_send('viewd',del.delivery_id,true)" ></a>
 			</div>
 		</div>
 	</div>
 	<div class="orderdetail clearfix block order_b" ><a href="" class="edit right openD show_btns" ng-click="show('details',$event)">delete</a><span class="right specialspan">Order Options</span>
 		<div class="clear btns" ng-show="details" >
-			<button class="croped" ng-click="snap_modal()"><span></span>Send by email</button>
+			<button class="croped" ng-click="snap_send('sendd')"><span></span>Send by email</button>
 			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_sent'})" ng-show="order.is_editable"><span id="mark_as_ready"></span>Mark as ready to delivery</button>
 			<button class="croped" ng-click="go('order/'+order.order_id)" ng-show="order.is_editable"><span id="edito"></span>Edit</button>
 			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_as_draft'})" ng-show="revert"><span id="edito"></span>Revert to Draft</button>
