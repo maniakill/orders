@@ -552,13 +552,14 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.doIt('get',params,function(){ $scope.snap_back(); });
   }
 }]).controller('view_del', ['$scope','$timeout','$http', function($scope,$timeout,$http){
+	$scope.dely = [];
 	$scope.do_it = function (){
+		$scope.dely = [];
   	var params = {};
 		params.do = 'orders-view_order_line';
 		params.order_id = $scope.order.order_id;
 		params.delivery_id = $scope.sel_del;
-		console.log(params);
-		$scope.doIt('get',params,function(){ });
+		$scope.doIt('get',params,function(res){ console.log(res); $scope.dely = res; });
   }
 	$scope.$on('do_get', function(arg,args) {
 		$scope.do_it();

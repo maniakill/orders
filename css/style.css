@@ -227,7 +227,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .deliveries .delete { background-position: 0px -2256px; }
 .deliveries .send { background-position: 0px -2189px; }
 .bg_white { background: white;}
-.send_by_email{ padding: 20px; }
+.send_by_email, .view_del{ padding: 20px; }
 .send_by_email p { padding-bottom: 5px;}
 .send_by_email label { width: 150px; font-size: 14px; color: #252525; margin: 20px 20px 0 0; padding-top: 5px; }
 .send_by_email span { font-size: 14px; color: #252525; }
@@ -235,3 +235,6 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .send_by_email select { -webkit-appearance: menulist; border: 1px solid #9dabb3; border-radius: 5px; padding: 10px; margin: 20px 0; width: 334px; height: 44px; background: #fff; font-size: 18px; }
 .buttons { margin-top: 20px; }
 .buttons button { margin-right: 20px; }
+.view_del { font-size: 16px; }
+.view_del label { font-weight: bold; }
+.view_del div,.view_del table{ margin-bottom: 10px; }
