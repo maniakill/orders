@@ -1,6 +1,6 @@
 <div ng-include="'layout/menu.html'" ></div>
-<div hm-swipe-left="handleGesture($event)">
-	<div class="menu"><span class="title">Orders</span><span class="left snap" ng-click="snap()"></span></div>
+<div hm-swipe-right="handleGesture($event)">
+	<div class="menu"><span class="title">Add order</span><span class="left snap" ng-click="snap()"></span></div>
 	<div class="form_wrap">
 	<form>
 		<input type="text" ng-model="s_buyer_id" placeholder="Select Customer" typeahead="authors.label for authors in getLocation($viewValue,'customers_auto')"  typeahead-on-select="autos($item)" typeahead-min-length="0" typeahead-wait-ms="200" class="autocomplete margin_right" typeahead-loading="loading" typeahead-on-change="cs()">

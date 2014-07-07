@@ -100,7 +100,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.snap = function(){
 		angular.element('.main_menu').show(0,function(){
 			var _this = angular.element('.cmain_menu'), width = _this.outerWidth();
-			_this.removeClass('slide_right slide_left').css({'right':'-'+width+'px'});
+			_this.removeClass('slide_right slide_left').css({'left':'-'+width+'px'});
 			$timeout(function(){ _this.addClass('slide_left'); });
 		});
 	}
@@ -140,6 +140,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 /* datepicker */
 }]).controller('order', ['$scope','project','$http','$timeout','$routeParams','$location', function ($scope,project,$http,$timeout,$routeParams,$location){
 	$scope.order_id = isNaN($routeParams.id) === false ? $routeParams.id : 0;
+	$scope.text = $scope.order_id ? 'Edit' : 'Add';
 	$scope.cancel_link = isNaN($routeParams.id) === false ? 'vorder/'+$scope.order_id : 'orders';
 	var s = $routeParams.id.split('&'),p = [];
 	for(x in s){
@@ -190,7 +191,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   			random = new Date().getTime();
   	if($scope.order.allow_article_packing == 0){ pack = 1; sale = 1;}
   	if($scope.order.allow_article_sale_unit == 0){ sale = 1; }
-  	var line_total = display_value(item.price * ( pack / sale ));
+  	var line_total = display_value(item.price * item.quantity * ( pack / sale ));
   	var line = {"tr_id":"tmp" + random,
   							"article":item.quoteformat,
   							"article_code":item.code,
@@ -199,7 +200,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   							"tax_for_article_id":"0",
   							"is_tax":0,
   							"quantity_old":"1",
-  							"quantity":display_value(1),
+  							"quantity":display_value(item.quantity),
   							"price_vat":display_value(p_vat),
   							"price": display_value(item.price),
   							"percent_x": display_value(item.vat),
@@ -230,7 +231,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   $scope.snap = function(){
 		angular.element('.main_menu').show(0,function(){
 			var _this = angular.element('.cmain_menu'), width = _this.outerWidth();
-			_this.removeClass('slide_right slide_left').css({'right':'-'+width+'px'});
+			_this.removeClass('slide_right slide_left').css({'left':'-'+width+'px'});
 			$timeout(function(){ _this.addClass('slide_left'); });
 		});
 	}
@@ -290,6 +291,10 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   			break;
   		case 'quantity':
   			l.quantity = display_value(return_value(l.quantity));
+  			var params = { article_id: l.article_id,price:l.price ,quantity:return_value(l.quantity), 'do': 'orders--order-get_article_quantity_price' };
+		  	$scope.doIt('get',params,function(res){
+		  		if(res.response){ l.price = display_value(res.response); return $scope.calc(l,'price'); }
+		  	});
   			break;
   		case 'discount_line':
   			l.disc = display_value(return_value(l.disc));
@@ -354,15 +359,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params,'.modal_wrap ').then(function(res){
 			if(res.code != 'error'){
-				$scope.pagg = res.pagin;
-				$scope.backlink = res.backlink;
-				$scope.nextlink = res.nextlink;
-				$scope.last_link = res.last_link;
-				$scope.first_link = res.first_link;
-				$scope.is_pagination = res.is_pagination;
-				$scope.articles.length = 0;
-				angular.forEach(res.articles_row,function(value,key){ $scope.articles.push(value); });
-				if (callback && typeof(callback) === "function") { callback(); }
+				if (callback && typeof(callback) === "function") { callback(res); }
 			}
   		project.stopLoading();
 		},function(){project.stopLoading();});
@@ -375,19 +372,52 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.choice = false; $scope.article_list = true;
 		getparams.cat_id = $scope.order.in.price_category_id ? $scope.order.in.price_category_id : 0;
 		getparams.lang_id = $scope.order.in.languages;
-		$timeout(function(){ $scope.doIt('get',getparams); });
+		$timeout(function(){ $scope.doIt('get',getparams,function(res){
+			$scope.pagg = res.pagin;
+			$scope.backlink = res.backlink;
+			$scope.nextlink = res.nextlink;
+			$scope.last_link = res.last_link;
+			$scope.first_link = res.first_link;
+			$scope.is_pagination = res.is_pagination;
+			$scope.articles.length = 0;
+			angular.forEach(res.articles_row,function(value,key){ $scope.articles.push(value); });
+		}); });
 	}
 	$scope.page = function(pag){
 		if(pag == undefined){ return false; }
 		getparams.offset = pag;
-		$scope.doIt('get',getparams);
+		$scope.doIt('get',getparams,function(res){
+			$scope.pagg = res.pagin;
+			$scope.backlink = res.backlink;
+			$scope.nextlink = res.nextlink;
+			$scope.last_link = res.last_link;
+			$scope.first_link = res.first_link;
+			$scope.is_pagination = res.is_pagination;
+			$scope.articles.length = 0;
+			angular.forEach(res.articles_row,function(value,key){ $scope.articles.push(value); });
+		});
 	}
 	$scope.submit = function() {
 		getparams.offset=0;
 		getparams.search = $scope.serch;
-    $scope.doIt('get',getparams);
+    $scope.doIt('get',getparams,function(res){
+    	$scope.pagg = res.pagin;
+			$scope.backlink = res.backlink;
+			$scope.nextlink = res.nextlink;
+			$scope.last_link = res.last_link;
+			$scope.first_link = res.first_link;
+			$scope.is_pagination = res.is_pagination;
+			$scope.articles.length = 0;
+			angular.forEach(res.articles_row,function(value,key){ $scope.articles.push(value); });
+    });
   };
   $scope.add_article = function(item){ $scope.addArticle(item); }
+  $scope.change_qty = function(item){
+  	var params = { article_id: item.article_id,price:item.price ,quantity:item.quantity, 'do': 'orders--order-get_article_quantity_price' };
+  	$scope.doIt('get',params,function(res){
+  		if(res.response){ item.price = res.response; }
+  	});
+  }
 }]).controller('add_order', ['$scope','project','$location','$timeout','$http', function ($scope,project,$location,$timeout,$http){
 	var getparams = { 'do':'orders-add_order' };
 	$scope.language_select = [{ name:"Dutch", val:3},{ name:"English", val:1},{ name:"French", val:2}];
@@ -399,7 +429,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.snap = function(){
 		angular.element('.main_menu').show(0,function(){
 			var _this = angular.element('.cmain_menu'), width = _this.outerWidth();
-			_this.removeClass('slide_right slide_left').css({'right':'-'+width+'px'});
+			_this.removeClass('slide_right slide_left').css({'left':'-'+width+'px'});
 			$timeout(function(){ _this.addClass('slide_left'); });
 		});
 	}
@@ -452,7 +482,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.snap = function(){
 		angular.element('.main_menu').show(0,function(){
 			var _this = angular.element('.cmain_menu'), width = _this.outerWidth();
-			_this.removeClass('slide_right slide_left').css({'right':'-'+width+'px'});
+			_this.removeClass('slide_right slide_left').css({'left':'-'+width+'px'});
 			$timeout(function(){ _this.addClass('slide_left'); });
 		});
 	}

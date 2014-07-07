@@ -18,8 +18,8 @@
 							<tr>
 								<th width="20%">Code</th>
 								<th width="35%">Name</th>
-								<th width="30%">Base price</th>
-								<th width="15%" class="last">Add</th>
+								<th width="25%">Base price</th>
+								<th width="20%" class="last">Add</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -27,17 +27,15 @@
 								<td>{{art.code}}</td>
 								<td ng-bind-html="art.name2"></td>
 								<td>{{art.price}}</td>
-								<td class="last"><button ng-click="add_article(art)">+</button></td>
+								<td class="last"><input type="text" ng-model="art.quantity" ng-change="change_qty(art)" class="qty"><button ng-click="add_article(art)">+</button></td>
 							</tr>
 						</tbody>
 					</table>
 					<ul class="pagination" ng-show="is_pagination">
-						<!-- <li ng-click="page(first_link)">First</li> -->
 						<li ng-click="page(backlink)">Previous</li><li ng-repeat="pag in pagg" ng-click="page(pag.pag - 1)" class="{{pag.active}}">{{pag.pag}}</li><li ng-click="page(nextlink)">Next</li>
-						<!-- <li ng-click="page(last_link)">Last</li> -->
 					</ul>
 				</div>
-			</div>	
+			</div>
 			<button ng-click="snap_back()" class="close_btn">Close</button>
 		</div>
 	</div>

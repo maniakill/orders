@@ -105,6 +105,7 @@ app.config(function ($routeProvider) {
     var stuff = angular.element(parent+'.scrolling_stuff'),
         load = angular.element(parent+'.loading');
     var h = stuff.height();
+    console.log(stuff);
     if(parent) {
       var w = stuff.width();
       if(w){ load.width(w); }

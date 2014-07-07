@@ -2,8 +2,8 @@
 <div ng-include="'layout/send_by_email.html'" ></div>
 <div ng-include="'layout/send_delivery.html'" ></div>
 <div ng-include="'layout/view_delivery.html'" ></div>
-<div hm-swipe-left="handleGesture($event)">
-	<div class="menu"><span class="title">Edit Order</span><span class="left snap" ng-click="snap()"></span></div>
+<div hm-swipe-right="handleGesture($event)">
+	<div class="menu"><span class="title">Order {{order.serial_number}}</span><span class="left snap" ng-click="snap()"></span></div>
 	<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
 	<alert ng-repeat="alert in alerts" class="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	<div class="ord_detail clearfix">

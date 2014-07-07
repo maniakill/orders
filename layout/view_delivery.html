@@ -12,13 +12,13 @@
 				<thead>
 					<tr>
 						<th width="65%">Name</th>
-						<th width="35%" class="last">Quantity</th>						
+						<th width="35%" class="last">Quantity</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="art in dely.view_order_line">
 						<td ng-bind-html="art.article"></td>
-						<td class="last">{{art.quantity}}</td>						
+						<td class="last">{{art.quantity}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -26,7 +26,7 @@
 				<div>{{dely.delivery_note}}</div>
 			</div>
 			<div class="buttons">
-				<button ng-click="snap_back('viewd')">Cancel</button>
+				<button ng-click="snap_back('viewd')">Close</button>
 			</div>
 		</div>
  </div>
