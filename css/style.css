@@ -128,13 +128,13 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
   .line .line_amount span { font-size: 16px; font-weight: bold; color: #5d97b9; padding: 32px 10px 14px 0px; border-radius: 5px; display: inline-block; margin-top: 5px; width: 91%; }
 	.line .line_amount .labeled { color: #999; font-size: 12px; padding: 0px; background: none; margin-top: 0px; }
   .line .line_amount { padding: 10px; background: #eef4f8; border-radius: 5px; width: 57.64%; margin-left: 3.473%; }
-  .line .last_td .line_amount { width: 58%; margin-left: 0; padding: 0; background: none; }
+  .line .last_td .line_amount { width: 57%; margin-left: 0; padding: 0; background: none; }
   .line .pack { padding: 10px 0; width: 28.82%; }
 .first_td { padding: 8px 0; }
 .last_td { position: absolute; z-index: 1; top: 0; right: 0px; height: 100%; }
 .wrap_last { height: 100%; position: absolute; top: 0; width: 100%; left: 0; z-index: 1; }
 .move_line { float: right; height: 100%; width: 80px; background: #f3f3f3; position: relative;}
-.remove_line{ float: right; width: 58.34%; position: relative;  height: 79px; }
+.remove_line{ float: right; width: 57.34%; position: relative;  height: 79px; }
 .move_icon, .close_icon{ background: url('../images/icons.png') no-repeat -3px -992px; display: block; padding: 14px 11px; width: 0px; top: 50%; position: absolute; margin-top: -14px; left: 50%; margin-left: -11px; }
 .close_icon { background-position: 0px -908px; padding: 22px; margin-top: 26px; margin-left: -22px; top: 0px; }
 .margin { margin-bottom: 1	0px; }
@@ -148,8 +148,8 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 	.omain_menu { background: black; opacity: 0.4 ;height: 100%; width: 100%; position: absolute; z-index: 4; }
 	.slide_left{ -webkit-transform:translate(100%,0); -ms-transform:translate(100%,0); transform:translate(100%,0); -webkit-transition:-webkit-transform .3s ease-out;	-moz-transition:-moz-transform .3s ease-out;	-o-transition:-o-transform .3s ease-out; transition:transform .3s ease-out }
 	.slide_right{ -webkit-transform:translate(0,0); -ms-transform:translate(0,0);	transform:translate(0,0);	-webkit-transition:-webkit-transform .3s ease-in;	-moz-transition:-moz-transform .3s ease-in;	-o-transition:-o-transform .3s ease-in;	transition:transform .3s ease-in }
-	.menu_btn, .snap{ display: block; padding: 22px 76px 22px 0px; background: url('../images/icons.png') no-repeat 0px -1056px; line-height: 28px; margin-bottom: -1px; }
-	.snap { background-position: 0px -1420px; }
+	.menu_btn, .snap{ display: block; padding: 22px 140px 22px 0px; background: url('../images/icons.png') no-repeat 20px -1055px; line-height: 28px; margin-bottom: -1px; }
+	.snap { background-position: 20px -1420px; }
 	.menu_list{}
 	.menu_list li { color:#252525; font-size:24px; font-weight: bold; border-bottom: 1px solid #d9d9d9; padding: 20px; }
 		.menu_list li span { display: inline-block; padding: 16px; background: url('../images/icons.png') no-repeat -2px -1220px; vertical-align: middle; margin-right: 15px; }
@@ -241,3 +241,6 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .view_del label { font-weight: bold; }
 .view_del div,.view_del table{ margin-bottom: 10px; }
 .qty { width: 40px; margin-top: 0px; vertical-align: top; margin-right: 10px; }
+.other_addr { margin-top: 10px; }
+.other_addr button { padding: 8px 10px; width: 37.847%; margin-right: 20px; }
+.some_padding { padding-left: 2.865%; }

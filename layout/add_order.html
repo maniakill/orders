@@ -14,7 +14,7 @@
 		</div>
 		<div>
 			<label>Currency</label><select ng-model="c">
-			<option ng-repeat="cr in currency" value="{{cr.val}}">{{cr.name}}</option>
+			<option ng-repeat="cr in currency" value="{{cr.val}}" ng-bind-html="cr.name"></option>
 			</select>
 		</div>
 		<button ng-click="go('order',true)">Next</button>

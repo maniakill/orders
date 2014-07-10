@@ -138,7 +138,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   $scope.dateOptions = { 'starting-day': 1 };
   $timeout( function(){ $scope.doIt('get',getparams); });
 /* datepicker */
-}]).controller('order', ['$scope','project','$http','$timeout','$routeParams','$location', function ($scope,project,$http,$timeout,$routeParams,$location){
+}]).controller('order', ['$scope','project','$http','$timeout','$routeParams','$location','$rootScope', function ($scope,project,$http,$timeout,$routeParams,$location,$rootScope){
 	$scope.order_id = isNaN($routeParams.id) === false ? $routeParams.id : 0;
 	$scope.text = $scope.order_id ? 'Edit' : 'Add';
 	$scope.cancel_link = isNaN($routeParams.id) === false ? 'vorder/'+$scope.order_id : 'orders';
@@ -151,10 +151,9 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$('select').width($('.date').outerWidth()-17);
 	$scope.dateOptions = { 'starting-day': 1 };
 	$scope.details = false;
-	$scope.order = {'in':{serial_number:''},author_id:'',customer_name:'&nbsp;',total_vat:'&nbsp;',article_line:[]};
+	$scope.order = {'in':{serial_number:''},author_id:'',customer_name:' ',total_vat:'&nbsp;',article_line:[]};
 	$scope.details2 = true;
 	$scope.showAddress = false;
-	$scope.autorul_puli='';
 	$scope.style = '.,';
 	$scope.disc_global = false;
 	$scope.disc_line = false;
@@ -167,7 +166,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   };
   $scope.doIt = function(method,params,callback){
   	project.doGet(method,params).then(function(res){
-  		if (callback && typeof(callback) === "function" && res.code!='error') { callback(res); }
+  		if (callback && typeof(callback) === "function" && res.code!='error') { callback(res); }else{ $location.path('orders'); }
   		project.stopLoading();
 		},function(){project.stopLoading();});
 	}
@@ -293,7 +292,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   			l.quantity = display_value(return_value(l.quantity));
   			var params = { article_id: l.article_id,price:l.price ,quantity:return_value(l.quantity), 'do': 'orders--order-get_article_quantity_price' };
 		  	$scope.doIt('get',params,function(res){
-		  		if(res.response){ l.price = display_value(res.response); return $scope.calc(l,'price'); }
+		  		if(res.response){ l.price = res.response; return $scope.calc(l,'price'); }
 		  	});
   			break;
   		case 'discount_line':
@@ -322,6 +321,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	});
   	tdiscount = total * gdisc / 100;
   	$scope.order.total_vat = display_value( vtotal + total - tdiscount );
+  	$scope.order.total_default_c = display_value((vtotal + total - tdiscount) * return_value($scope.order.in.currency_rate));
   }
   $scope.sortableOptions = { handle: ".move_line", axis: 'y' };
   $scope.save = function(){
@@ -330,13 +330,33 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	var data = $.param($scope.order);
   	$scope.doIt('post',data,function(res){ $scope.order_id=res.response; $location.path('/vorder/'+$scope.order_id); });
   }
+  $scope.change_model = function(i){
+  	console.log(i);
+  }
+  $scope.snap_send = function(elem,d,t){
+		if(d){ $scope.sel_del = d; }
+		angular.element('.'+elem).show(0,function(){
+			var _this = angular.element('.m_wrapper');
+			_this.removeClass('slide_right slide_left');
+			$timeout(function(){ _this.addClass('slide_left'); if(t){ $rootScope.$broadcast('do_get'); } });
+		});
+	}
+	$scope.remove_address = function(){
+		var e = new MouseEvent('click', {
+	    'view': window,
+	    'bubbles': true,
+	    'cancelable': true
+	  });
+		$scope.show(e,'showAddress');
+		$scope.order.delivery_address = '';
+		$scope.show(e,'showAddress');
+	}
   $timeout( function(){
   	$scope.doIt('get',getparams,function(res){
 			$scope.order = res;
 			$scope.style = res.style;
 			if(!$scope.order.article_line){ $scope.order.article_line = []; }
 			if(angular.isString($scope.order.show_vat_checked)){ if($scope.order.show_vat_checked == '1'){ $scope.order.show_vat_checked = true; }else{ $scope.order.show_vat_checked = false; } }
-			if($scope.order.acc_manager){ $scope.autorul_puli = project.utf8_encode($scope.order.acc_manager); }
 			if($scope.order.in.apply_discount > 1){ $scope.disc_global = true; }
 			if($scope.order.in.apply_discount == 1 || $scope.order.in.apply_discount == 3){ $scope.disc_line = true;  }
 		});
@@ -435,7 +455,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	}
 	$scope.handleGesture = function($event){ $scope.snap();	}
 	$scope.autos = function(item){ $scope.buyer_id=item.id; $scope.lq = item.lang_id && item.lang_id!=0 ? item.lang_id : 1 ; $scope.c=item.currency_id && item.currency_id!=0 ? item.currency_id : 1; }
-	$scope.autosc = function(item){ $scope.contact_id=item.id; $scope.s_buyer_id = item.c_name; $scope.buyer_id=item.customer_id; }
+	$scope.autosc = function(item){ console.log(item); $scope.contact_id=item.id; $scope.s_buyer_id = item.c_name; $scope.buyer_id=item.customer_id; }
 	$scope.getLocation = function(val,pag) {
 		var customer_id = $scope.buyer_id ? $scope.buyer_id : 0;
     return $http.get('https://app.salesassist.eu/pim/mobile/admin/',{params:{'do':'orders-'+pag,api_key:localStorage.Otoken,username:localStorage.Ousername,term:val, customer_id:customer_id}}).then(function(res){
@@ -476,6 +496,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params).then(function(res){
 			if (callback && typeof(callback) === "function" && res.code != 'error') { callback(res); }
+			if(res.code == 'error'){ $location.path('/orders'); }
   		project.stopLoading();
 		},function(){project.stopLoading();});
 	}
@@ -597,5 +618,42 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.snap_back = function(elem){
 		$timeout(function(){ angular.element('.m_wrapper').addClass('slide_right'); });
 		$timeout(function(){ angular.element('.'+elem).hide(); },400);
+	}
+}]).controller('sel_del', ['$scope','$timeout','$http', function($scope,$timeout,$http){
+	$scope.adel = [];
+	$scope.selected_address = '';
+	var e = new MouseEvent('click', {
+    'view': window,
+    'bubbles': true,
+    'cancelable': true
+  });
+	$scope.do_it = function (){
+		$scope.adel = [];
+  	var params = {};
+		params.do = 'orders-xdelivery_address_list';
+		params.customer_id = $scope.order.in.customer_id;
+		if(!params.customer_id){ params.contact_id = $scope.order.in.contact_id; }
+		$scope.doIt('get',params,function(res){ console.log(res); $scope.adel = res; });
+  }
+	$scope.$on('do_get', function(arg,args) {
+		$scope.do_it();
+	});
+	$scope.snap_back = function(elem){
+		$timeout(function(){ angular.element('.m_wrapper').addClass('slide_right'); });
+		$timeout(function(){ angular.element('.'+elem).hide(); },400);
+		$scope.show(e,'showAddress');
+		$scope.show(e,'showAddress');
+	}
+	$scope.set_item = function(item){
+		console.log(item.address,item.zip,item.city,item.country)
+		$scope.selected_address = item.address+"\n"+item.zip+" "+item.city+"\n"+item.country;
+	}
+	$scope.select = function(){
+		if($scope.selected_address){ $scope.order.delivery_address = $scope.selected_address; }
+		$scope.snap_back('viewd');
+	}
+	$scope.cancel = function(){
+		$scope.selected_address = '';
+		$scope.snap_back('viewd');
 	}
 }]);

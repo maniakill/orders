@@ -11,7 +11,7 @@
 			<h3>Order Details</h3>
 			<p><span>Date: {{order.factur_date}}</span></p>
 			<p><span>Delivery Date: {{order.factur_del_date}}</span></p>
-			<p><span>Ref: {{order.ref}}</span></p>
+			<p ng-show="order.ref"><span>Ref: {{order.ref}}</span></p>
 			<p><span>Author: {{order.order_author}}</span></p>
 		</div>
 		<div class="three_cols left">
@@ -21,6 +21,8 @@
       <p>{{buyer_email}}</p>
       <p>{{buyer_phone}}</p>
       <p>{{buyer_fax}}</p>
+      <p ng-show="order.delivery_address"><b>Delivery address:</b></p>
+      <p ng-bind-html="order.delivery_address" ng-show="order.delivery_address"></p>
 		</div>
 		<div class="three_cols left deliveries">
 			<h3>Deliveries</h3>
@@ -42,41 +44,47 @@
 	</div>
 	<div class="vlines">
 		<div class="vline clearfix" ng-repeat="line in order.order_row">
-			<div class="vdesc left">
-				<span>{{line.article_code}}</span>
-				<p>{{line.article}}</p>
+			<div ng-show="line.is_article_code">
+				<div class="vdesc left">
+					<span>{{line.article_code}}</span>
+					<p>{{line.article}}</p>
+				</div>
+				<div class="vamount right">
+					<span>Amount</span>
+					<p>{{line.price_vat}}</p>
+				</div>
+				<div class="vdisv seventy right" ng-show="order.sh_discount">
+					<span>Discount</span>
+					<p>{{line.disc}}</p>
+				</div>
+				<div class="vpack seventy right" ng-show="order.allow_article_packing">
+					<span>Pack</span>
+					<p>{{line.packing}}<em ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</em></p>
+				</div>
+				<div class="vvat seventy right" ng-show="order.is_vat">
+					<span>VAT</span>
+					<p>{{line.percent}}</p>
+				</div>
+				<div class="vprice seventy right">
+					<span>Price</span>
+					<p>{{line.price}}</p>
+				</div>
+				<div class="vqt seventy right">
+					<span>Quantity</span>
+					<p>{{line.quantity}}</p>
+				</div>
 			</div>
-			<div class="vamount right">
-				<span>Amount</span>
-				<p>{{line.price_vat}}</p>
-			</div>
-			<div class="vdisv seventy right" ng-show="order.sh_discount">
-				<span>Discount</span>
-				<p>{{line.disc}}</p>
-			</div>
-			<div class="vpack seventy right" ng-show="order.allow_article_packing">
-				<span>Pack</span>
-				<p>{{line.packing}}<em ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</em></p>
-			</div>
-			<div class="vvat seventy right" ng-show="order.is_vat">
-				<span>VAT</span>
-				<p>{{line.percent}}</p>
-			</div>
-			<div class="vprice seventy right">
-				<span>Price</span>
-				<p>{{line.price}}</p>
-			</div>
-			<div class="vqt seventy right">
-				<span>Quantity</span>
-				<p>{{line.quantity}}</p>
+			<div ng-hide="line.is_article_code">
+				<p class="some_padding" ng-bind-html="line.article"></p>
 			</div>
 		</div>
 		<div class="totals clearfix block">
 			<div class="right">
-				<div class="total_lines" ng-hide="order.sh_vat"><span>Total without VAT</span><span class="score">{{order.total}}</span></div>
-				<div class="total_lines" ng-show="order.sh_discount1"><span>Discount {{order.discount_percent}}</span><span class="score">{{order.discount_total}}</span></div>
-				<div class="total_lines" ng-repeat="vat in order.vat_loop"  ng-show="order.is_vat"><span>VAT ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}}</span></div>
-				<div class="total"><span>Total</span><span class="score">{{order.total_vat}}</span></div>
+				<div class="total_lines" ng-hide="order.sh_vat"><span>Total without VAT</span><span class="score">{{order.total}}</span> <span class="score" ng-bind-html="order.currency_type"></span></div>
+				<div class="total_lines" ng-show="order.sh_discount1"><span>Discount {{order.discount_percent}}</span><span class="score">{{order.discount_total}}</span> <span class="score" ng-bind-html="order.currency_type"></span></div>
+				<div class="total_lines" ng-repeat="vat in order.vat_loop"  ng-show="order.is_vat"><span>VAT ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}}</span> <span class="score" ng-bind-html="order.currency_type"></span></div>
+				<div class="total"><span>Total</span><span class="score">{{order.total_vat}}</span> <span class="score" ng-bind-html="order.currency_type"></span></div>
+				<div class="total" ng-hide="order.total_hide"><span>Total</span><span class="score">{{order.total_default}}</span> <span class="score" ng-bind-html="order.currency_d_type"></span></div>
 			</div>
 		</div>
 	</div>
