@@ -6,7 +6,7 @@
 			<div><label>Delivery Date:</label><span>{{dely.delivery_date}}</span></div>
 			<div><label>Contact:</label><span>{{dely.contact_name}}</span></div>
 			<div><label>Delivery Address:</label>
-				<div>{{dely.delivery_address}}</div>
+				<div ng-bind-html="dely.delivery_address"></div>
 			</div>
 			<table cellspacing="0" cellpadding="0" border="0" width="100%" class="atr_list">
 				<thead>

@@ -649,7 +649,9 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.selected_address = item.address+"\n"+item.zip+" "+item.city+"\n"+item.country;
 	}
 	$scope.select = function(){
-		if($scope.selected_address){ $scope.order.delivery_address = $scope.selected_address; }
+		if($scope.selected_address){ 
+			$scope.order.delivery_address = $scope.selected_address;
+			$scope.selected_address = ''; }
 		$scope.snap_back('viewd');
 	}
 	$scope.cancel = function(){
