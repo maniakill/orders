@@ -6,19 +6,19 @@
 			<table cellspacing="0" cellpadding="0" border="0" width="100%" class="atr_list">
 				<thead>
 					<tr>
-						<th width="40%">Address</th>
-						<th width="15%" class="last">Zip</th>
-						<th width="15%" class="last">City</th>
-						<th width="15%" class="last">Country</th>
+						<th width="40%" class="first">Address</th>
+						<th width="15%" >Zip</th>
+						<th width="15%" >City</th>
+						<th width="15%" >Country</th>
 						<th width="15%" class="last">Select</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="art in adel.address_row">
 						<td ng-bind-html="art.address"></td>
-						<td class="last">{{art.zip}}</td>
-						<td class="last">{{art.city}}</td>
-						<td class="last">{{art.country}}</td>
+						<td >{{art.zip}}</td>
+						<td >{{art.city}}</td>
+						<td >{{art.country}}</td>
 						<td class="last"><input type="radio" ng-model="art.checked" name="selected_adr" ng-click="set_item(art)" style="width:auto;" /></td>
 					</tr>
 				</tbody>

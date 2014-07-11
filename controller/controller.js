@@ -375,6 +375,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.article_list = false;
 	$scope.choice = true;
 	$scope.articles = [];
+	var spromise, cpromise;
 	var getparams = { 'do':'orders-xproducts_list' };
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params,'.modal_wrap ').then(function(res){
@@ -431,12 +432,22 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			angular.forEach(res.articles_row,function(value,key){ $scope.articles.push(value); });
     });
   };
-  $scope.add_article = function(item){ $scope.addArticle(item); }
+  $scope.add_article = function(item){
+    $scope.addArticle(item);
+    $scope.alerts=[{type:'success',msg:'Article added'}];
+    if(cpromise){ $timeout.cancel(cpromise); }
+	  cpromise = $timeout(function(){ $scope.closeAlert(0); },1500);
+ 	}
+ 	$scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
   $scope.change_qty = function(item){
   	var params = { article_id: item.article_id,price:item.price ,quantity:item.quantity, 'do': 'orders--order-get_article_quantity_price' };
   	$scope.doIt('get',params,function(res){
   		if(res.response){ item.price = res.response; }
   	});
+  }
+  $scope.search = function(){
+  	if(spromise){ $timeout.cancel(spromise); }
+  	spromise = $timeout(function(){ $scope.submit(); },500);
   }
 }]).controller('add_order', ['$scope','project','$location','$timeout','$http', function ($scope,project,$location,$timeout,$http){
 	var getparams = { 'do':'orders-add_order' };
@@ -649,7 +660,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.selected_address = item.address+"\n"+item.zip+" "+item.city+"\n"+item.country;
 	}
 	$scope.select = function(){
-		if($scope.selected_address){ 
+		if($scope.selected_address){
 			$scope.order.delivery_address = $scope.selected_address;
 			$scope.selected_address = ''; }
 		$scope.snap_back('viewd');

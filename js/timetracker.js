@@ -104,12 +104,12 @@ app.config(function ($routeProvider) {
     if(parent == undefined) { parent=''; }
     var stuff = angular.element(parent+'.scrolling_stuff'),
         load = angular.element(parent+'.loading');
-    var h = stuff.height();
+    /*var h = stuff.height();
     if(parent) {
       var w = stuff.width();
       if(w){ load.width(w); }
     }
-    if(h){ load.height(h); }
+    if(h){ load.height(h); }*/
     load.show();
   }
   project.stopLoading = function(){ angular.element('.loading').hide(); }

@@ -80,11 +80,11 @@
 		</div>
 		<div class="totals clearfix block">
 			<div class="right">
-				<div class="total_lines" ng-hide="order.sh_vat"><span>Total without VAT</span><span class="score">{{order.total}}</span> <span class="score" ng-bind-html="order.currency_type"></span></div>
-				<div class="total_lines" ng-show="order.sh_discount1"><span>Discount {{order.discount_percent}}</span><span class="score">{{order.discount_total}}</span> <span class="score" ng-bind-html="order.currency_type"></span></div>
-				<div class="total_lines" ng-repeat="vat in order.vat_loop"  ng-show="order.is_vat"><span>VAT ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}}</span> <span class="score" ng-bind-html="order.currency_type"></span></div>
-				<div class="total"><span>Total</span><span class="score">{{order.total_vat}}</span> <span class="score" ng-bind-html="order.currency_type"></span></div>
-				<div class="total" ng-hide="order.total_hide"><span>Total</span><span class="score">{{order.total_default}}</span> <span class="score" ng-bind-html="order.currency_d_type"></span></div>
+				<div class="total_lines" ng-hide="order.sh_vat"><span>Total without VAT</span><span class="score">{{order.total}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total_lines" ng-show="order.sh_discount1"><span>Discount {{order.discount_percent}}</span><span class="score">{{order.discount_total}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total_lines" ng-repeat="vat in order.vat_loop"  ng-show="order.is_vat"><span>VAT ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total"><span>Total</span><span class="score">{{order.total_vat}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total" ng-hide="order.total_hide"><span>Total</span><span class="score">{{order.total_default}} <span ng-bind-html="order.currency_d_type"></span></span></div>
 			</div>
 		</div>
 	</div>
