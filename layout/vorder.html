@@ -4,7 +4,7 @@
 <div ng-include="'layout/view_delivery.html'" ></div>
 <div hm-swipe-right="handleGesture($event)">
 	<div class="menu"><span class="title">Order {{order.serial_number}}</span><span class="left snap" ng-click="snap()"></span></div>
-	<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
+	<div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
 	<alert ng-repeat="alert in alerts" class="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	<div class="ord_detail clearfix">
 		<div class="three_cols left">
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="orderdetail clearfix block order_b" ><a href="" class="edit right openD show_btns" ng-click="show('details',$event)">delete</a><span class="right specialspan">Order Options</span>
+	<div class="orderdetail clearfix block order_b" ><a href="" class="edit right openD show_btns" ng-click="show('details',$event)">delete</a><span class="right specialspan">Order Options</span><button class="croped right" ng-click="go('orders')"><span></span>Orders</button>
 		<div class="clear btns" ng-show="details" >
 			<button class="croped" ng-click="snap_send('sendd')"><span></span>Send by email</button>
 			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_sent'})" ng-show="order.is_editable"><span id="mark_as_ready"></span>Mark as ready to delivery</button>

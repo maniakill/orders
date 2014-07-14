@@ -1,10 +1,11 @@
 app.controller('login',['$scope','$http','$templateCache','$location','$timeout','project',function ($scope,$http,$templateCache,$location,$timeout,project) {
 	var token = localStorage.getItem('Otoken');
-	if(token){ $location.path('/orders'); }
+	if(token){ $location.path('/dashboard'); }
 	$scope.method = 'POST';
 	$scope.url = 'https://app.salesassist.eu/pim/mobile/admin/';
 	$scope.params = [];
 	$scope.lang = {};
+	var apromise;
 	angular.forEach(LANG[project.lang],function(value,key){
 		$scope.lang[key]=value;
 	});
@@ -24,17 +25,20 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 					project.setKey();
 					$location.path('/orders');
 				}else{
-					$scope.alerts=[{type:'error',msg:data.error_code}];
-					$timeout(function(){ $scope.closeAlert(0); },3000);
+					$scope.alerts=[{type:'danger',msg:data.error_code}];
+					if(apromise){ $timeout.cancel(apromise); }
+					apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 				}
 			}).
 			error(function(data,status){
-				$scope.alerts=[{type:'error',msg:LANG[project.lang]['Server error. Please try later']}];
-				$timeout(function(){ $scope.closeAlert(0); },3000);
+				$scope.alerts=[{type:'danger',msg:LANG[project.lang]['Server error. Please try later']}];
+				if(apromise){ $timeout.cancel(apromise); }
+				apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 			});
 		}else{
-			$scope.alerts=[{type:'error',msg:LANG[project.lang]['Please fill all the fields']}];
-			$timeout(function(){ $scope.closeAlert(0); },3000);
+			$scope.alerts=[{type:'danger',msg:LANG[project.lang]['Please fill all the fields']}];
+			if(apromise){ $timeout.cancel(apromise); }
+			apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 		}
 	};
 	$scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
@@ -60,7 +64,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params).then(function(res){
 			if(res.code!='error'){
-				console.log(res);
 				$scope.pagg = res.pagin;
 				$scope.backlink = res.backlink;
 				$scope.nextlink = res.nextlink;
@@ -136,8 +139,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     $scope[type] = true;
   };
   $scope.dateOptions = { 'starting-day': 1 };
-  $timeout( function(){ $scope.doIt('get',getparams); });
 /* datepicker */
+  $timeout( function(){ $scope.doIt('get',getparams); });
 }]).controller('order', ['$scope','project','$http','$timeout','$routeParams','$location','$rootScope', function ($scope,project,$http,$timeout,$routeParams,$location,$rootScope){
 	$scope.order_id = isNaN($routeParams.id) === false ? $routeParams.id : 0;
 	$scope.text = $scope.order_id ? 'Edit' : 'Add';
@@ -151,12 +154,13 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$('select').width($('.date').outerWidth()-17);
 	$scope.dateOptions = { 'starting-day': 1 };
 	$scope.details = false;
-	$scope.order = {'in':{serial_number:''},author_id:'',customer_name:' ',total_vat:'&nbsp;',article_line:[]};
+	$scope.order = {'in':{serial_number:''},author_id:'',customer_name:' ',total_vat:'&nbsp;',article_line:[],total_currency_hide:true};
 	$scope.details2 = true;
 	$scope.showAddress = false;
 	$scope.style = '.,';
 	$scope.disc_global = false;
 	$scope.disc_line = false;
+	$scope.show_modal = false;
 	$scope.open = function($event,type) {
   	$event.preventDefault();
     $event.stopPropagation();
@@ -183,6 +187,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     $scope.order.article_line.push(line);
   }
   $scope.addArticle = function(item){
+  	$scope.show_pending_articles = false;
   	var vpercent = $scope.order.remove_vat == 1 ? 0 : item.vat;
   			p_vat =  item.price*1 + item.price * vpercent/100,
   			pack = item.packing ? item.packing : 1,
@@ -209,7 +214,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   							"sale_unit_x":"1",
   							"packing_x":"1",
   							"sale_unit":item.sale_unit,
-  							"stock":"",
+  							"stock":item.stock,
   							"pending_articles":item.pending_articles,
   							"threshold_value":item.threshold_value,
   							"packing":item.packing,
@@ -223,6 +228,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   							"input_width":""};
   	$scope.order.article_line.push(line);
   	$scope.calcTotal();
+  	$scope.alert_stock(item);
   }
   $scope.removeLine = function($i){ if($i > -1){ $scope.order.article_line.splice($i, 1); $scope.calcTotal(); } }
   $scope.go = function(h){ $location.path(h); }
@@ -294,6 +300,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		  	$scope.doIt('get',params,function(res){
 		  		if(res.response){ l.price = res.response; return $scope.calc(l,'price'); }
 		  	});
+		  	$scope.alert_stock(l);
   			break;
   		case 'discount_line':
   			l.disc = display_value(return_value(l.disc));
@@ -330,9 +337,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	var data = $.param($scope.order);
   	$scope.doIt('post',data,function(res){ $scope.order_id=res.response; $location.path('/vorder/'+$scope.order_id); });
   }
-  $scope.change_model = function(i){
-  	console.log(i);
-  }
   $scope.snap_send = function(elem,d,t){
 		if(d){ $scope.sel_del = d; }
 		angular.element('.'+elem).show(0,function(){
@@ -351,6 +355,25 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.order.delivery_address = '';
 		$scope.show(e,'showAddress');
 	}
+	$scope.alert_stock = function(item){
+		var new_stock=parseFloat(item.stock) - parseFloat(item.quantity);
+		if(new_stock < parseFloat(item.threshold_value)){
+    	$scope.new_stock = new_stock;
+      $scope.threshold_value = item.threshold_value;
+      $scope.colors= 'ea7a69';
+      if(new_stock<0){
+      	$scope.colors= 'ff2100';
+      }
+      if(item.pending_articles) {
+      	$scope.show_pending_articles = true;
+      	$scope.pending_articles = item.pending_articles
+      }
+      $scope.show_modal = true;
+    }
+	}
+	$scope.close_modal = function(){
+ 		$scope.show_modal = false;
+ 	}
   $timeout( function(){
   	$scope.doIt('get',getparams,function(res){
 			$scope.order = res;
@@ -375,6 +398,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.article_list = false;
 	$scope.choice = true;
 	$scope.articles = [];
+	// $scope.show_modal = false;
 	var spromise, cpromise;
 	var getparams = { 'do':'orders-xproducts_list' };
 	$scope.doIt = function(method,params,callback){
@@ -434,10 +458,27 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   };
   $scope.add_article = function(item){
     $scope.addArticle(item);
+
     $scope.alerts=[{type:'success',msg:'Article added'}];
+    /*var new_stock=parseFloat(item.stock) - parseFloat(item.quantity);
+    if(new_stock < parseFloat(item.threshold_value)){
+    	$scope.new_stock = new_stock;
+      $scope.threshold_value = item.threshold_value;
+      $scope.colors= 'ea7a69';
+      if(new_stock<0){
+      	$scope.colors= 'ff2100';
+      }
+      if(item.pending_articles) {
+      	$scope.show_pending_articles = true;
+      	$scope.pending_articles = item.pending_articles
+      }
+      $scope.show_modal = true;
+    }*/
+
     if(cpromise){ $timeout.cancel(cpromise); }
 	  cpromise = $timeout(function(){ $scope.closeAlert(0); },1500);
  	}
+
  	$scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
   $scope.change_qty = function(item){
   	var params = { article_id: item.article_id,price:item.price ,quantity:item.quantity, 'do': 'orders--order-get_article_quantity_price' };
@@ -466,7 +507,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	}
 	$scope.handleGesture = function($event){ $scope.snap();	}
 	$scope.autos = function(item){ $scope.buyer_id=item.id; $scope.lq = item.lang_id && item.lang_id!=0 ? item.lang_id : 1 ; $scope.c=item.currency_id && item.currency_id!=0 ? item.currency_id : 1; }
-	$scope.autosc = function(item){ console.log(item); $scope.contact_id=item.id; $scope.s_buyer_id = item.c_name; $scope.buyer_id=item.customer_id; }
+	$scope.autosc = function(item){ $scope.contact_id=item.id; $scope.s_buyer_id = item.c_name; $scope.buyer_id=item.customer_id; }
 	$scope.getLocation = function(val,pag) {
 		var customer_id = $scope.buyer_id ? $scope.buyer_id : 0;
     return $http.get('https://app.salesassist.eu/pim/mobile/admin/',{params:{'do':'orders-'+pag,api_key:localStorage.Otoken,username:localStorage.Ousername,term:val, customer_id:customer_id}}).then(function(res){
@@ -500,7 +541,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 }]).controller('vorder', ['$scope','project','$routeParams','$location','$timeout','$route','$rootScope', function ($scope,project,$routeParams,$location,$timeout,$route,$rootScope){
 	if(isNaN($routeParams.id)){ $location.path('/orders'); }
 	var getparams = { 'do':'orders-order','order_id': $routeParams.id };
-	$scope.order = { 'order_buyer_name':'-','languages_pdf':[{ language:"Dutch", pdf_link_loop:3},{ language:"English", pdf_link_loop:1},{ language:"French", pdf_link_loop:2}],'languages':1,'include_pdf_checked':false,'in':{copy:false}};
+	$scope.order = { 'order_buyer_name':'-','languages_pdf':[{ language:"Dutch", pdf_link_loop:3},{ language:"English", pdf_link_loop:1},{ language:"French", pdf_link_loop:2}],'languages':1,'include_pdf_checked':false,'in':{copy:false},'total_hide':true,'sh_vat':true};
 	$scope.details = false;
 	$scope.revert = false;
 	$scope.ss = [];
@@ -522,7 +563,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$timeout(function(){
 		$scope.doIt('get',getparams,function(res){
 			$scope.order = res;
-			console.log($scope.order);
 			$scope.func();
 		});
 	});
@@ -610,8 +650,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		params.contact_id = $scope.del_contact_id;
 		params.customer_id = $scope.order.buyer_id;
 		params.delivery_id = $scope.sel_del;
-		console.log(params);
-		$scope.doIt('get',params,function(){ $scope.snap_back(); });
+		$scope.doIt('get',params,function(){ $scope.snap_back('editd'); });
   }
 }]).controller('view_del', ['$scope','$timeout','$http', function($scope,$timeout,$http){
 	$scope.dely = [];
@@ -621,7 +660,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		params.do = 'orders-view_order_line';
 		params.order_id = $scope.order.order_id;
 		params.delivery_id = $scope.sel_del;
-		$scope.doIt('get',params,function(res){ console.log(res); $scope.dely = res; });
+		$scope.doIt('get',params,function(res){ $scope.dely = res; });
   }
 	$scope.$on('do_get', function(arg,args) {
 		$scope.do_it();
@@ -644,7 +683,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		params.do = 'orders-xdelivery_address_list';
 		params.customer_id = $scope.order.in.customer_id;
 		if(!params.customer_id){ params.contact_id = $scope.order.in.contact_id; }
-		$scope.doIt('get',params,function(res){ console.log(res); $scope.adel = res; });
+		$scope.doIt('get',params,function(res){ $scope.adel = res; });
   }
 	$scope.$on('do_get', function(arg,args) {
 		$scope.do_it();
@@ -656,7 +695,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.show(e,'showAddress');
 	}
 	$scope.set_item = function(item){
-		console.log(item.address,item.zip,item.city,item.country)
 		$scope.selected_address = item.address+"\n"+item.zip+" "+item.city+"\n"+item.country;
 	}
 	$scope.select = function(){
@@ -669,4 +707,38 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.selected_address = '';
 		$scope.snap_back('viewd');
 	}
+}]).controller('dashboard', ['$scope','project','$timeout','$location', function ($scope,project,$timeout,$location){
+	var getparams = {};
+	getparams.do = 'orders-orders';
+	getparams.view = 2;
+	getparams.limit = 5;
+	$scope.all_ready = 0;
+	$scope.all_del = 0;
+	$scope.all_draft = 0;
+	$scope.snap = function(){
+		angular.element('.main_menu').show(0,function(){
+			var _this = angular.element('.cmain_menu'), width = _this.outerWidth();
+			_this.removeClass('slide_right slide_left').css({'left':'-'+width+'px'});
+			$timeout(function(){ _this.addClass('slide_left'); });
+		});
+	}
+	$scope.orders = [];
+	$scope.doIt = function(method,params,callback){
+		project.doGet(method,params).then(function(res){
+			if(res.code!='error'){
+				if (callback && typeof(callback) === "function") { callback(res); }
+	  	}
+			project.stopLoading();
+		},function(){project.stopLoading();});
+	}
+	$scope.go = function(h){ $location.path(h); }
+	$timeout( function(){
+		$scope.doIt('get',getparams,function(res){
+			$scope.all_ready=res.all_ready;
+			$scope.all_del=res.all_del;
+			$scope.all_draft=res.all_draft;
+			$scope.orders.length = 0;
+			angular.forEach(res.order_row,function(value,key){ $scope.orders.push(value); });
+		});
+	});
 }]);

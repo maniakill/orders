@@ -3,17 +3,26 @@
 	<div class="m_wrapper">
 		<div class="modal_wrap">
 			<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
-			<div class="loading"><div></div><img src="images/loading.gif" id="loading" /></div>
+			<div ng-show="show_modal">
+				<div class="omain_menu"></div>
+				<div class="myAlert clearfix" >
+					<b>When delivered the stock (<span style='color:#{{colors}};'> {{new_stock}} </span>) will be under the threshold of {{threshold_value}}</b>
+					<div ng-show="show_pending_articles">
+						<b>You have pending deliveries for {{pending_articles}} pieces </b>
+					</div>
+					<button ng-click="close_modal()" class="right">Close</button>
+				</div>
+			</div>
+			<div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
 			<div class="menu"><span class="title">View delivery</span></div>
 			<div ng-controller="AlertController">
 			</div>
 			<div class="option_btns" ng-show="choice">
 				<button class="first_btn" ng-click="show_art_list()">Add from list</button>
-				<button>Scan article</button>
+				<!-- <button>Scan article</button> -->
 				<button ng-click="snap_back()" class="close_btn">Close</button>
 			</div>
 			<div ng-show="article_list" class="articles_list">
-
 				<div class="scrolling_stuff">
 					<form ng-submit="submit()">
 						<input type="text" name="search" class="search" placeholder="Search" autocapitalize="off" autocorrect="off" ng-model="serch" ng-change="search()">
