@@ -712,6 +712,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	getparams.do = 'orders-orders';
 	getparams.view = 2;
 	getparams.limit = 5;
+  $scope.all = 0;
 	$scope.all_ready = 0;
 	$scope.all_del = 0;
 	$scope.all_draft = 0;
@@ -732,11 +733,103 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		},function(){project.stopLoading();});
 	}
 	$scope.go = function(h){ $location.path(h); }
+/*chart*/
+
+  $scope.chartConfig = {
+    categories : ['Delivered', 'Ready', 'Draft'],
+    options: {
+      chart: {
+        type: 'pie'
+      }
+    },
+    series: [
+    {
+            type: 'pie',
+            name: 'Articles Ordered',
+            innerSize: '90%',
+            dataLabels: {
+                    formatter: function() {
+                        return  null;
+                    }
+                },
+            data: [
+                {name: 'Draft',
+        y: $scope.all_draft,
+        color: "#cccccc"},
+       {name: 'Ready',
+        y: $scope.all_del,
+        color: "#f9c052"},
+       {name: 'Delivered',
+        y: $scope.all_ready,
+        color: "#67b34f"}
+            ]
+        }
+    ],
+    title: {
+      text: 'Last 30 days orders'
+    },
+    credits: {
+      enabled: false
+    }
+  }
+
+  $scope.linechartConfig = {
+    options: {
+      chart: {
+        type: 'column',
+      }
+    },
+    series: [
+    {
+      name: 'Articles',
+      data: [0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0]
+
+    }
+    ],
+    xAxis: {
+      categories: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec'
+      ]
+    },
+    title: {
+      text: 'Last 12 Months articles sold'
+    },
+    credits: {
+      enabled: false
+    }
+  }
+
+/*chart*/
 	$timeout( function(){
 		$scope.doIt('get',getparams,function(res){
-			$scope.all_ready=res.all_ready;
-			$scope.all_del=res.all_del;
-			$scope.all_draft=res.all_draft;
+			$scope.all_ready=parseFloat(res.all_ready);
+			$scope.all_del=parseFloat(res.all_del);
+			$scope.all_draft=parseFloat(res.all_draft);
+      $scope.all = res.all,
+      $scope.chartConfig.series[0].data = [
+       {name: 'Draft',
+        y: $scope.all_draft,
+        color: "#cccccc"},
+       {name: 'Ready',
+        y: $scope.all_del,
+        color: "#f9c052"},
+       {name: 'Delivered',
+        y: $scope.all_ready,
+        color: "#67b34f"}
+      ];
+      $scope.linechartConfig.series[0].data = res.in.art_all;
+      $scope.linechartConfig.xAxis.categories = res.in.month_all;
 			$scope.orders.length = 0;
 			angular.forEach(res.order_row,function(value,key){ $scope.orders.push(value); });
 		});

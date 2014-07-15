@@ -149,8 +149,8 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 	.omain_menu { background: black; opacity: 0.4 ;height: 100%; width: 100%; position: absolute; z-index: 4; }
 	.slide_left{ -webkit-transform:translate(100%,0); -ms-transform:translate(100%,0); transform:translate(100%,0); -webkit-transition:-webkit-transform .3s ease-out;	-moz-transition:-moz-transform .3s ease-out;	-o-transition:-o-transform .3s ease-out; transition:transform .3s ease-out }
 	.slide_right{ -webkit-transform:translate(0,0); -ms-transform:translate(0,0);	transform:translate(0,0);	-webkit-transition:-webkit-transform .3s ease-in;	-moz-transition:-moz-transform .3s ease-in;	-o-transition:-o-transform .3s ease-in;	transition:transform .3s ease-in }
-	.menu_btn, .snap{ display: block; padding: 22px 140px 22px 0px; background: url('../images/icons.png') no-repeat 35px -1055px; line-height: 28px; margin-bottom: -1px; }
-	.snap { background-position: 35px -1420px; }
+	.menu_btn, .snap{ display: block; padding: 22px 140px 22px 0px; background: url('../images/icons.png') no-repeat 14px -1055px; line-height: 28px; margin-bottom: -1px; }
+	.snap { background-position: 30px -1420px; }
 	.menu_list{}
 	.menu_list li { color:#252525; font-size:24px; font-weight: bold; border-bottom: 1px solid #d9d9d9; padding: 20px; }
 		.menu_list li span { display: inline-block; padding: 16px; background: url('../images/icons.png') no-repeat -2px -1220px; vertical-align: middle; margin-right: 15px; }
@@ -281,9 +281,11 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 .bubles .draft { background: #ccc; }
 .bubles .left { margin-right: 5.686%; width: 104px; }
 .bubles p { color: #67b34f; font-size: 18px; font-weight: bold; text-align: center; padding-bottom: 5px; }
-.right_col{ padding:40px 20px; /*padding: 40px 2.865%; width: 45.835%;*/ }
+.right_col{ padding:20px; /*padding: 40px 2.865%; width: 45.835%;*/ }
 .right_col button { padding: 10px;font-size: 24px; height: 62px; margin-bottom: 20px; width: 352px; display:block; }
 .bubles {border-top: 1px solid #e7e7e7; padding-top: 20px; }
 .bubles .no_margin { margin-right: 0; }
-.chart { padding: 40px; text-align: center; font-size: 18px; font-weight: bold; }
-.border_b { border-bottom: 1px solid #ccc;}
+.chart { margin: 20px; text-align: center; font-size: 18px; font-weight: bold; width: 300px; height: 336px; position: relative; }
+.border_b { border-bottom: 1px solid #ccc; }
+.chartpie { width: 300px; height: inherit; }
+#all_orders { position: absolute; left: 50%; top: 50%; z-index: 1; text-align: center; width: 150px; margin: -15px 0px 0px -75px; font-size: 24px; line-height: 30px; }

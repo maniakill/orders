@@ -55,7 +55,7 @@ angular.module('fsCordova', [])
       }
     }, 3000);
 }]);
-var app = angular.module('orders', ['ngRoute','angular-gestures','ngSanitize','ui.bootstrap','ui.sortable']);
+var app = angular.module('orders', ['ngRoute','angular-gestures','ngSanitize','ui.bootstrap','ui.sortable','highcharts-ng']);
 app.config(function ($routeProvider) {
   $routeProvider
     .when('/',{controller: 'login',templateUrl: 'layout/login.html'})
