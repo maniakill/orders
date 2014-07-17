@@ -84,7 +84,7 @@
 			<input type="text" value="" ng-model="order.in.your_ref">
 		</div>
 		<div class="other_addr">
-			<button class="croped" ng-click="snap_send('viewd',order.buyer_id,true)">Other Delivery Address</button>
+			<button class="croped" ng-click="snap_send('viewd',order.buyer_id,'do_get')">Other Delivery Address</button>
 			<button class="croped" ng-click="remove_address()" ng-show="order.delivery_address">Remove Address</button>
 		</div>
 		<div class="half" ng-show="order.delivery_address">
@@ -95,7 +95,7 @@
 </div>
 <div class="orderdetail croped" ng-hide="details" ng-show="details2"><span class="darker">Order #{{order.in.serial_number}}</span> <span ng-bind-html="order.total_vat"></span> <span ng-bind-html="order.currency_type"></span> <span ng-hide="order.total_currency_hide">(<span ng-bind-html="order.total_default_c"></span> <span ng-bind-html="order.default_currency_val"></span>)</span> <a href="" class="edit right openD" ng-click="show($event,'details')">delete</a></div>
 <div class="orderdetail croped" ng-hide="showAddress" ng-show="details2"><span class="darker">{{order.customer_name}}</span> - <span >{{order.address_info}}</span><a href="" class="edit right openD" ng-click="show($event,'showAddress')">delete</a></div>
-<div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal')">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go(cancel_link)">Cancel</button><button class="croped" ng-click="save()">Save</button></div>
+<div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal',null,'show_art_list')">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go(cancel_link)">Cancel</button><button class="croped" ng-click="save()">Save</button></div>
 <div class="lines scrolling_stuff" >
 	<div ui-sortable="sortableOptions" ng-model="order.article_line">
 	<div class="line" ng-repeat="line in order.article_line">

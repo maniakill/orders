@@ -289,3 +289,4 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 .border_b { border-bottom: 1px solid #ccc; }
 .chartpie { width: 300px; height: inherit; }
 #all_orders { position: absolute; left: 50%; top: 50%; z-index: 1; text-align: center; width: 150px; margin: -15px 0px 0px -75px; font-size: 24px; line-height: 30px; }
+/*.chartline{ height: 325px; }*/

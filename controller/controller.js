@@ -342,7 +342,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		angular.element('.'+elem).show(0,function(){
 			var _this = angular.element('.m_wrapper');
 			_this.removeClass('slide_right slide_left');
-			$timeout(function(){ _this.addClass('slide_left'); if(t){ $rootScope.$broadcast('do_get'); } });
+			$timeout(function(){ _this.addClass('slide_left'); if(t){ $rootScope.$broadcast(t); } });
 		});
 	}
 	$scope.remove_address = function(){
@@ -428,6 +428,10 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			angular.forEach(res.articles_row,function(value,key){ $scope.articles.push(value); });
 		}); });
 	}
+  $scope.$on('show_art_list', function(arg,args) {
+    $scope.show_art_list();
+  });
+  // $scope.show_art_list(); // once we have more buttons we remove this one;
 	$scope.page = function(pag){
 		if(pag == undefined){ return false; }
 		getparams.offset = pag;
@@ -458,27 +462,10 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   };
   $scope.add_article = function(item){
     $scope.addArticle(item);
-
     $scope.alerts=[{type:'success',msg:'Article added'}];
-    /*var new_stock=parseFloat(item.stock) - parseFloat(item.quantity);
-    if(new_stock < parseFloat(item.threshold_value)){
-    	$scope.new_stock = new_stock;
-      $scope.threshold_value = item.threshold_value;
-      $scope.colors= 'ea7a69';
-      if(new_stock<0){
-      	$scope.colors= 'ff2100';
-      }
-      if(item.pending_articles) {
-      	$scope.show_pending_articles = true;
-      	$scope.pending_articles = item.pending_articles
-      }
-      $scope.show_modal = true;
-    }*/
-
     if(cpromise){ $timeout.cancel(cpromise); }
 	  cpromise = $timeout(function(){ $scope.closeAlert(0); },1500);
  	}
-
  	$scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
   $scope.change_qty = function(item){
   	var params = { article_id: item.article_id,price:item.price ,quantity:item.quantity, 'do': 'orders--order-get_article_quantity_price' };
@@ -491,7 +478,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	spromise = $timeout(function(){ $scope.submit(); },500);
   }
 }]).controller('add_order', ['$scope','project','$location','$timeout','$http', function ($scope,project,$location,$timeout,$http){
-	var getparams = { 'do':'orders-add_order' };
+	var getparams = { 'do':'orders-add_order' },cpromise;
 	$scope.language_select = [{ name:"Dutch", val:3},{ name:"English", val:1},{ name:"French", val:2}];
 	$scope.currency = [{ name:"EUR &euro;", val:1},{ name:"USD $", val:2},{ name:"GBP &pound;", val:3}];
 	$scope.lq = 1;
@@ -521,11 +508,16 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   		if($scope.buyer_id || $scope.contact_id){
   			h += '/buyer_id='+$scope.buyer_id+'&s_buyer_id='+$scope.s_buyer_id+'&contact_id='+$scope.contact_id+'&s_customer_id='+$scope.s_customer_id+'&currency_type='+$scope.c+'&languages='+$scope.lq;
   			$location.path(h);
-  		}
+  		}else{
+        $scope.alerts=[{type:'danger',msg:'Please select a company or a contact'}];
+        if(cpromise){ $timeout.cancel(cpromise); }
+        cpromise = $timeout(function(){ $scope.closeAlert(0); },1500);
+      }
   		return false;
   	}
   	$location.path(h);
   }
+  $scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
   $scope.doIt = function(method,params,callback){
 		project.doGet(method,params,'.modal_wrap ').then(function(res){
 			if (callback && typeof(callback) === "function" && res.code != 'error') { callback(res); }
@@ -707,7 +699,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.selected_address = '';
 		$scope.snap_back('viewd');
 	}
-}]).controller('dashboard', ['$scope','project','$timeout','$location', function ($scope,project,$timeout,$location){
+}]).controller('dashboard', ['$scope','project','$timeout','$location','checkConnection','$rootScope', function ($scope,project,$timeout,$location,checkConnection,$rootScope){
 	var getparams = {};
 	getparams.do = 'orders-orders';
 	getparams.view = 2;
@@ -737,80 +729,50 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 
   $scope.chartConfig = {
     categories : ['Delivered', 'Ready', 'Draft'],
-    options: {
-      chart: {
-        type: 'pie'
-      }
-    },
-    series: [
-    {
-            type: 'pie',
-            name: 'Articles Ordered',
-            innerSize: '90%',
-            dataLabels: {
-                    formatter: function() {
-                        return  null;
-                    }
-                },
-            data: [
-                {name: 'Draft',
-        y: $scope.all_draft,
-        color: "#cccccc"},
-       {name: 'Ready',
-        y: $scope.all_del,
-        color: "#f9c052"},
-       {name: 'Delivered',
-        y: $scope.all_ready,
-        color: "#67b34f"}
-            ]
-        }
-    ],
-    title: {
-      text: 'Last 30 days orders'
-    },
-    credits: {
-      enabled: false
-    }
+    options: { chart: { type: 'pie' } },
+    series: [{
+      type: 'pie',
+      name: 'Articles Ordered',
+      innerSize: '90%',
+      dataLabels: { formatter: function() { return  null; } },
+      data: [
+        {name: 'Draft',       y: $scope.all_draft, color: "#cccccc"},
+        {name: 'Ready',       y: $scope.all_del,   color: "#f9c052"},
+        {name: 'Delivered',   y: $scope.all_ready, color: "#67b34f"}
+        ]
+    }],
+    title: { text: 'Last 30 days orders' },
+    credits: { enabled: false }
   }
 
   $scope.linechartConfig = {
-    options: {
-      chart: {
-        type: 'column',
-      }
-    },
-    series: [
-    {
+    options: { chart: { type: 'column', } },
+    series: [{
       name: 'Articles',
-      data: [0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0]
-
-    }
-    ],
-    xAxis: {
-      categories: [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec'
-      ]
-    },
-    title: {
-      text: 'Last 12 Months articles sold'
-    },
-    credits: {
-      enabled: false
-    }
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }],
+    xAxis: { categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] },
+    title: { text: 'Last 12 Months articles sold' },
+    credits: { enabled: false },
+    size: { height: 325 }
   }
-
-/*chart*/
+  $scope.resizeLineChart = function(){
+    var h = window.innerHeight - (angular.element('.border_b').outerHeight()+angular.element('#top_menu').outerHeight()) - 10;
+    $scope.$apply(function(){ $scope.linechartConfig.size.height = h; });
+  }
+  $scope.goe = function(){
+    alert($scope.linechartConfig.size.height);
+  }
+  window.addEventListener('orientationchange', $scope.resizeLineChart, false);
+  /*chart*/
+  $scope.snap = function(){
+    angular.element('.main_menu').show(0,function(){
+      var _this = angular.element('.cmain_menu'), width = _this.outerWidth();
+      _this.removeClass('slide_right slide_left').css({'left':'-'+width+'px'});
+      $timeout(function(){ _this.addClass('slide_left'); });
+    });
+  }
+  $scope.handleGesture = function($event){ $scope.snap(); }
 	$timeout( function(){
 		$scope.doIt('get',getparams,function(res){
 			$scope.all_ready=parseFloat(res.all_ready);
@@ -818,18 +780,14 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			$scope.all_draft=parseFloat(res.all_draft);
       $scope.all = res.all,
       $scope.chartConfig.series[0].data = [
-       {name: 'Draft',
-        y: $scope.all_draft,
-        color: "#cccccc"},
-       {name: 'Ready',
-        y: $scope.all_del,
-        color: "#f9c052"},
-       {name: 'Delivered',
-        y: $scope.all_ready,
-        color: "#67b34f"}
+        {name: 'Draft',       y: $scope.all_draft, color: "#cccccc"},
+        {name: 'Ready',       y: $scope.all_del,   color: "#f9c052"},
+        {name: 'Delivered',   y: $scope.all_ready, color: "#67b34f"}
       ];
       $scope.linechartConfig.series[0].data = res.in.art_all;
       $scope.linechartConfig.xAxis.categories = res.in.month_all;
+      var h = window.innerHeight - (angular.element('.border_b').outerHeight()+angular.element('#top_menu').outerHeight()) - 10;
+      $scope.linechartConfig.size.height = h;
 			$scope.orders.length = 0;
 			angular.forEach(res.order_row,function(value,key){ $scope.orders.push(value); });
 		});

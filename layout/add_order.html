@@ -1,5 +1,6 @@
 <div ng-include="'layout/menu.html'" ></div>
 <div hm-swipe-right="handleGesture($event)">
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	<div class="menu"><span class="title">Add order</span><span class="left snap" ng-click="snap()"></span></div>
 	<div class="form_wrap">
 	<form>

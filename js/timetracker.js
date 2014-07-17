@@ -40,21 +40,6 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
-angular.module('fsCordova', [])
-.service('CordovaService', ['$document', '$q',
-  function($document, $q) {
-    var d = $q.defer(), resolved = false; self = this;
-    this.ready = d.promise;
-    document.addEventListener('deviceready', function() {
-      resolved = true;
-      d.resolve(window.cordova);
-    });
-    setTimeout(function() {
-      if (!resolved) {
-        if (window.cordova) d.resolve(window.cordova);
-      }
-    }, 3000);
-}]);
 var app = angular.module('orders', ['ngRoute','angular-gestures','ngSanitize','ui.bootstrap','ui.sortable','highcharts-ng']);
 app.config(function ($routeProvider) {
   $routeProvider
@@ -69,8 +54,31 @@ app.config(function ($routeProvider) {
     .when('/menu',{controller: 'menu',templateUrl: 'layout/menu.html'})
     .when('/dashboard',{controller: 'dashboard',templateUrl: 'layout/dashboard.html'})
     .otherwise({ redirectTo: '/' });
-}).factory('project', ['$http','$location','$rootScope','$q', function ($http,$location,$rootScope,$q) {
+}).factory('cordovaReady', function() {
+  return function (fn) {
+    var queue = [];
+    var impl = function () {
+      queue.push(Array.prototype.slice.call(arguments));
+    };
+    document.addEventListener('deviceready', function () {
+      queue.forEach(function (args) {
+        fn.apply(this, args);
+      });
+      impl = fn;
+    }, false);
+    return function () {
+      return impl.apply(this, arguments);
+    };
+  };
+}).factory('checkConnection',function (cordovaReady){
+  return {
+    check: cordovaReady(function(){
+      return navigator.connection.type;
+    })
+  };
+}).factory('project', ['$http','$location','$rootScope','$q','$timeout','checkConnection', function ($http,$location,$rootScope,$q,$timeout,checkConnection) {
   var project = {}, url = 'https://app.salesassist.eu/pim/mobile/admin/', key = 'api_key='+localStorage.Otoken+'&username='+localStorage.Ousername, obj = {},search='',canceler;
+  project.d = '';
   /* store data */
   var init = function(){
     project.lang = localStorage.getItem("OrdersLang") ? JSON.parse(localStorage.getItem("OrdersLang")) : 2;
@@ -87,8 +95,8 @@ app.config(function ($routeProvider) {
       params = {};
     }
     project.loading(parent);
-    var connect = checkConnection();
-    if(connect == 'none' && connect =='unknown'){ this.data = []; }
+    var connect = checkConnection.check();
+    if(connect == 'none' || connect =='unknown'){ this.data = []; alert("check your internet connection") }
     else{
       if (canceler) { canceler.resolve(); }
       canceler = $q.defer();
@@ -120,3 +128,4 @@ app.config(function ($routeProvider) {
   project.deleteData = function(){ localStorage.clear(); }
   return project;
 }]);
+
