@@ -2,7 +2,7 @@
 <div hm-swipe-right="handleGesture($event)">
 <div class="menu"><span class="title">{{text}} Order</span><span class="left snap" ng-click="snap()"></span></div>
 <div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
-<div class="orderdetails" ng-show="details">
+<!-- <div class="orderdetails" ng-show="details">
 	<h2>Order details</h2>
 	<form>
 		<input type="hidden" value="" ng-model="order.author_id">
@@ -80,7 +80,7 @@
 			<textarea ng-model="order.delivery_address"></textarea>
 		</div>
 	</form>
-</div>
+</div> -->
 <div class="orderdetail croped" ng-hide="details" ng-show="details2"><span class="darker">Order #{{order.in.serial_number}}</span> <span ng-bind-html="order.total_vat"></span> <span ng-bind-html="order.currency_type"></span> <span ng-hide="order.total_currency_hide">(<span ng-bind-html="order.total_default_c"></span> <span ng-bind-html="order.default_currency_val"></span>)</span> <a href="" class="edit right openD" ng-click="show($event,'details')">delete</a></div>
 <div class="orderdetail croped" ng-hide="showAddress" ng-show="details2"><span class="darker">{{order.customer_name}}</span> - <span >{{order.address_info}}</span><a href="" class="edit right openD" ng-click="show($event,'showAddress')">delete</a></div>
 <div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal',null,'show_art_list')">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go(cancel_link)">Cancel</button><button class="croped" ng-click="save()">Save</button></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def
