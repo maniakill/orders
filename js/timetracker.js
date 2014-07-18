@@ -94,7 +94,7 @@ app.config(function ($routeProvider) {
     }
     project.loading(parent);
     var connect = checkConnection.check();
-    if(connect == 'none' || connect =='unknown'){ this.data = []; alert("check your internet connection") }
+    if(connect == 'none' || connect =='unknown'){ this.data = []; alert("check your internet connection");project.stopLoading(); }
     else{
       if (canceler) { canceler.resolve(); }
       canceler = $q.defer();
