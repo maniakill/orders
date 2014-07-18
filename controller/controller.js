@@ -731,7 +731,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			project.stopLoading();
 		},function(){project.stopLoading();});
 	}
-	$scope.go = function(h,t){ $location.path(h+'/'+t);  }
+	$scope.go = function(h,t){ var p = t ? h+'/'+t : h; $location.path(p);  }
 /*chart*/
   $scope.chartConfig = {
     categories : ['Delivered', 'Ready', 'Draft'],
