@@ -128,10 +128,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		params.order_id = item;
 		$scope.doIt('get',params);
 	}
-  $scope.$on('orders', function(event,args) {
-    console.log(args);
-    $scope.fil(args);
-  });
 /* datepicker */
 	$scope.today = function() {
     $scope.dt = new Date();
@@ -768,9 +764,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   $scope.resizeLineChart = function(){
     var h = window.innerHeight - (angular.element('.border_b').outerHeight()+angular.element('#top_menu').outerHeight()) - 10;
     $scope.$apply(function(){ $scope.linechartConfig.size.height = h; });
-  }
-  $scope.goe = function(){
-    alert($scope.linechartConfig.size.height);
   }
   window.addEventListener('orientationchange', $scope.resizeLineChart, false);
   /*chart*/

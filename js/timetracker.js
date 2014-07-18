@@ -1,9 +1,5 @@
 window.addEventListener('load', function() { FastClick.attach(document.body); }, false);
-function checkConnection() {
-  if(devReady === true){ var networkState = navigator.connection.type; }
-  else{ var networkState = 'browser'; }
-  return networkState;
-}
+function exitTheApp(){ navigator.app.exitApp(); }
 function str_replace(search, replace, subject, count) {
   var i = 0, j = 0, temp = '', repl = '', sl = 0, fl = 0, f = [].concat(search), r = [].concat(replace), s = subject, ra = Object.prototype.toString.call(r) === '[object Array]', sa = Object.prototype.toString.call(s) === '[object Array]';
   s = [].concat(s);
@@ -62,6 +58,7 @@ app.config(function ($routeProvider) {
       queue.push(Array.prototype.slice.call(arguments));
     };
     document.addEventListener('deviceready', function () {
+      document.addEventListener("backbutton", exitTheApp, false);
       queue.forEach(function (args) {
         fn.apply(this, args);
       });
