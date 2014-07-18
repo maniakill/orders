@@ -2,16 +2,6 @@
 <div hm-swipe-right="handleGesture($event)">
 <div class="menu"><span class="title">{{text}} Order</span><span class="left snap" ng-click="snap()"></span></div>
 <div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
-<div ng-show="show_modal">
-	<div class="omain_menu"></div>
-	<div class="myAlert clearfix" >
-		<b>When delivered the stock (<span style='color:#{{colors}};'> {{new_stock}} </span>) will be under the threshold of {{threshold_value}}</b>
-		<div ng-show="show_pending_articles">
-			<b>You have pending deliveries for {{pending_articles}} pieces </b>
-		</div>
-		<button ng-click="close_modal()" class="right">Close</button>
-	</div>
-</div>
 <div class="orderdetails" ng-show="details">
 	<h2>Order details</h2>
 	<form>
@@ -96,53 +86,53 @@
 <div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal',null,'show_art_list')">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go(cancel_link)">Cancel</button><button class="croped" ng-click="save()">Save</button></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def
 <div class="lines scrolling_stuff" >abc
 	<div ui-sortable="sortableOptions" ng-model="order.article_line">
-	<div class="line" ng-repeat="line in order.article_line">
-		<div style="width:75%" class="first_td" ng-show="line.is_article_code">
-			<div class="clearfix full margin">
-				<div class="left colstwo">
-					<label class="article_code">{{line.article_code}}</label>
-					<textarea rows="1" ng-model="line.article"></textarea>
+		<div class="line" ng-repeat="line in order.article_line">
+			<div style="width:75%" class="first_td" ng-show="line.is_article_code">
+				<div class="clearfix full margin">
+					<div class="left colstwo">
+						<label class="article_code">{{line.article_code}}</label>
+						<textarea rows="1" ng-model="line.article"></textarea>
+					</div>
+					<div class="left colsone smalest">
+						<label>Quantity</label>
+						<input type="text" value="" ng-model="line.quantity" ng-blur="calc(line,'quantity')">
+					</div>
+					<div class="left colsone smalest">
+						<label>Pack./S.U.:</label>
+						<span>{{line.packing}}</span><span ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</span>
+					</div>
 				</div>
-				<div class="left colsone smalest">
-					<label>Quantity</label>
-					<input type="text" value="" ng-model="line.quantity" ng-blur="calc(line,'quantity')">
-				</div>
-				<div class="left colsone smalest">
-					<label>Pack./S.U.:</label>
-					<span>{{line.packing}}</span><span ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</span>
+				<div class="clearfix full margin">
+					<div class="left colsones colsonef">
+						<label>Unit price</label>
+						<input type="text" value="" ng-model="line.price" ng-blur="calc(line,'price')">
+					</div>
+					<div class="left colsones smalest" ng-hide="order.remove_vat">
+						<label>VAT</label>
+						<input type="text" value="" disabled="disabled" ng-model="line.percent_x" class="smalest">
+					</div>
+					<div class="left colsones smalest" ng-show="disc_line">
+						<label>Discount</label>
+						<input type="text" value="" ng-model="line.disc" ng-blur="calc(line,'discount_line')">
+					</div>
+					<div class="left colsones">
+						<label>Unit price + VAT</label>
+						<input type="text" value="" ng-model="line.price_vat" ng-blur="calc(line,'price_vat')">
+					</div>
 				</div>
 			</div>
-			<div class="clearfix full margin">
-				<div class="left colsones colsonef">
-					<label>Unit price</label>
-					<input type="text" value="" ng-model="line.price" ng-blur="calc(line,'price')">
-				</div>
-				<div class="left colsones smalest" ng-hide="order.remove_vat">
-					<label>VAT</label>
-					<input type="text" value="" disabled="disabled" ng-model="line.percent_x" class="smalest">
-				</div>
-				<div class="left colsones smalest" ng-show="disc_line">
-					<label>Discount</label>
-					<input type="text" value="" ng-model="line.disc" ng-blur="calc(line,'discount_line')">
-				</div>
-				<div class="left colsones">
-					<label>Unit price + VAT</label>
-					<input type="text" value="" ng-model="line.price_vat" ng-blur="calc(line,'price_vat')">
+			<div style="width:75%" class="first_td" ng-hide="line.is_article_code">
+				<div class="margin">
+					<textarea  class="line_content" ng-model="line.article"></textarea>
 				</div>
 			</div>
-		</div>
-		<div style="width:75%" class="first_td" ng-hide="line.is_article_code">
-			<div class="margin">
-				<textarea  class="line_content" ng-model="line.article"></textarea>
+			<div style="width:25%" class="last_td">
+				<div class="move_line"><span class="move_icon"></span></div><div class="remove_line"><span class="close_icon" ng-click="removeLine($index)"></span></div><div class="left colstwo line_amount">
+						<span ng-show="line.is_article_code" class="labeled">Amount:</span>
+						<span ng-show="line.is_article_code" class="croped">{{line.line_total}}</span>
+					</div>
 			</div>
-		</div>
-		<div style="width:25%" class="last_td">
-			<div class="move_line"><span class="move_icon"></span></div><div class="remove_line"><span class="close_icon" ng-click="removeLine($index)"></span></div><div class="left colstwo line_amount">
-					<span ng-show="line.is_article_code" class="labeled">Amount:</span>
-					<span ng-show="line.is_article_code" class="croped">{{line.line_total}}</span>
-				</div>
 		</div>
 	</div>
-</div>
 </div>
 </div>
