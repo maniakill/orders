@@ -141,7 +141,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .margin { margin-bottom: 0px; }
 	.line label.article_code { color: #5d97b9 !important;}
 .order_b { padding:10px 2.865% 10px 2.865% }
-.lines { position: fixed; overflow: auto; top: 256px; bottom: 0px; -webkit-overflow-scrolling: touch; z-index: 1; width: 100%; -webkit-backface-visibility: hidden; }
+.lines { position: absolute; overflow: auto; top: 256px; bottom: 0px; -webkit-overflow-scrolling: touch; z-index: 1; width: 100%; -webkit-backface-visibility: hidden; }
 .autoC { position: relative; }
 .line_content{ margin-left: 3.822%; width: 89.585%; margin-top: 2px; }
 .main_menu, .main_menu2 { position: absolute; height: 100%; width: 100%; z-index: 4; top: 0;right: 0;left: 0;bottom: 0px; display: none; }

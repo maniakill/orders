@@ -1,8 +1,20 @@
-
+<div ng-include="'layout/menu.html'" ></div>
+<div ng-include="'layout/modal.html'" ></div>
+<div ng-include="'layout/daddress.html'" ></div>
 <div hm-swipe-right="handleGesture($event)">
 <div class="menu"><span class="title">{{text}} Order</span><span class="left snap" ng-click="snap()"></span></div>
 <div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
-<!-- <div class="orderdetails" ng-show="details">
+<div ng-show="show_modal">
+	<div class="omain_menu"></div>
+	<div class="myAlert clearfix" >
+		<b>When delivered the stock (<span style='color:#{{colors}};'> {{new_stock}} </span>) will be under the threshold of {{threshold_value}}</b>
+		<div ng-show="show_pending_articles">
+			<b>You have pending deliveries for {{pending_articles}} pieces </b>
+		</div>
+		<button ng-click="close_modal()" class="right">Close</button>
+	</div>
+</div>
+<div class="orderdetails" ng-show="details">
 	<h2>Order details</h2>
 	<form>
 		<input type="hidden" value="" ng-model="order.author_id">
@@ -80,12 +92,12 @@
 			<textarea ng-model="order.delivery_address"></textarea>
 		</div>
 	</form>
-</div> -->
+</div>
 <div class="orderdetail croped" ng-hide="details" ng-show="details2"><span class="darker">Order #{{order.in.serial_number}}</span> <span ng-bind-html="order.total_vat"></span> <span ng-bind-html="order.currency_type"></span> <span ng-hide="order.total_currency_hide">(<span ng-bind-html="order.total_default_c"></span> <span ng-bind-html="order.default_currency_val"></span>)</span> <a href="" class="edit right openD" ng-click="show($event,'details')">delete</a></div>
 <div class="orderdetail croped" ng-hide="showAddress" ng-show="details2"><span class="darker">{{order.customer_name}}</span> - <span >{{order.address_info}}</span><a href="" class="edit right openD" ng-click="show($event,'showAddress')">delete</a></div>
-<div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal',null,'show_art_list')">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go(cancel_link)">Cancel</button><button class="croped" ng-click="save()">Save</button></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def
-<div class="lines scrolling_stuff" >abc
-	<!-- <div ui-sortable="sortableOptions" ng-model="order.article_line">
+<div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal',null,'show_art_list')">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go(cancel_link)">Cancel</button><button class="croped" ng-click="save()">Save</button></div>
+<div class="lines scrolling_stuff" >
+	<div ui-sortable="sortableOptions" ng-model="order.article_line">
 		<div class="line" ng-repeat="line in order.article_line">
 			<div style="width:75%" class="first_td" ng-show="line.is_article_code">
 				<div class="clearfix full margin">
@@ -133,6 +145,6 @@
 					</div>
 			</div>
 		</div>
-	</div> -->
+	</div>
 </div>
 </div>
