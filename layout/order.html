@@ -85,7 +85,7 @@
 <div class="orderdetail croped" ng-hide="showAddress" ng-show="details2"><span class="darker">{{order.customer_name}}</span> - <span >{{order.address_info}}</span><a href="" class="edit right openD" ng-click="show($event,'showAddress')">delete</a></div>
 <div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal',null,'show_art_list')">Add Article</button><button class="croped" ng-click="addLine()">Add line</button><button class="croped" ng-click="go(cancel_link)">Cancel</button><button class="croped" ng-click="save()">Save</button></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def
 <div class="lines scrolling_stuff" >abc
-	<div ui-sortable="sortableOptions" ng-model="order.article_line">
+	<!-- <div ui-sortable="sortableOptions" ng-model="order.article_line">
 		<div class="line" ng-repeat="line in order.article_line">
 			<div style="width:75%" class="first_td" ng-show="line.is_article_code">
 				<div class="clearfix full margin">
@@ -133,6 +133,6 @@
 					</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 </div>
