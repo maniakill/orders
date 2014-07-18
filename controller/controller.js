@@ -43,13 +43,20 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	};
 	$scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
 	$scope.openInBrowser=function(){ window.open('https://app.salesassist.eu', '_system', 'location=yes'); }
-}]).controller('orders',['$scope','project','$filter','$timeout',function ($scope,project,$filter,$timeout) {
+}]).controller('orders',['$scope','project','$filter','$timeout','$routeParams',function ($scope,project,$filter,$timeout,$routeParams) {
 	var getparams = {};
 	getparams.do = 'orders-orders';
 	getparams.view = 0;
 	$scope.views = [{name:'All',view:'all',active:'active',p:'0'},{name:'Draft',view:'draft',active:'',p:'1'},{name:'Ready to deliver',view:'ready',active:'',p:'2'},{name:'Fully delivered',view:'fully',active:'',p:'3'}];
 	$scope.search = false;
 	$scope.pick_date_format = '';
+  if($routeParams.view){
+    getparams.view = $routeParams.view;
+    angular.forEach($scope.views, function(value,key){
+      value.active = '';
+      if(value.p == $routeParams.view){ value.active = 'active'; }
+    });
+  }
 	$scope.showSearch = function(){
 		$scope.search = !$scope.search;
 		angular.element('.search').toggleClass('cancel');
@@ -121,6 +128,10 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		params.order_id = item;
 		$scope.doIt('get',params);
 	}
+  $scope.$on('orders', function(event,args) {
+    console.log(args);
+    $scope.fil(args);
+  });
 /* datepicker */
 	$scope.today = function() {
     $scope.dt = new Date();
@@ -724,9 +735,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			project.stopLoading();
 		},function(){project.stopLoading();});
 	}
-	$scope.go = function(h){ $location.path(h); }
+	$scope.go = function(h,t){ $location.path(h+'/'+t);  }
 /*chart*/
-
   $scope.chartConfig = {
     categories : ['Delivered', 'Ready', 'Draft'],
     options: { chart: { type: 'pie' } },
@@ -744,7 +754,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     title: { text: 'Last 30 days orders' },
     credits: { enabled: false }
   }
-
   $scope.linechartConfig = {
     options: { chart: { type: 'column', } },
     series: [{

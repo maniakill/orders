@@ -15,13 +15,13 @@
 			<button class="vieworders croped" ng-click="go('orders')">View Orders</button>
 			<div class="bubles clearfix">
 				<div class="left"><p>Fully delivered</p>
-					<div class="buble " ng-click="go('orders')">{{all_del}}</div>
+					<div class="buble " ng-click="go('orders','3')">{{all_del}}</div>
 				</div>
 				<div class="left"><p>Ready to deliver</p>
-					<div class="buble ready" ng-click="go('orders')">{{all_ready}}</div>
+					<div class="buble ready" ng-click="go('orders','2')">{{all_ready}}</div>
 				</div>
 				<div class="left no_margin"><p>Draft<br />&nbsp;</p>
-					<div class="buble draft" ng-click="go('orders')">{{all_draft}}</div>
+					<div class="buble draft" ng-click="go('orders','1')">{{all_draft}}</div>
 				</div>
 			</div>
 		</div>

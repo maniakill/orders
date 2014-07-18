@@ -47,6 +47,7 @@ app.config(function ($routeProvider) {
     .when('/login',{controller: 'login',templateUrl: 'layout/login.html'})
     .when('/login/:error',{controller: 'login',templateUrl: 'layout/login.html'})
     .when('/orders',{controller: 'orders',templateUrl: 'layout/orders.html'})
+    .when('/orders/:view',{controller: 'orders',templateUrl: 'layout/orders.html'})
     .when('/add_order',{controller: 'add_order',templateUrl: 'layout/add_order.html'})
     .when('/order',{controller: 'order',templateUrl: 'layout/order.html'})
     .when('/order/:id',{controller: 'order',templateUrl: 'layout/order.html'})
