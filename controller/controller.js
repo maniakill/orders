@@ -734,30 +734,31 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.go = function(h,t){ var p = t ? h+'/'+t : h; $location.path(p);  }
 /*chart*/
   $scope.chartConfig = {
-    categories : ['Delivered', 'Ready', 'Draft'],
+    // categories : ['Delivered', 'Ready', 'Draft'],
     options: { chart: { type: 'pie' } },
     series: [{
       type: 'pie',
-      name: 'Articles Ordered',
+      name: LANG[project.lang]['Articles Ordered'],
       innerSize: '90%',
       dataLabels: { formatter: function() { return  null; } },
       data: [
-        {name: 'Draft',       y: $scope.all_draft, color: "#cccccc"},
-        {name: 'Ready',       y: $scope.all_del,   color: "#f9c052"},
-        {name: 'Delivered',   y: $scope.all_ready, color: "#67b34f"}
+        {name: LANG[project.lang]['Draft'],       y: $scope.all_draft, color: "#cccccc"},
+        {name: LANG[project.lang]['Ready'],       y: $scope.all_del,   color: "#f9c052"},
+        {name: LANG[project.lang]['Delivered'],   y: $scope.all_ready, color: "#67b34f"}
         ]
     }],
-    title: { text: 'Last 30 days orders' },
+    title: { text: LANG[project.lang]['Last 30 days orders'] },
     credits: { enabled: false }
   }
   $scope.linechartConfig = {
-    options: { chart: { type: 'column', } },
+    options: { chart: { type: 'column' },legend: { enabled: false } },
     series: [{
-      name: 'Articles',
+      // name: 'Articles',
       data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }],
     xAxis: { categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] },
-    title: { text: 'Last 12 Months articles sold' },
+    yAxis: { title: { text: LANG[project.lang]['Articles'] } },
+    title: { text: LANG[project.lang]['Last 12 Months sold articles'] },
     credits: { enabled: false },
     size: { height: 325 }
   }
@@ -782,9 +783,9 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			$scope.all_draft=parseFloat(res.all_draft);
       $scope.all = res.all,
       $scope.chartConfig.series[0].data = [
-        {name: 'Draft',       y: $scope.all_draft, color: "#cccccc"},
-        {name: 'Ready',       y: $scope.all_del,   color: "#f9c052"},
-        {name: 'Delivered',   y: $scope.all_ready, color: "#67b34f"}
+        {name: LANG[project.lang]['Draft'],       y: $scope.all_draft, color: "#cccccc"},
+        {name: LANG[project.lang]['Ready'],       y: $scope.all_del,   color: "#f9c052"},
+        {name: LANG[project.lang]['Delivered'],   y: $scope.all_ready, color: "#67b34f"}
       ];
       $scope.linechartConfig.series[0].data = res.in.art_all;
       $scope.linechartConfig.xAxis.categories = res.in.month_all;

@@ -1,26 +1,26 @@
 <div ng-include="'layout/menu.html'" ></div>
 <div hm-swipe-right="handleGesture($event)">
-	<div class="menu" id="top_menu"><span class="title">Dashboard</span><span class="left snap" ng-click="snap()"></span></div>
+	<div class="menu" id="top_menu"><span class="title" lng="Dashboard"></span><span class="left snap" ng-click="snap()"></span></div>
 	<div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
 	<div class="clearfix border_b">
 		<div class="left chart">
 			<div id="all_orders">
-				<p>Orders</p>
+				<p lng="Orders"></p>
 				<p class="croped">{{all}}</p>
 			</div>
 			<highchart id="chart1" config="chartConfig" class="chartpie" ></highchart>
 		</div>
 		<div class="right right_col">
-			<button class="addnew croped" ng-click="go('add_order')">Add New Order</button>
-			<button class="vieworders croped" ng-click="go('orders')">View Orders</button>
+			<button class="addnew croped" ng-click="go('add_order')" lng="Add New Order"></button>
+			<button class="vieworders croped" ng-click="go('orders')" lng="View Orders"></button>
 			<div class="bubles clearfix">
-				<div class="left"><p>Fully delivered</p>
+				<!-- <div class="left"><p lng="Fully delivered"></p>
 					<div class="buble " ng-click="go('orders','3')">{{all_del}}</div>
-				</div>
-				<div class="left"><p>Ready to deliver</p>
+				</div> -->
+				<div class="left"><p lng="Ready to deliver"></p>
 					<div class="buble ready" ng-click="go('orders','2')">{{all_ready}}</div>
 				</div>
-				<div class="left no_margin"><p>Draft<br />&nbsp;</p>
+				<div class="left no_margin"><p lng="Draft" befor="true"><br>&nbsp;</p>
 					<div class="buble draft" ng-click="go('orders','1')">{{all_draft}}</div>
 				</div>
 			</div>

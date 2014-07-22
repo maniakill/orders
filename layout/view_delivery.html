@@ -1,18 +1,18 @@
 <div class="main_menu2 viewd" ng-controller="view_del">
 	<div class="m_wrapper bg_white">
-		<div class="menu"><span class="title">View delivery</span></div>
+		<div class="menu"><span class="title" lng="View delivery"></span></div>
 		<div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
 		<div class="view_del">
-			<div><label>Delivery Date:</label><span>{{dely.delivery_date}}</span></div>
-			<div><label>Contact:</label><span>{{dely.contact_name}}</span></div>
-			<div><label>Delivery Address:</label>
+			<div><label lng="Delivery Date" befor="true">:</label> <span>{{dely.delivery_date}}</span></div>
+			<div><label lng="Contact" befor="true">:</label><span>{{dely.contact_name}}</span></div>
+			<div><label lng="Delivery address" befor="true">:</label>
 				<div ng-bind-html="dely.delivery_address"></div>
 			</div>
 			<table cellspacing="0" cellpadding="0" border="0" width="100%" class="atr_list">
 				<thead>
 					<tr>
-						<th width="65%" class="first">Name</th>
-						<th width="35%" class="last">Quantity</th>
+						<th width="65%" class="first" lng="Name"></th>
+						<th width="35%" class="last" lng="Quantity"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -22,11 +22,11 @@
 					</tr>
 				</tbody>
 			</table>
-			<div><label>Delivery note:</label>
+			<div><label lng="Delivery note" befor="true">:</label>
 				<div>{{dely.delivery_note}}</div>
 			</div>
 			<div class="buttons">
-				<button ng-click="snap_back('viewd')">Close</button>
+				<button ng-click="snap_back('viewd')" lng="Close"></button>
 			</div>
 		</div>
  </div>

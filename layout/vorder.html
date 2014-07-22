@@ -3,16 +3,16 @@
 <div ng-include="'layout/send_delivery.html'" ></div>
 <div ng-include="'layout/view_delivery.html'" ></div>
 <div hm-swipe-right="handleGesture($event)">
-	<div class="menu"><span class="title">Order {{order.serial_number}}</span><span class="left snap" ng-click="snap()"></span></div>
+	<div class="menu"><span class="title" lng="Order"></span><span class="title">{{order.serial_number}}</span><span class="left snap" ng-click="snap()"></span></div>
 	<div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
 	<alert ng-repeat="alert in alerts" class="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	<div class="ord_detail clearfix">
 		<div class="three_cols left">
-			<h3>Order Details</h3>
-			<p><span>Date: {{order.factur_date}}</span></p>
-			<p><span>Delivery Date: {{order.factur_del_date}}</span></p>
+			<h3 lng="Order Details"></h3>
+			<p><span lng="Date" befor="true">:</span><span> {{order.factur_date}}</span></p>
+			<p><span lng="Delivery Date" befor="true">:</span><span> {{order.factur_del_date}}</span></p>
 			<p ng-show="order.ref"><span>Ref: {{order.ref}}</span></p>
-			<p><span>Author: {{order.order_author}}</span></p>
+			<p><span lng="Author" befor="true">:</span><span> {{order.order_author}}</span></p>
 		</div>
 		<div class="three_cols left">
 			<h3>{{order.order_buyer_name}}</h3>
@@ -21,29 +21,30 @@
       <p>{{buyer_email}}</p>
       <p>{{buyer_phone}}</p>
       <p>{{buyer_fax}}</p>
-      <p ng-show="order.delivery_address"><b>Delivery address:</b></p>
+      <p ng-show="order.delivery_address"><b lng="Delivery address" befor="true">:</b></p>
       <p ng-bind-html="order.delivery_address" ng-show="order.delivery_address"></p>
 		</div>
 		<div class="three_cols left deliveries">
-			<h3>Deliveries</h3>
+			<h3 lng="Deliveries"></h3>
 			<div ng-repeat="del in order.delivery" class="clearfix block">
 				<span ng-class="del.active">{{del.delivey}}</span>
-				<a href="" class="edit send right" ng-click="snap_send('editd',del.delivery_id)"></a>
+				<!-- <a href="" class="edit send right" ng-click="snap_send('editd',del.delivery_id)"></a> -->
 				<a href="" class="edit delete right" ng-click="mark({order_id:order.order_id,'do':'orders-order-order-delete_delivery',delivery_id:del.delivery_id,del_nr:del.del_nr},true)"></a>
 				<a href="" class="edit info right" ng-click="snap_send('viewd',del.delivery_id,true)" ></a>
 			</div>
 		</div>
 	</div>
 	<div class="orderdetail clearfix block order_b" >
-		<span class="right specialspan" ng-click="show('details',$event)">Order Options<a href="" class="edit right openD show_btns" >delete</a></span>
-		<span class="right specialspan" ng-click="go('orders')">Back to orders<a href="" class="edit right openD show_btns back_to_ord" ></a></span>
+		<span class="right specialspan" ng-click="show('details',$event)" ><span lng="Order Options"></span><a href="" class="edit right openD show_btns"  ></a></span>
+		<span class="right specialspan" ng-click="go('orders')" ><span lng="Back to orders"></span><a href="" class="edit right openD show_btns back_to_ord" ></a></span>
+		<span class="right specialspan" ng-click="go('orders')" ><span lng="Add New Order"></span><a href="" class="edit right openD show_btns back_to_ord" ></a></span>
 		<!-- <button class="croped right" ng-click="go('orders')"><span></span>Orders</button> -->
 		<div class="clear btns" ng-show="details" >
-			<button class="croped" ng-click="snap_send('sendd')"><span></span>Send by email</button>
-			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_sent'})" ng-show="order.is_editable"><span id="mark_as_ready"></span>Mark as ready to delivery</button>
-			<button class="croped" ng-click="go('order/'+order.order_id)" ng-show="order.is_editable"><span id="edito"></span>Edit</button>
-			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_as_draft'})" ng-show="revert"><span id="edito"></span>Revert to Draft</button>
-			<button class="croped" ng-click="delete_order(order.order_id)" ng-show="order.is_editable"><span id="deleteo"></span>Delete</button></div>
+			<!-- <button class="croped" ng-click="snap_send('sendd')"><span></span>Send by email</button> -->
+			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_sent'})" ng-show="order.is_editable" lng="Mark as ready to delivery"><span id="mark_as_ready"></span></button>
+			<button class="croped" ng-click="go('order/'+order.order_id)" ng-show="order.is_editable" lng="Edit" ><span id="edito"></span></button>
+			<button class="croped" ng-click="mark({order_id:order.order_id,'do':'orders--order-mark_as_draft'})" ng-show="revert" lng="Revert to Draft"><span id="edito"></span></button>
+			<button class="croped" ng-click="delete_order(order.order_id)" ng-show="order.is_editable" lng="Delete"><span id="deleteo"></span></button></div>
 	</div>
 	<div class="vlines">
 		<div class="vline clearfix" ng-repeat="line in order.order_row">
@@ -53,27 +54,27 @@
 					<p>{{line.article}}</p>
 				</div>
 				<div class="vamount right">
-					<span>Amount</span>
+					<span lng="Amount"></span>
 					<p>{{line.price_vat}}</p>
 				</div>
 				<div class="vdisv seventy right" ng-show="order.sh_discount">
-					<span>Discount</span>
+					<span lng="Discount"></span>
 					<p>{{line.disc}}</p>
 				</div>
 				<div class="vpack seventy right" ng-show="order.allow_article_packing">
-					<span>Pack</span>
+					<span lng="Pack"></span>
 					<p>{{line.packing}}<em ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</em></p>
 				</div>
 				<div class="vvat seventy right" ng-show="order.is_vat">
-					<span>VAT</span>
+					<span lng="VAT"></span>
 					<p>{{line.percent}}</p>
 				</div>
 				<div class="vprice seventy right">
-					<span>Price</span>
+					<span lng="Price"></span>
 					<p>{{line.price}}</p>
 				</div>
 				<div class="vqt seventy right">
-					<span>Quantity</span>
+					<span lng="Quantity"></span>
 					<p>{{line.quantity}}</p>
 				</div>
 			</div>
@@ -83,11 +84,11 @@
 		</div>
 		<div class="totals clearfix block">
 			<div class="right">
-				<div class="total_lines" ng-hide="order.sh_vat"><span>Total without VAT</span><span class="score">{{order.total}} <span ng-bind-html="order.currency_type"></span></span></div>
-				<div class="total_lines" ng-show="order.sh_discount1"><span>Discount {{order.discount_percent}}</span><span class="score">{{order.discount_total}} <span ng-bind-html="order.currency_type"></span></span></div>
-				<div class="total_lines" ng-repeat="vat in order.vat_loop"  ng-show="order.is_vat"><span>VAT ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}} <span ng-bind-html="order.currency_type"></span></span></div>
-				<div class="total"><span>Total</span><span class="score">{{order.total_vat}} <span ng-bind-html="order.currency_type"></span></span></div>
-				<div class="total" ng-hide="order.total_hide"><span>Total</span><span class="score">{{order.total_default}} <span ng-bind-html="order.currency_d_type"></span></span></div>
+				<div class="total_lines" ng-hide="order.sh_vat"><span lng="Total without VAT"></span><span class="score">{{order.total}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total_lines" ng-show="order.sh_discount1"><span lng='Discount'></span><span> {{order.discount_percent}}</span><span class="score">{{order.discount_total}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total_lines" ng-repeat="vat in order.vat_loop"  ng-show="order.is_vat"><span lng="VAT"></span><span> ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total"><span lng="Total"></span><span class="score">{{order.total_vat}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total" ng-hide="order.total_hide"><span lng="Total"></span><span class="score">{{order.total_default}} <span ng-bind-html="order.currency_d_type"></span></span></div>
 			</div>
 		</div>
 	</div>

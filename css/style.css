@@ -220,7 +220,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 	.btns button #edito { background-position: 0px -1766px; }
 	.btns button #deleteo { background-position: 0px -1827px; }
 .show_btns, .show_btns:hover, .show_btns:active { background-position: 0px -2099px; }
-.hide_btns, .hide_btns:hover, .hide_btns:active { background-position: 0px -2528px; }
+/*.hide_btns, .hide_btns:hover, .hide_btns:active { background-position: 0px -2528px; }*/
 .totals { padding: 17px 20px; }
 .totals .total_lines ,.totals .total { width: 350px; padding-bottom: 10px; }
 	.total_lines span { font-size: 16px; color: #a9a9a9; }

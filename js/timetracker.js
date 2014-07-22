@@ -125,5 +125,28 @@ app.config(function ($routeProvider) {
   project.setKey = function(){ key = 'api_key='+localStorage.Otoken+'&username='+localStorage.Ousername; init(); }
   project.deleteData = function(){ localStorage.clear(); }
   return project;
+}]).directive('lng',['project',function(project){
+  return {
+    restrict: 'A',
+    link: function (scope,element,attrs){
+      // console.log(element);
+      if(element[0].tagName == 'INPUT'){
+        if(element[0].type == 'submit'){
+          element.val(attrs.lng);
+          if(LANG[project.lang][attrs.lng]){ element.val( LANG[project.lang][attrs.lng] ); }
+        }
+        if(element[0].type == 'text'){
+          element[0].placeholder = attrs.lng;
+          if(LANG[project.lang][attrs.lng]){ element[0].placeholder = LANG[project.lang][attrs.lng]; }
+        }
+      }else{
+        var extra = element[0].innerHTML,
+            text = LANG[project.lang][attrs.lng] ? LANG[project.lang][attrs.lng] : attrs.lng,
+            val = attrs.befor ? text + extra : extra + text;
+            // console.log(attrs.lng,LANG[project.lang][attrs.lng],val)
+        element.html(val);
+        // if(LANG[project.lang][attrs.lng]){ element.html( extra + LANG[project.lang][attrs.lng] ); }
+      }
+    }
+  }
 }]);
-
