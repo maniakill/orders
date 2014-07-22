@@ -101,7 +101,7 @@ LANG[1]={
 //english
 LANG[2]={
 	'Log In':'Log In',
-	'Username':'Username',
+	'Username':'Username1',
 	'Password':'Password',
 	'Can\'t access your account':'Can\'t access your account',
 	'Please fill all the fields':'Please fill all the fields',

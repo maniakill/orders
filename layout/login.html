@@ -2,9 +2,9 @@
 <div class="loginForm center">
 	<img src="images/logo.png" alt="SalesAssist" width="275" height="78">
 	<form>
-		<input type="text" name="username" value="" maxlenght="50" class="username" placeholder="{{lang.Username}}" ng-model="username" autocomplete="OFF" autocapitalize="off" autocorrect="off" />
-		<input type="password" name="password" value="" maxlenght="50" class="password" placeholder="{{lang.Password}}" ng-model="password" autocomplete="OFF" autocapitalize="off" autocorrect="off" />
-		<input type="submit" class="submit" value="{{lang['Log In']}}" ng-click="fetch()">
+		<input type="text" name="username" value="" maxlenght="50" class="username" lng="Username" ng-model="username" autocomplete="OFF" autocapitalize="off" autocorrect="off" />
+		<input type="password" name="password" value="" maxlenght="50" class="password" lng="Password" ng-model="password" autocomplete="OFF" autocapitalize="off" autocorrect="off" />
+		<input type="submit" class="submit" value="Log In" ng-click="fetch()" lng="Log In">
 	</form>
-	<div class="external_link"><a id="forgot" ng-click="openInBrowser()" >{{lang['Can\'t access your account']}}?</a></div>
+	<div class="external_link"><a id="forgot" ng-click="openInBrowser()" lng="Can't access your account" befor="true">?</a></div>
 </div>
