@@ -23,7 +23,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 					localStorage.setItem('Olast_name',data.last_name);
 					localStorage.setItem('Oemail',data.email);
 					project.setKey();
-					$location.path('/orders');
+					$location.path('/dashboard');
 				}else{
 					$scope.alerts=[{type:'danger',msg:data.error_code}];
 					if(apromise){ $timeout.cancel(apromise); }
@@ -713,7 +713,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	getparams.limit = 5;
   $scope.all = 0;
 	$scope.all_ready = 0;
-	$scope.all_del = 0;
+  $scope.all_del = 0;
+	$scope.all_del_last = 0;
 	$scope.all_draft = 0;
 	$scope.snap = function(){
 		angular.element('.main_menu').show(0,function(){
@@ -742,12 +743,11 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
       innerSize: '90%',
       dataLabels: { formatter: function() { return  null; } },
       data: [
-        {name: LANG[project.lang]['Draft'],       y: $scope.all_draft, color: "#cccccc"},
-        {name: LANG[project.lang]['Ready'],       y: $scope.all_del,   color: "#f9c052"},
-        {name: LANG[project.lang]['Delivered'],   y: $scope.all_ready, color: "#67b34f"}
+        {name: LANG[project.lang]['Ready'],       y: $scope.all_del,   color: "#67b34f"},
+        {name: LANG[project.lang]['Delivered'],   y: $scope.all_del_last, color: "#7cce63"}
         ]
     }],
-    title: { text: LANG[project.lang]['Last 30 days orders'] },
+    title: { text: LANG[project.lang]['Last Month / This Month'] },
     credits: { enabled: false }
   }
   $scope.linechartConfig = {
@@ -779,13 +779,13 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$timeout( function(){
 		$scope.doIt('get',getparams,function(res){
 			$scope.all_ready=parseFloat(res.all_ready);
-			$scope.all_del=parseFloat(res.all_del);
+      $scope.all_del=parseFloat(res.all_del_this);
+			$scope.all_del_last=parseFloat(res.all_del_last);
 			$scope.all_draft=parseFloat(res.all_draft);
       $scope.all = res.all,
       $scope.chartConfig.series[0].data = [
-        {name: LANG[project.lang]['Draft'],       y: $scope.all_draft, color: "#cccccc"},
-        {name: LANG[project.lang]['Ready'],       y: $scope.all_del,   color: "#f9c052"},
-        {name: LANG[project.lang]['Delivered'],   y: $scope.all_ready, color: "#67b34f"}
+        {name: LANG[project.lang]['Ready'],       y: $scope.all_del,   color: "#67b34f"},
+        {name: LANG[project.lang]['Delivered'],   y: $scope.all_del_last, color: "#7cce63"}
       ];
       $scope.linechartConfig.series[0].data = res.in.art_all;
       $scope.linechartConfig.xAxis.categories = res.in.month_all;

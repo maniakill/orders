@@ -94,7 +94,7 @@ app.config(function ($routeProvider) {
     }
     project.loading(parent);
     var connect = checkConnection.check();
-    if(connect == 'none' || connect =='unknown'){ this.data = []; alert("check your internet connection");project.stopLoading(); }
+    if(connect == 'none' || connect =='unknown'){ this.data = []; alert("check your internet connection"); project.stopLoading(); }
     else{
       if (canceler) { canceler.resolve(); }
       canceler = $q.defer();
@@ -129,13 +129,19 @@ app.config(function ($routeProvider) {
   return {
     restrict: 'A',
     link: function (scope,element,attrs){
-      // console.log(element);
+      /*
+      works for input type text,password and submit, div,span,p,h[1-6] basicly any kind of element that can contain text
+      element should have the lng attr where the text to be translated goes
+      element can have text inside of it that can be appended or prepended to the text in the lng attr (if you set the befor attr as true it will append)
+      element should not contain other html in it because it will stop working
+      element should not have angular bindings in it
+      */
       if(element[0].tagName == 'INPUT'){
         if(element[0].type == 'submit'){
           element.val(attrs.lng);
           if(LANG[project.lang][attrs.lng]){ element.val( LANG[project.lang][attrs.lng] ); }
         }
-        if(element[0].type == 'text'){
+        if(element[0].type == 'text' || element[0].type == 'password'){
           element[0].placeholder = attrs.lng;
           if(LANG[project.lang][attrs.lng]){ element[0].placeholder = LANG[project.lang][attrs.lng]; }
         }
@@ -145,7 +151,6 @@ app.config(function ($routeProvider) {
             val = attrs.befor ? text + extra : extra + text;
             // console.log(attrs.lng,LANG[project.lang][attrs.lng],val)
         element.html(val);
-        // if(LANG[project.lang][attrs.lng]){ element.html( extra + LANG[project.lang][attrs.lng] ); }
       }
     }
   }

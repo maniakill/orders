@@ -97,11 +97,12 @@ LANG[1]={
 	'Select Contact':'Select Contact',
 	'Language':'Language',
 	'Currency':'Currency',
+	'Last Month / This Month':'Last Month / This Month',
 }
 //english
 LANG[2]={
 	'Log In':'Log In',
-	'Username':'Username1',
+	'Username':'Username',
 	'Password':'Password',
 	'Can\'t access your account':'Can\'t access your account',
 	'Please fill all the fields':'Please fill all the fields',
@@ -196,6 +197,7 @@ LANG[2]={
 	'Select Contact':'Select Contact',
 	'Language':'Language',
 	'Currency':'Currency',
+	'Last Month / This Month':'Last Month / This Month',
 }
 //french
 LANG[3]={
@@ -295,6 +297,7 @@ LANG[3]={
 	'Select Contact':'Select Contact',
 	'Language':'Language',
 	'Currency':'Currency',
+	'Last Month / This Month':'Last Month / This Month',
 }
 //german
 LANG[4]={
@@ -304,7 +307,7 @@ LANG[4]={
 	'Can\'t access your account':'Can\'t access your account',
 	'Please fill all the fields':'Please fill all the fields',
 	'Server error. Please try later':'Server error. Please try later',
-	'Dashboard':'Dashboard german',
+	'Dashboard':'Dashboard',
 	'Orders':'Orders',
 	'Add New Order':'Add New Order',
 	'View Orders':'View Orders',
@@ -394,4 +397,5 @@ LANG[4]={
 	'Select Contact':'Select Contact',
 	'Language':'Language',
 	'Currency':'Currency',
+	'Last Month / This Month':'Last Month / This Month',
 }
