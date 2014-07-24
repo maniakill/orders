@@ -1,6 +1,11 @@
-app.controller('login',['$scope','$http','$templateCache','$location','$timeout','project',function ($scope,$http,$templateCache,$location,$timeout,project) {
+app.controller('login',['$scope','$http','$templateCache','$location','$timeout','project','$routeParams',function ($scope,$http,$templateCache,$location,$timeout,project,$routeParams) {
 	var token = localStorage.getItem('Otoken');
 	if(token){ $location.path('/dashboard'); }
+	if($routeParams.error){
+		$scope.alerts=[{type:'danger',msg:$routeParams.error}];
+		if(apromise){ $timeout.cancel(apromise); }
+		apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
+	}
 	$scope.method = 'POST';
 	$scope.url = 'https://app.salesassist.eu/pim/mobile/admin/';
 	$scope.params = [];
@@ -661,6 +666,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.snap_back('viewd');
 	}
 }]).controller('dashboard', ['$scope','project','$timeout','$location','checkConnection','$rootScope', function ($scope,project,$timeout,$location,checkConnection,$rootScope){
+
 	var getparams = {};
 	getparams.do = 'orders-orders';
 	getparams.view = 2;
@@ -686,7 +692,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			project.stopLoading();
 		},function(){project.stopLoading();});
 	}
-	$scope.go = function(h,t){ var p = t ? h+'/'+t : h; $location.path(p);  }
+	$scope.go = function(h,t,e){ var p = t ? h+'/'+t : h; $location.path(p);  }
 /*chart*/
   $scope.chartConfig = {
     // categories : ['Delivered', 'Ready', 'Draft'],

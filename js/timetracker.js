@@ -103,7 +103,7 @@ app.config(function ($routeProvider) {
       this.data = $http({method:method,url:url,params:params,data:data,headers: {'Content-Type': 'application/x-www-form-urlencoded'},timeout:canceler.promise}).then(function(response){
         if(response.data.code=='error'){ project.logout(response.data); }
         return response.data;
-      });
+      },function(response){ return; });
     }
     return this.data;
   }
