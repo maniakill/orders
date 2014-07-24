@@ -11,7 +11,7 @@
 			<h3 lng="Order Details"></h3>
 			<p><span lng="Date" befor="true">:</span><span> {{order.factur_date}}</span></p>
 			<p><span lng="Delivery Date" befor="true">:</span><span> {{order.factur_del_date}}</span></p>
-			<p ng-show="order.ref"><span>Ref: {{order.ref}}</span></p>
+			<p ng-show="order.ref"><span lng="Ref" befor="true">:</span><span> {{order.ref}}</span></p>
 			<p><span lng="Author" befor="true">:</span><span> {{order.order_author}}</span></p>
 		</div>
 		<div class="three_cols left">
@@ -37,7 +37,7 @@
 	<div class="orderdetail clearfix block order_b" >
 		<span class="right specialspan" ng-click="show('details',$event)" ><span lng="Order Options"></span><a href="" class="edit right openD show_btns"  ></a></span>
 		<span class="right specialspan" ng-click="go('orders')" ><span lng="Back to orders"></span><a href="" class="edit right openD show_btns back_to_ord" ></a></span>
-		<span class="right specialspan" ng-click="go('orders')" ><span lng="Add New Order"></span><a href="" class="edit right openD show_btns back_to_ord" ></a></span>
+		<span class="right specialspan" ng-click="go('add_order')" ><span lng="Add New Order"></span><a href="" class="edit right openD show_btns back_to_add" ></a></span>
 		<!-- <button class="croped right" ng-click="go('orders')"><span></span>Orders</button> -->
 		<div class="clear btns" ng-show="details" >
 			<!-- <button class="croped" ng-click="snap_send('sendd')"><span></span>Send by email</button> -->
@@ -62,7 +62,7 @@
 					<p>{{line.disc}}</p>
 				</div>
 				<div class="vpack seventy right" ng-show="order.allow_article_packing">
-					<span lng="Pack"></span>
+					<span ng-hide="order.allow_article_sale_unit" lng="Pack"></span><span ng-show="order.allow_article_sale_unit" lng="Pack/S.U."></span>
 					<p>{{line.packing}}<em ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</em></p>
 				</div>
 				<div class="vvat seventy right" ng-show="order.is_vat">

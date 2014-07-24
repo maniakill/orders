@@ -97,7 +97,7 @@
 <div class="orderdetail croped" ng-hide="showAddress" ng-show="details2"><span class="darker">{{order.customer_name}}</span> - <span >{{order.address_info}}</span><a href="" class="edit right openD" ng-click="show($event,'showAddress')"></a></div>
 <div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal',null,'show_art_list')" lng='Add Article'></button><button class="croped" ng-click="addLine()" lng="Add line"></button><button class="croped" ng-click="go(cancel_link)" lng="Cancel"></button><button class="croped" ng-click="save()" lng="Save"></button></div>
 <div class="lines scrolling_stuff" >
-	<div ui-sortable="sortableOptions" ng-model="order.article_line">
+	<div ng-model="order.article_line"><!-- ui-sortable="sortableOptions"-->
 		<div class="line" ng-repeat="line in order.article_line">
 			<div style="width:75%" class="first_td" ng-show="line.is_article_code">
 				<div class="clearfix full margin">
@@ -110,7 +110,7 @@
 						<input type="text" value="" ng-model="line.quantity" ng-blur="calc(line,'quantity')">
 					</div>
 					<div class="left colsone smalest">
-						<label lng="Pack"></label>
+						<label ng-hide="order.allow_article_sale_unit" lng="Pack"></label><label ng-show="order.allow_article_sale_unit" lng="Pack/S.U."></label>
 						<span>{{line.packing}}</span><span ng-show="order.allow_article_sale_unit">/{{line.sale_unit}}</span>
 					</div>
 				</div>

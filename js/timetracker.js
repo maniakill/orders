@@ -35,8 +35,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     s[1] += new Array(prec - s[1].length + 1).join('0');
   }
   return s.join(dec);
-}
-var app = angular.module('orders', ['ngRoute','angular-gestures','ngSanitize','ui.bootstrap','ui.sortable','highcharts-ng']);
+}//'ui.sortable',
+var app = angular.module('orders', ['ngRoute','angular-gestures','ngSanitize','ui.bootstrap','highcharts-ng']);
 app.config(function ($routeProvider) {
   $routeProvider
     .when('/',{controller: 'login',templateUrl: 'layout/login.html'})
@@ -146,10 +146,7 @@ app.config(function ($routeProvider) {
           if(LANG[project.lang][attrs.lng]){ element[0].placeholder = LANG[project.lang][attrs.lng]; }
         }
       }else{
-        var extra = element[0].innerHTML,
-            text = LANG[project.lang][attrs.lng] ? LANG[project.lang][attrs.lng] : attrs.lng,
-            val = attrs.befor ? text + extra : extra + text;
-            // console.log(attrs.lng,LANG[project.lang][attrs.lng],val)
+        var extra = element[0].innerHTML, text = LANG[project.lang][attrs.lng] ? LANG[project.lang][attrs.lng] : attrs.lng, val = attrs.befor ? text + extra : extra + text;
         element.html(val);
       }
     }

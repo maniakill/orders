@@ -4,11 +4,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.method = 'POST';
 	$scope.url = 'https://app.salesassist.eu/pim/mobile/admin/';
 	$scope.params = [];
-	$scope.lang = {};
 	var apromise;
-	angular.forEach(LANG[project.lang],function(value,key){
-		$scope.lang[key]=value;
-	});
 	$scope.fetch = function() {
 		$scope.params['username']=$scope.username;
 		$scope.params['password']=$scope.password;
@@ -44,12 +40,12 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
 	$scope.openInBrowser=function(){ window.open('https://app.salesassist.eu', '_system', 'location=yes'); }
 }]).controller('orders',['$scope','project','$filter','$timeout','$routeParams',function ($scope,project,$filter,$timeout,$routeParams) {
-	var getparams = {};
-	getparams.do = 'orders-orders';
-	getparams.view = 0;
+	var getparams = {'do' : 'orders-orders',view:0};
 	$scope.views = [{name:'All',view:'all',active:'active',p:'0'},{name:'Draft',view:'draft',active:'',p:'1'},{name:'Ready to deliver',view:'ready',active:'',p:'2'},{name:'Fully delivered',view:'fully',active:'',p:'3'}];
 	$scope.search = false;
 	$scope.pick_date_format = '';
+  $scope.orders = [];
+  $scope.pagg = '';
   if($routeParams.view){
     getparams.view = $routeParams.view;
     angular.forEach($scope.views, function(value,key){
@@ -66,8 +62,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     	$scope.submit();
 		}
 	}
-	$scope.orders = [];
-	$scope.pagg = '';
 	$scope.doIt = function(method,params,callback){
 		project.doGet(method,params).then(function(res){
 			if(res.code!='error'){
@@ -129,13 +123,9 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.doIt('get',params);
 	}
 /* datepicker */
-	$scope.today = function() {
-    $scope.dt = new Date();
-  };
+	$scope.today = function() { $scope.dt = new Date(); };
   $scope.today();
-  $scope.clear = function () {
-    $scope.dt = null;
-  };
+  $scope.clear = function () { $scope.dt = null; };
   $scope.open = function($event,type) {
   	$event.preventDefault();
     $event.stopPropagation();
@@ -203,36 +193,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	if($scope.order.allow_article_packing == 0){ pack = 1; sale = 1;}
   	if($scope.order.allow_article_sale_unit == 0){ sale = 1; }
   	var line_total = display_value(item.price * item.quantity * ( pack / sale ));
-  	var line = {"tr_id":"tmp" + random,
-  							"article":item.quoteformat,
-  							"article_code":item.code,
-  							"is_article_code":true,
-  							"article_id":item.article_id,
-  							"tax_for_article_id":"0",
-  							"is_tax":0,
-  							"quantity_old":"1",
-  							"quantity":display_value(item.quantity),
-  							"price_vat":display_value(p_vat),
-  							"price": display_value(item.price),
-  							"percent_x": display_value(item.vat),
-  							"percent":item.vat,
-  							"vat_value_x":"",
-  							"vat_value":"",
-  							"sale_unit_x":"1",
-  							"packing_x":"1",
-  							"sale_unit":item.sale_unit,
-  							"stock":item.stock,
-  							"pending_articles":item.pending_articles,
-  							"threshold_value":item.threshold_value,
-  							"packing":item.packing,
-  							"content":"0",
-  							"colspan":"",
-  							"disc":"0",
-  							"content_class":"",
-  							"line_total":line_total,
-  							"th_width":"",
-  							"td_width":"",
-  							"input_width":""};
+  	var line = {"tr_id":"tmp" + random,"article":item.quoteformat,"article_code":item.code,"is_article_code":true,"article_id":item.article_id,"tax_for_article_id":"0","is_tax":0,"quantity_old":"1","quantity":display_value(item.quantity),"price_vat":display_value(p_vat),"price": display_value(item.price),"percent_x": display_value(item.vat),"percent":item.vat,"vat_value_x":"","vat_value":"","sale_unit_x":"1","packing_x":"1","sale_unit":item.sale_unit,"stock":item.stock,"pending_articles":item.pending_articles,"threshold_value":item.threshold_value,"packing":item.packing,"content":"0","colspan":"","disc":"0","content_class":"","line_total":line_total,"th_width":"","td_width":"","input_width":""};
   	$scope.order.article_line.push(line);
   	$scope.calcTotal();
   	$scope.alert_stock(item);
@@ -405,7 +366,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.article_list = false;
 	$scope.choice = true;
 	$scope.articles = [];
-	// $scope.show_modal = false;
 	var spromise, cpromise;
 	var getparams = { 'do':'orders-xproducts_list' };
 	$scope.doIt = function(method,params,callback){
@@ -469,7 +429,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   };
   $scope.add_article = function(item){
     $scope.addArticle(item);
-    $scope.alerts=[{type:'success',msg:'Article added'}];
+    $scope.alerts=[{type:'success',msg:LANG[project.lang]['Article added']}];
     if(cpromise){ $timeout.cancel(cpromise); }
 	  cpromise = $timeout(function(){ $scope.closeAlert(0); },1500);
  	}
@@ -516,7 +476,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   			h += '/buyer_id='+$scope.buyer_id+'&s_buyer_id='+$scope.s_buyer_id+'&contact_id='+$scope.contact_id+'&s_customer_id='+$scope.s_customer_id+'&currency_type='+$scope.c+'&languages='+$scope.lq;
   			$location.path(h);
   		}else{
-        $scope.alerts=[{type:'danger',msg:'Please select a company or a contact'}];
+        $scope.alerts=[{type:'danger',msg:LANG[project.lang]['Please select a company or a contact']}];
         if(cpromise){ $timeout.cancel(cpromise); }
         cpromise = $timeout(function(){ $scope.closeAlert(0); },1500);
       }
@@ -671,11 +631,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 }]).controller('sel_del', ['$scope','$timeout','$http', function($scope,$timeout,$http){
 	$scope.adel = [];
 	$scope.selected_address = '';
-	var e = new MouseEvent('click', {
-    'view': window,
-    'bubbles': true,
-    'cancelable': true
-  });
+	var e = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
 	$scope.do_it = function (){
 		$scope.adel = [];
   	var params = {};
@@ -684,9 +640,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		if(!params.customer_id){ params.contact_id = $scope.order.in.contact_id; }
 		$scope.doIt('get',params,function(res){ $scope.adel = res; });
   }
-	$scope.$on('do_get', function(arg,args) {
-		$scope.do_it();
-	});
+	$scope.$on('do_get', function(arg,args) { $scope.do_it(); });
 	$scope.snap_back = function(elem){
 		$timeout(function(){ angular.element('.m_wrapper').addClass('slide_right'); });
 		$timeout(function(){ angular.element('.'+elem).hide(); },400);
@@ -739,12 +693,12 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     options: { chart: { type: 'pie' } },
     series: [{
       type: 'pie',
-      name: LANG[project.lang]['Articles Ordered'],
+      name: LANG[project.lang]['Orders'],
       innerSize: '90%',
       dataLabels: { formatter: function() { return  null; } },
       data: [
-        {name: LANG[project.lang]['Ready'],       y: $scope.all_del,   color: "#67b34f"},
-        {name: LANG[project.lang]['Delivered'],   y: $scope.all_del_last, color: "#7cce63"}
+        {name: LANG[project.lang]['Delivered'],       y: $scope.all_del,   color: "#67b34f"},
+        {name: LANG[project.lang]['Delivered'],   y: $scope.all_del_last, color: "#83fa5d"}
         ]
     }],
     title: { text: LANG[project.lang]['Last Month / This Month'] },
@@ -784,8 +738,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			$scope.all_draft=parseFloat(res.all_draft);
       $scope.all = res.all,
       $scope.chartConfig.series[0].data = [
-        {name: LANG[project.lang]['Ready'],       y: $scope.all_del,   color: "#67b34f"},
-        {name: LANG[project.lang]['Delivered'],   y: $scope.all_del_last, color: "#7cce63"}
+        {name: LANG[project.lang]['Delivered'],       y: $scope.all_del,   color: "#67b34f"},
+        {name: LANG[project.lang]['Delivered'],   y: $scope.all_del_last, color: "#83fa5d"}
       ];
       $scope.linechartConfig.series[0].data = res.in.art_all;
       $scope.linechartConfig.xAxis.categories = res.in.month_all;
