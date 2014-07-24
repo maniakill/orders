@@ -633,10 +633,10 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$timeout(function(){ angular.element('.m_wrapper').addClass('slide_right'); });
 		$timeout(function(){ angular.element('.'+elem).hide(); },400);
 	}
-}]).controller('sel_del', ['$scope','$timeout','$http', function($scope,$timeout,$http){
-	$scope.adel = [];
+}]).controller('sel_del', ['$scope','$timeout','$http', function ($scope,$timeout,$http){
+	/*$scope.adel = [];
 	$scope.selected_address = '';
-	var e = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
+	// var e = new MouseEvent('click', { 'view': window, 'bubbles': true, 'cancelable': true });
 	$scope.do_it = function (){
 		$scope.adel = [];
   	var params = {};
@@ -645,14 +645,14 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		if(!params.customer_id){ params.contact_id = $scope.order.in.contact_id; }
 		$scope.doIt('get',params,function(res){ $scope.adel = res; });
   }
-	$scope.$on('do_get', function(arg,args) { $scope.do_it(); });
+	$scope.$on('do_get', function(arg,args) { $scope.do_it(); });*/
 	$scope.snap_back = function(elem){
 		$timeout(function(){ angular.element('.m_wrapper').addClass('slide_right'); });
 		$timeout(function(){ angular.element('.'+elem).hide(); },400);
-		$scope.show(e,'showAddress');
-		$scope.show(e,'showAddress');
+		// $scope.show(e,'showAddress');
+		// $scope.show(e,'showAddress');
 	}
-	$scope.set_item = function(item){
+	/*$scope.set_item = function(item){
 		$scope.selected_address = item.address+"\n"+item.zip+" "+item.city+"\n"+item.country;
 	}
 	$scope.select = function(){
@@ -660,7 +660,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			$scope.order.delivery_address = $scope.selected_address;
 			$scope.selected_address = ''; }
 		$scope.snap_back('viewd');
-	}
+	}*/
 	$scope.cancel = function(){
 		$scope.selected_address = '';
 		$scope.snap_back('viewd');
