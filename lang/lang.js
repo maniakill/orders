@@ -97,7 +97,7 @@ LANG[1]={
 	'Select Contact':'Selecteer contactpersoon',
 	'Language':'Taal',
 	'Currency':'Valuta',
-	'Last Month / This Month':'Deze maand / Vorige maand Bestelbonnen',
+	'Last Month / This Month':'Vorige maand / Deze maand',
 	'Article added':'Artikel toegevoegd',
 	'Please select a company or a contact':'Gelieve een bedrijf of contact te selecteren',
 }
@@ -301,7 +301,7 @@ LANG[3]={
 	'Select Contact':'Sélectionnez un contact',
 	'Language':'Langue',
 	'Currency':'Monnaie',
-	'Last Month / This Month':'Ce mois / Mois précédent Commandes',
+	'Last Month / This Month':'Mois précédent / Ce mois',
 	'Article added':'Article ajouté',
 	'Please select a company or a contact':'Veuillez sélectionner une société ou contact',
 }
@@ -403,7 +403,7 @@ LANG[4]={
 	'Select Contact':'Kontakt auswählen',
 	'Language':'Sprache',
 	'Currency':'Währung',
-	'Last Month / This Month':'Diesen Monat / Letzten Monat Aufträge',
+	'Last Month / This Month':'Letzten Monat / Diesen Monat',
 	'Article added':'Artikel hinzugefügt',
 	'Please select a company or a contact':'Wählen Sie bitte eine Firma oder ein Kontakt',
 }

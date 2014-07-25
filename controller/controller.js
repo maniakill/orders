@@ -3,8 +3,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	if(token){ $location.path('/dashboard'); }
 	if($routeParams.error){
 		$scope.alerts=[{type:'danger',msg:$routeParams.error}];
-		if(apromise){ $timeout.cancel(apromise); }
-		apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
+		// if(apromise){ $timeout.cancel(apromise); }
+		// apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 	}
 	$scope.method = 'POST';
 	$scope.url = 'https://app.salesassist.eu/pim/mobile/admin/';
@@ -27,19 +27,19 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 					$location.path('/dashboard');
 				}else{
 					$scope.alerts=[{type:'danger',msg:data.error_code}];
-					if(apromise){ $timeout.cancel(apromise); }
-					apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
+				// 	if(apromise){ $timeout.cancel(apromise); }
+				// 	apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 				}
 			}).
 			error(function(data,status){
 				$scope.alerts=[{type:'danger',msg:LANG[project.lang]['Server error. Please try later']}];
-				if(apromise){ $timeout.cancel(apromise); }
-				apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
+				// if(apromise){ $timeout.cancel(apromise); }
+				// apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 			});
 		}else{
 			$scope.alerts=[{type:'danger',msg:LANG[project.lang]['Please fill all the fields']}];
-			if(apromise){ $timeout.cancel(apromise); }
-			apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
+			// if(apromise){ $timeout.cancel(apromise); }
+			// apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 		}
 	};
 	$scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
@@ -221,9 +221,9 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			$timeout(function(){ _this.addClass('slide_left'); });
 		});
 	}
-  $scope.show = function(e,t){
+  $scope.show = function(t){
   	var eq = 0;
-  	e.preventDefault();
+  	// e.preventDefault();
   	$scope[t] = !$scope[t];
   	$scope.details2 = !$scope.details2;
   	if(t == 'showAddress'){ eq = 1; }
@@ -232,6 +232,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   		if($scope.details2 === true){ h = 193; }
   		angular.element('.lines').css({top:h+63});
   	});
+  	return false
   }
   var display_value = function (number){
     var style = $scope.style;
@@ -319,14 +320,9 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		});
 	}
 	$scope.remove_address = function(){
-		/*var e = new MouseEvent('click', {
-	    'view': window,
-	    'bubbles': true,
-	    'cancelable': true
-	  });*/
-		// $scope.show(e,'showAddress');
+		$scope.show('showAddress');
 		$scope.order.delivery_address = '';
-		// $scope.show(e,'showAddress');
+		$scope.show('showAddress');
 	}
 	$scope.alert_stock = function(item){
 		var new_stock=parseFloat(item.stock) - parseFloat(item.quantity);
@@ -482,8 +478,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   			$location.path(h);
   		}else{
         $scope.alerts=[{type:'danger',msg:LANG[project.lang]['Please select a company or a contact']}];
-        if(cpromise){ $timeout.cancel(cpromise); }
-        cpromise = $timeout(function(){ $scope.closeAlert(0); },1500);
+        // if(cpromise){ $timeout.cancel(cpromise); }
+        // cpromise = $timeout(function(){ $scope.closeAlert(0); },1500);
       }
   		return false;
   	}
@@ -649,8 +645,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.snap_back = function(elem){
 		$timeout(function(){ angular.element('.m_wrapper').addClass('slide_right'); });
 		$timeout(function(){ angular.element('.'+elem).hide(); },400);
-		// $scope.show(e,'showAddress');
-		// $scope.show(e,'showAddress');
+		$scope.show('showAddress');
+		$scope.show('showAddress');
 	}
 	$scope.set_item = function(item){
 		$scope.selected_address = item.address+"\n"+item.zip+" "+item.city+"\n"+item.country;
