@@ -74,11 +74,13 @@ app.config(function ($routeProvider) {
       return navigator.connection.type;
     })
   };
-}).factory('vibrate', function (cordovaReady){
+}).factory('vibrate', function (){
   return {
-      vib: function (milliseconds) {
+    vib: function (milliseconds) {
+      if(navigator.notification){
         navigator.notification.vibrate(milliseconds);
       }
+    }
   };
 }).factory('project', ['$http','$location','$rootScope','$q','$timeout','checkConnection', function ($http,$location,$rootScope,$q,$timeout,checkConnection) {
   var project = {}, url = 'https://app.salesassist.eu/pim/mobile/admin/', key = 'api_key='+localStorage.Otoken+'&username='+localStorage.Ousername, obj = {},search='',canceler;
