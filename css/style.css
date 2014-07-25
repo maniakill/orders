@@ -283,7 +283,7 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 .bubles .ready { background: #f9c052; }
 .bubles .draft { background: #ccc; }
 .bubles .left { margin-right: 5.686%; width: 160px; }
-.bubles p { color: #67b34f; font-size: 18px; font-weight: bold; text-align: center; padding-bottom: 5px; }
+.bubles p { color: #67b34f; font-size: 18px; font-weight: bold; text-align: center; padding-bottom: 5px; min-height: 47px; }
 .right_col{ padding:20px; /*padding: 40px 2.865%; width: 45.835%;*/ }
 .right_col button { padding: 10px;font-size: 24px; height: 62px; margin-bottom: 20px; width: 352px; display:block; }
 .bubles {border-top: 1px solid #e7e7e7; padding-top: 20px; }
