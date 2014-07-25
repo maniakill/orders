@@ -471,6 +471,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.cs = function(){ $scope.buyer_id=0; $scope.s_buyer_id = ''; $scope.contact_id = 0; $scope.s_customer_id = ''; }
 	$scope.cs();
 	$scope.snap = function(){
+		vibrate.vib(100);
 		angular.element('.main_menu').show(0,function(){
 			var _this = angular.element('.cmain_menu'), width = _this.outerWidth();
 			_this.removeClass('slide_right slide_left').css({'left':'-'+width+'px'});
@@ -712,7 +713,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			project.stopLoading();
 		},function(){project.stopLoading();});
 	}
-	$scope.go = function(h,t,e){ vibrate.vib(100); var p = t ? h+'/'+t : h; $location.path(p);  }
+	$scope.go = function(h,t){ vibrate.vib(100); var p = t ? h+'/'+t : h; $location.path(p);  }
 /*chart*/
   $scope.chartConfig = {
     // categories : ['Delivered', 'Ready', 'Draft'],

@@ -14,11 +14,8 @@
 			<button class="addnew croped" ng-click="go('add_order')" lng="Add New Order"></button>
 			<button class="vieworders croped" ng-click="go('orders')" lng="View Orders"></button>
 			<div class="bubles clearfix">
-				<!-- <div class="left"><p lng="Fully delivered"></p>
-					<div class="buble " ng-click="go('orders','3')">{{all_del}}</div>
-				</div> -->
 				<div class="left"><p lng="Ready to deliver"></p>
-					<div class="buble ready" ng-click="go('orders','2',$event)">{{all_ready}}</div>
+					<div class="buble ready" ng-click="go('orders','2')">{{all_ready}}</div>
 				</div>
 				<div class="left no_margin"><p lng="Draft" befor="true"><br>&nbsp;</p>
 					<div class="buble draft" ng-click="go('orders','1')">{{all_draft}}</div>

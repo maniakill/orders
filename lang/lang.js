@@ -4,7 +4,7 @@ LANG[1]={
 	'Log In':'Log In',
 	'Username':'Gebruikersnaam',
 	'Password':'Wachtwoord',
-	'Can\'t access your account':'Can\'t access your account',
+	'Can\'t access your account':'Heeft u geen toegang tot uw account',
 	'Please fill all the fields':'Vul alle verplichte velden in',
 	'Server error. Please try later':'Oeps! Er is een probleem met de server. Probeer het aub later opnieuw.',
 	'Dashboard':'Dashboard',
@@ -100,6 +100,8 @@ LANG[1]={
 	'Last Month / This Month':'Vorige maand / Deze maand',
 	'Article added':'Artikel toegevoegd',
 	'Please select a company or a contact':'Gelieve een bedrijf of contact te selecteren',
+	'authentication required':'Uw account werd afgemeld bij SalesAssist, omdat een andere gebruiker zich met uw account heeft aangemeld op een ander toestel.',
+	'wrong username':'wrong username'
 }
 //english
 LANG[2]={
@@ -202,13 +204,15 @@ LANG[2]={
 	'Last Month / This Month':'Last Month / This Month',
 	'Article added':'Article added',
 	'Please select a company or a contact':'Please select a company or a contact',
+	'authentication required':'You are no longer logged in to SalesAssist, because someone logged in with your account on another device.',
+	'wrong username':'wrong username'
 }
 //french
 LANG[3]={
 	'Log In':'Log In',
 	'Username':"Nom d'utilisateur",
 	'Password':'Mot de passe',
-	'Can\'t access your account':'Can\'t access your account',
+	'Can\'t access your account':'Vous ne pouvez pas accéder à votre compte',
 	'Please fill all the fields':'Veuillez remplir tous les champs obligatoires',
 	'Server error. Please try later':'Oups! Il y a un problème avec le serveur. Nous vous prions de le réessayer plus tard.',
 	'Dashboard':'Tableau de bord',
@@ -304,13 +308,15 @@ LANG[3]={
 	'Last Month / This Month':'Mois précédent / Ce mois',
 	'Article added':'Article ajouté',
 	'Please select a company or a contact':'Veuillez sélectionner une société ou contact',
+	'authentication required':'Vous n\'êtes plus connecté, car quelqu\'un a utilisé votre compte sur un autre appareil.',
+	'wrong username':'wrong username'
 }
 //german
 LANG[4]={
 	'Log In':'Log In',
 	'Username':'Benutzernamen',
 	'Password':'Passwort',
-	'Can\'t access your account':'Can\'t access your account',
+	'Can\'t access your account':'Können Sie nicht auf Ihr Konto zugreifen',
 	'Please fill all the fields':'Please fill all the fields',
 	'Server error. Please try later':'Oops. Ein Server-Fehler ist aufgetreten. Versuchen Sie bitte erneut später.',
 	'Dashboard':'Dashboard',
@@ -406,4 +412,6 @@ LANG[4]={
 	'Last Month / This Month':'Letzten Monat / Diesen Monat',
 	'Article added':'Artikel hinzugefügt',
 	'Please select a company or a contact':'Wählen Sie bitte eine Firma oder ein Kontakt',
+	'authentication required':'Sie sind nicht mehr in SalesAssist eingeloggt, weil jemand sich mit Ihrem Konto auf ein anderes Gerät eingeloggt hat.',
+	'wrong username':'wrong username'
 }
