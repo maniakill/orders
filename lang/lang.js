@@ -101,7 +101,7 @@ LANG[1]={
 	'Article added':'Artikel toegevoegd',
 	'Please select a company or a contact':'Gelieve een bedrijf of contact te selecteren',
 	'authentication required':'Uw account werd afgemeld bij SalesAssist, omdat een andere gebruiker zich met uw account heeft aangemeld op een ander toestel.',
-	'wrong username':'wrong username'
+	'wrong username':'Foute gebruikersnaam'
 }
 //english
 LANG[2]={
@@ -205,7 +205,7 @@ LANG[2]={
 	'Article added':'Article added',
 	'Please select a company or a contact':'Please select a company or a contact',
 	'authentication required':'You are no longer logged in to SalesAssist, because someone logged in with your account on another device.',
-	'wrong username':'wrong username'
+	'wrong username':'Wrong username'
 }
 //french
 LANG[3]={
@@ -309,7 +309,7 @@ LANG[3]={
 	'Article added':'Article ajouté',
 	'Please select a company or a contact':'Veuillez sélectionner une société ou contact',
 	'authentication required':'Vous n\'êtes plus connecté, car quelqu\'un a utilisé votre compte sur un autre appareil.',
-	'wrong username':'wrong username'
+	'wrong username':'Nom d\'utilisateur incorrect'
 }
 //german
 LANG[4]={
@@ -413,5 +413,5 @@ LANG[4]={
 	'Article added':'Artikel hinzugefügt',
 	'Please select a company or a contact':'Wählen Sie bitte eine Firma oder ein Kontakt',
 	'authentication required':'Sie sind nicht mehr in SalesAssist eingeloggt, weil jemand sich mit Ihrem Konto auf ein anderes Gerät eingeloggt hat.',
-	'wrong username':'wrong username'
+	'wrong username':'Falschen Benutzernamen'
 }

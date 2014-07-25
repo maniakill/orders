@@ -52,6 +52,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.pick_date_format = '';
   $scope.orders = [];
   $scope.pagg = '';
+  $scope.openeds = false;
   if($routeParams.view){
     getparams.view = $routeParams.view;
     angular.forEach($scope.views, function(value,key){
@@ -138,15 +139,16 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   $scope.today();
   $scope.clear = function () { $scope.dt = null; };
   $scope.open = function($event,type) {
-  	$event.preventDefault();
-    $event.stopPropagation();
+  	$event.stopPropagation();
     $scope.openeds = false;
     $scope.openede = false;
     $scope.openedds = false;
     $scope.openedde = false;
     $scope[type] = true;
+    // $scope.openeds = true;
+    // $scope[m] = $scope.dt;
   };
-  $scope.dateOptions = { 'starting-day': 1 };
+  $scope.dateOptions = { 'starting-day': 1,'show-weeks':false, };
 /* datepicker */
   $timeout( function(){ $scope.doIt('get',getparams); });
 }]).controller('order', ['$scope','project','$http','$timeout','$routeParams','$location','$rootScope','vibrate', function ($scope,project,$http,$timeout,$routeParams,$location,$rootScope,vibrate){

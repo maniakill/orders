@@ -125,7 +125,7 @@ app.config(function ($routeProvider) {
     if(code.error_code=='authentication required' || code.error_code=='wrong username' || code.logout === true){
         localStorage.setItem('Ousername','');
         localStorage.setItem('Otoken','');
-        if(code.error_code){ $location.path('/login/'+code.error_code); }
+        if(code.error_code){ $location.path('/login/'+LANG[project.lang][code.error_code]); }
         else{ $location.path('/login'); }
     }// else unknown error!!! and we don't need to relog the user
   }
