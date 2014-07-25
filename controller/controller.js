@@ -1,4 +1,4 @@
-app.controller('login',['$scope','$http','$templateCache','$location','$timeout','project','$routeParams',function ($scope,$http,$templateCache,$location,$timeout,project,$routeParams) {
+app.controller('login',['$scope','$http','$templateCache','$location','$timeout','project','$routeParams','vibrate',function ($scope,$http,$templateCache,$location,$timeout,project,$routeParams,vibrate) {
 	var token = localStorage.getItem('Otoken');
 	if(token){ $location.path('/dashboard'); }
 	if($routeParams.error){
@@ -11,6 +11,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.params = [];
 	var apromise;
 	$scope.fetch = function() {
+		vibrate.vib(100);
 		$scope.params['username']=$scope.username;
 		$scope.params['password']=$scope.password;
 		if($scope.params['username'] && $scope.params['password']){
