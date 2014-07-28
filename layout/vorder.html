@@ -1,6 +1,6 @@
 <div ng-include="'layout/menu.html'" ></div>
-<div ng-include="'layout/send_by_email.html'" ></div>
-<div ng-include="'layout/send_delivery.html'" ></div>
+<!-- <div ng-include="'layout/send_by_email.html'" ></div> -->
+<!-- <div ng-include="'layout/send_delivery.html'" ></div> -->
 <div ng-include="'layout/view_delivery.html'" ></div>
 <div hm-swipe-right="handleGesture($event)">
 	<div class="menu"><span class="title" lng="Order"></span><span class="title">{{order.serial_number}}</span><span class="left snap" ng-click="snap()"></span></div>
@@ -86,7 +86,7 @@
 			<div class="right">
 				<div class="total_lines" ng-hide="order.sh_vat"><span lng="Total without VAT"></span><span class="score">{{order.total}} <span ng-bind-html="order.currency_type"></span></span></div>
 				<div class="total_lines" ng-show="order.sh_discount1"><span lng='Discount'></span><span> {{order.discount_percent}}</span><span class="score">{{order.discount_total}} <span ng-bind-html="order.currency_type"></span></span></div>
-				<div class="total_lines" ng-repeat="vat in order.vat_loop"  ng-show="order.is_vat"><span lng="VAT"></span><span> ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}} <span ng-bind-html="order.currency_type"></span></span></div>
+				<div class="total_lines" ng-repeat="vat in order.vat_loop" ng-show="order.is_vat"><span lng="VAT"></span><span> ({{vat.percent}}%)</span><span class="score">{{vat.vat_total}} <span ng-bind-html="order.currency_type"></span></span></div>
 				<div class="total"><span lng="Total"></span><span class="score">{{order.total_vat}} <span ng-bind-html="order.currency_type"></span></span></div>
 				<div class="total" ng-hide="order.total_hide"><span lng="Total"></span><span class="score">{{order.total_default}} <span ng-bind-html="order.currency_d_type"></span></span></div>
 			</div>

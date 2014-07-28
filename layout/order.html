@@ -1,6 +1,7 @@
 <div ng-include="'layout/menu.html'" ></div>
 <div ng-include="'layout/modal.html'" ></div>
 <div ng-include="'layout/daddress.html'" ></div>
+<datepicker ng-model="dt" class="well well-sm dropdown-menu" datepicker-options="dateOptions" ng-show="openeds"></datepicker>
 <div hm-swipe-right="handleGesture($event)">
 <div class="menu"><span class="title" >{{text}} <span lng="Order"></span></span><span class="left snap" ng-click="snap()"></span></div>
 <div class="loading"><div class="trans"></div><div class="tree"></div><img src="images/loading.gif" id="loading" /></div>
@@ -30,11 +31,11 @@
 			</div>
 			<div class="left forthy margines">
 				<label lng="Date"></label>
-				<input type="text" name="search" class="date" id="date" lng="Start Date" autocapitalize="off" autocorrect="off" ng-model="order.in.date" datepicker-popup="{{order.pick_date_format}}" is-open="opens" datepicker-options="dateOptions" ng-click="open($event,'opens')" readonly="readonly" datepicker-append-to-body="true">
+				<input type="text" name="search" class="date" id="date" lng="Start Date" autocapitalize="off" autocorrect="off" ng-model="sdate" ng-click="open($event,'sdate')" readonly="readonly">
 			</div>
 			<div class="left forthy">
 				<label lng="Delivery Date"></label>
-				<input type="text" name="search" class="date" id="sdate" lng="Delivery Date" autocapitalize="off" autocorrect="off" ng-model="order.in.delivery_date" datepicker-popup="{{order.pick_date_format}}" is-open="opend" datepicker-options="dateOptions" ng-click="open($event,'opend')" readonly="readonly" datepicker-append-to-body="true">
+				<input type="text" name="search" class="date" id="sdate" lng="Delivery Date" autocapitalize="off" autocorrect="off" ng-model="ddate" ng-click="open($event,'ddate')" readonly="readonly" >
 			</div>
 			<div class="left forthy margines">
 				<label lng="Payment method"></label>

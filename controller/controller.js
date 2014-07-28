@@ -44,6 +44,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   $scope.orders = [];
   $scope.pagg = '';
   $scope.openeds = false;
+  $scope.selectedInput = null;
   if($routeParams.view){
     getparams.view = $routeParams.view;
     angular.forEach($scope.views, function(value,key){
@@ -146,7 +147,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     $scope[$scope.selectedInput] = d;
     $scope.openeds = false;
     $scope.selectedInput = null;
-  })
+  });
   $scope.dateOptions = { 'starting-day': 1,'show-weeks':false, };
 /* datepicker */
   $timeout( function(){ $scope.doIt('get',getparams); });
@@ -170,13 +171,25 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.disc_global = false;
 	$scope.disc_line = false;
 	$scope.show_modal = false;
+  $scope.openeds = false;
+  $scope.pick_date_format = 'dd/MM/yyyy';
+  $scope.selectedInput = null;
 	$scope.open = function($event,type) {
   	$event.preventDefault();
     $event.stopPropagation();
-    $scope.opens = false;
-    $scope.opend = false;
-    $scope[type] = true;
+    $scope.openeds = true;
+    // $scope[type] = true;
+    $scope.selectedInput = type;
+    console.log($scope.sdate,$scope.ddate);
   };
+  $scope.$on('selectDate',function(arg,args){
+    var d = date_fromater($scope.pick_date_format,args);
+    $scope[$scope.selectedInput] = d;
+    $scope.openeds = false;
+    $scope.selectedInput = null;
+    $scope.order.in.date = $scope.sdate;
+    $scope.order.in.delivery_date = $scope.ddate;
+  });
   $scope.doIt = function(method,params,callback){
   	project.doGet(method,params).then(function(res){
   		if (callback && typeof(callback) === "function" && res.code!='error') { callback(res); }else{ $location.path('orders'); }
@@ -360,8 +373,12 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
  	}
   $timeout( function(){
   	$scope.doIt('get',getparams,function(res){
+      console.log(res);
 			$scope.order = res;
+      $scope.sdate = res.in.date;
+      $scope.ddate = res.in.delivery_date;
 			$scope.style = res.style;
+      $scope.pick_date_format = res.pick_date_format;
 			if(!$scope.order.article_line){ $scope.order.article_line = []; }
 			if(angular.isString($scope.order.show_vat_checked)){ if($scope.order.show_vat_checked == '1'){ $scope.order.show_vat_checked = true; }else{ $scope.order.show_vat_checked = false; } }
 			if($scope.order.in.apply_discount > 1){ $scope.disc_global = true; }
