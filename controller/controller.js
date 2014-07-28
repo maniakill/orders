@@ -79,6 +79,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		},function(){project.stopLoading();});
 	}
 	$scope.submit = function() {
+    $scope.openeds = false;
 		vibrate.vib(100);
 		getparams.offset=0;
 		getparams.search = $scope.serch;
@@ -110,7 +111,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 			$timeout(function(){ _this.addClass('slide_left'); });
 		});
 	}
-	$scope.handleGesture = function($event){ $scope.snap();	}
+	$scope.handleGesture = function($event){ $scope.snap(); }
 	$scope.page = function(pag){
 		if(pag == undefined){ return false; }
 		vibrate.vib(100);
@@ -131,14 +132,21 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   $scope.clear = function () { $scope.dt = null; };
   $scope.open = function($event,type) {
   	$event.stopPropagation();
-    $scope.openeds = false;
+    /*$scope.openeds = false;
     $scope.openede = false;
     $scope.openedds = false;
     $scope.openedde = false;
-    $scope[type] = true;
-    // $scope.openeds = true;
-    // $scope[m] = $scope.dt;
+    $scope[type] = true;*/
+    $scope.openeds = true;
+    $scope.selectedInput = type;
+    // $scope[type] = $scope.dt;
   };
+  $scope.$on('selectDate',function(arg,args){
+    var d = date_fromater($scope.pick_date_format,args);
+    $scope[$scope.selectedInput] = d;
+    $scope.openeds = false;
+    $scope.selectedInput = null;
+  })
   $scope.dateOptions = { 'starting-day': 1,'show-weeks':false, };
 /* datepicker */
   $timeout( function(){ $scope.doIt('get',getparams); });

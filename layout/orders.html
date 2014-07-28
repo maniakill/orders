@@ -1,17 +1,17 @@
 <div ng-include="'layout/menu.html'" ></div>
+<datepicker ng-model="dt" class="well well-sm dropdown-menu" datepicker-options="dateOptions" ng-show="openeds"></datepicker>
 <div hm-swipe-right="handleGesture($event)">
 	<div class="menu"><span class="title" lng="Orders"></span><span class="left snap" ng-click="snap()"></span></div>
 	<div class="filter" ng-show="search">
 		<form ng-submit="submit()">
 		<input type="text" name="search" class="search" autocapitalize="off" autocorrect="off" ng-model="serch" lng="Search">
-		<input type="text" name="search" class="date" id="sdate" autocapitalize="off" autocorrect="off" ng-model="sdate" datepicker-popup="{{format}}" is-open="openeds" datepicker-options="dateOptions" ng-click="open($event,'openeds')" readonly="readonly" lng="Start Date">
-		 <input type="text" name="search" class="date" id="edate" lng="End Date" autocapitalize="off" autocorrect="off" ng-model="edate" datepicker-popup="{{format}}" is-open="openede" datepicker-options="dateOptions" ng-click="open($event,'openede')" readonly="readonly"><br>
-		<input type="text" name="search" class="date" id="dsdate" lng="Delivery Start Date" autocapitalize="off" autocorrect="off" ng-model="ddate" datepicker-popup="{{format}}" is-open="openedds" datepicker-options="dateOptions" ng-click="open($event,'openedds')" readonly="readonly">
-		<input type="text" name="search" class="date" id="dedate" lng="Delivery End Date" autocapitalize="off" autocorrect="off" ng-model="dedate"	 datepicker-popup="{{format}}" is-open="openedde" datepicker-options="dateOptions" ng-click="open($event,'openedde')" readonly="readonly">
-		<input type="submit" value="Search" id="hit_it" lng="Search" >
+		<input type="text" name="search" class="date" id="sdate" autocapitalize="off" autocorrect="off" ng-model="sdate" ng-click="open($event,'sdate')" readonly="readonly" lng="Start Date">
+		 <input type="text" name="search" class="date last_date" id="edate" lng="End Date" autocapitalize="off" autocorrect="off" ng-model="edate" ng-click="open($event,'edate')" readonly="readonly"><br>
+		<input type="text" name="search" class="date" id="dsdate" lng="Delivery Start Date" autocapitalize="off" autocorrect="off" ng-model="ddate" ng-click="open($event,'ddate')" readonly="readonly">
+		<input type="text" name="search" class="date" id="dedate" lng="Delivery End Date" autocapitalize="off" autocorrect="off" ng-model="dedate"	ng-click="open($event,'dedate')" readonly="readonly">
+		<input type="submit" value="Search" id="hit_it" class="last_date" lng="Search" >
 	</form>
 	</div>
-	<!-- <datepicker ng-model="dt" class="well well-sm dropdown-menu" datepicker-options="dateOptions" ng-show="openeds"></datepicker> -->
 	<div class="views">
 		<ul>
 			<li ng-repeat="view in views" class="{{view.view}} {{view.active}}" ng-click="fil(view.p)" lng="{{view.name}}"><span class="dot"></span></li><li class="search right" ng-click="showSearch()"></li>
