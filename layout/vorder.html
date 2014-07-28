@@ -8,7 +8,7 @@
 	<alert ng-repeat="alert in alerts" class="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 	<div class="ord_detail clearfix">
 		<div class="three_cols left">
-			<h3 lng="Order Details"></h3>
+			<h3 class="croped" lng="Order Details"></h3>
 			<p><span lng="Date" befor="true">:</span><span> {{order.factur_date}}</span></p>
 			<p><span lng="Delivery Date" befor="true">:</span><span> {{order.factur_del_date}}</span></p>
 			<p ng-show="order.ref"><span lng="Ref" befor="true">:</span><span> {{order.ref}}</span></p>
@@ -25,7 +25,7 @@
       <p ng-bind-html="order.delivery_address" ng-show="order.delivery_address"></p>
 		</div>
 		<div class="three_cols left deliveries">
-			<h3 lng="Deliveries"></h3>
+			<h3 class="croped" lng="Deliveries"></h3>
 			<div ng-repeat="del in order.delivery" class="clearfix block">
 				<span ng-class="del.active">{{del.delivey}}</span>
 				<!-- <a href="" class="edit send right" ng-click="snap_send('editd',del.delivery_id)"></a> -->
@@ -35,9 +35,9 @@
 		</div>
 	</div>
 	<div class="orderdetail clearfix block order_b" >
-		<span class="right specialspan" ng-click="show('details',$event)" ><span lng="Order Options"></span><a href="" class="edit right openD show_btns"  ></a></span>
-		<span class="right specialspan" ng-click="go('orders')" ><span lng="Back to orders"></span><a href="" class="edit right openD show_btns back_to_ord" ></a></span>
-		<span class="right specialspan" ng-click="go('add_order')" ><span lng="Add New Order"></span><a href="" class="edit right openD show_btns back_to_add" ></a></span>
+		<span class="right specialspan" ng-click="show('details',$event)" ><span class="croped" lng="Order Options"></span><a href="" class="edit right openD show_btns"  ></a></span>
+		<span class="right specialspan" ng-click="go('orders')" ><span class="croped" lng="Back to orders"></span><a href="" class="edit right openD show_btns back_to_ord" ></a></span>
+		<span class="right specialspan" ng-click="go('add_order')" ><span class="croped" lng="Add New Order"></span><a href="" class="edit right openD show_btns back_to_add" ></a></span>
 		<!-- <button class="croped right" ng-click="go('orders')"><span></span>Orders</button> -->
 		<div class="clear btns" ng-show="details" >
 			<!-- <button class="croped" ng-click="snap_send('sendd')"><span></span>Send by email</button> -->

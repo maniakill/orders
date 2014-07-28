@@ -42,7 +42,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 	.views ul {  color: #999; font-weight: bold; font-size: 20px; }
 		.views ul li { display: inline-block; line-height: 25px; padding: 20px 10px 19px; cursor: pointer; }
 		.views ul li.active { border-bottom: 8px solid #5d97b9; padding-bottom: 12px; margin-bottom: -1px; }
-		.views ul li.search { padding: 32px;  background: url('../images/icons.png') no-repeat 8px -70px #eaf2f6; border-bottom: 1px solid #9dabb3; }
+		.views ul li.search { padding: 32px;  background: url('../images/icons.png') no-repeat 8px -70px #eaf2f6; border-bottom: 1px solid #9dabb3; position: absolute; right: 0px; }
 		.views ul li.cancel { padding: 32px;  background: url('../images/icons.png') no-repeat 16px -217px #eaf2f6; border-bottom: 8px solid #9dabb3; padding-bottom: 25px; }
 .dot { height: 20px; width: 20px; display: inline-block; background: #aecbdc; border-radius: 15px; vertical-align: text-bottom; margin-right: 10px; }
 			.views ul li.draft .dot, .gray .dot { background: #ccc; }
@@ -161,8 +161,8 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
  		.menu_list button { width: 76.124%; margin-top: 5px; }
  		.menu_list .omenu_list span { background-position: -2px -1287px; }
  		.menu_list .amenu_list span { background-position: 0px -1355px; }
-.pagination{ padding: 20px; }
-	.pagination li {  display: inline-block; border: 2px solid #aecbdc; background: #eaf2f6; font-size: 24px; font-weight: bold; padding: 8px 20px; line-height: 28px; margin-right: 20px; color: #5d97b9; border-radius: 5px; }
+.pagination{ padding: 20px; padding-bottom: 0px; }
+	.pagination li {  display: inline-block; border: 2px solid #aecbdc; background: #eaf2f6; font-size: 24px; font-weight: bold; padding: 8px 20px; line-height: 28px; margin: 0 20px 20px 0; color: #5d97b9; border-radius: 5px; }
 	.pagination .current { background: #5d97b9; color: #fff; }
 /*.modal_wrap { height: 600px; background: #fff; width: 85%;  position: relative; z-index: 5;  margin: 0 auto; border: 5px solid #5D97B9; top: 5%; border-radius: 5px; padding: 20px 20px 84px; }*/
 .modal_wrap { background: #fff; min-height: 100%; }
@@ -210,7 +210,8 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .vvat { width: 6.512%; }
 .vpack { width: 7.813%; }
 .vamount { padding-right: 2.865%; margin-left: 1.304%; width: 14.324%; }
-.specialspan { margin: 10px 60px; position: relative; }
+.specialspan { margin: 10px 60px 10px 20px; position: relative; width: 22.1%; }
+	.specialspan span { width: 100%; display: inline-block; }
 .specialspan .show_btns { top: -10px; right: -60px; }
 .specialspan .back_to_ord,.specialspan .back_to_ord:hover { background-position: 0px -2738px; }
 .specialspan .back_to_add,.specialspan .back_to_add:hover { background-position: 0px -2792px; }

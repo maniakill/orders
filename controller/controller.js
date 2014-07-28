@@ -1,14 +1,11 @@
 app.controller('login',['$scope','$http','$templateCache','$location','$timeout','project','$routeParams','vibrate',function ($scope,$http,$templateCache,$location,$timeout,project,$routeParams,vibrate) {
 	var token = localStorage.getItem('Otoken');
 	if(token){ $location.path('/dashboard'); }
-	if($routeParams.error){
-		$scope.alerts=[{type:'danger',msg:$routeParams.error}];
-		// if(apromise){ $timeout.cancel(apromise); }
-		// apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
-	}
+	if($routeParams.error){ $scope.alerts=[{type:'danger',msg:$routeParams.error}]; }
 	$scope.method = 'POST';
 	$scope.url = 'https://app.salesassist.eu/pim/mobile/admin/';
 	$scope.params = [];
+	$scope.username = localStorage.getItem('Ousername');
 	var apromise;
 	$scope.fetch = function() {
 		vibrate.vib(100);
@@ -28,19 +25,13 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 					$location.path('/dashboard');
 				}else{
 					$scope.alerts=[{type:'danger',msg:data.error_code}];
-				// 	if(apromise){ $timeout.cancel(apromise); }
-				// 	apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 				}
 			}).
 			error(function(data,status){
 				$scope.alerts=[{type:'danger',msg:LANG[project.lang]['Server error. Please try later']}];
-				// if(apromise){ $timeout.cancel(apromise); }
-				// apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 			});
 		}else{
 			$scope.alerts=[{type:'danger',msg:LANG[project.lang]['Please fill all the fields']}];
-			// if(apromise){ $timeout.cancel(apromise); }
-			// apromise = $timeout(function(){ $scope.closeAlert(0); },3000);
 		}
 	};
 	$scope.closeAlert=function(index){$scope.alerts.splice(index,1);}

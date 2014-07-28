@@ -123,7 +123,7 @@ app.config(function ($routeProvider) {
   project.stopLoading = function(){ angular.element('.loading').hide(); }
   project.logout = function(code){
     if(code.error_code=='authentication required' || code.error_code=='wrong username' || code.logout === true){
-        localStorage.setItem('Ousername','');
+        // localStorage.setItem('Ousername',''); we keep the username to show it on the login screen
         localStorage.setItem('Otoken','');
         if(code.error_code){ $location.path('/login/'+LANG[project.lang][code.error_code]); }
         else{ $location.path('/login'); }
@@ -138,8 +138,8 @@ app.config(function ($routeProvider) {
     link: function (scope,element,attrs){
       /*
       works for input type text,password and submit, div,span,p,h[1-6] basicly any kind of element that can contain text
-      element should have the lng attr where the text to be translated goes
-      element can have text inside of it that can be appended or prepended to the text in the lng attr (if you set the befor attr as true it will append)
+      element should have the lng attr and it's value should be the text to be translated
+      element can have text inside of it that can be appended or prepended to the text in the lng attr (if you set the befor attr as true it will be appended)
       element should not contain other html in it because it will stop working
       element should not have angular bindings in it
       */
