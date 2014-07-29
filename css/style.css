@@ -271,6 +271,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 .alert-danger { color: #a94442; background-color: #f2dede; border-color: #ebccd1; }
 .alert-danger hr { border-top-color: #e4b9c0; }
 .alert-danger .alert-link { color: #843534; }
+.alert div span { display: block; margin: 0px 60px; }
 .close { float: right; font-size: 21px; font-weight: bold; line-height: 1; color: #000; text-shadow: 0 1px 0 #fff; filter: alpha(opacity=20); opacity: .2; }
 .close:hover, .close:focus { color: #000; text-decoration: none; cursor: pointer; filter: alpha(opacity=50); opacity: .5; }
 button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background: transparent; border: 0; }
