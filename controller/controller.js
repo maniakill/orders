@@ -180,7 +180,6 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     $scope.openeds = true;
     // $scope[type] = true;
     $scope.selectedInput = type;
-    console.log($scope.sdate,$scope.ddate);
   };
   $scope.$on('selectDate',function(arg,args){
     var d = date_fromater($scope.pick_date_format,args);
@@ -373,8 +372,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
  	}
   $timeout( function(){
   	$scope.doIt('get',getparams,function(res){
-      console.log(res);
-			$scope.order = res;
+      $scope.order = res;
       $scope.sdate = res.in.date;
       $scope.ddate = res.in.delivery_date;
 			$scope.style = res.style;
