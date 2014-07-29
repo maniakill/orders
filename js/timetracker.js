@@ -109,7 +109,6 @@ app.config(function ($routeProvider) {
 }).factory('vibrate', function (){
   return {
     vib: function (milliseconds) {
-      console.info('e');
       if(navigator.notification){ navigator.notification.vibrate(milliseconds); }
     }
   };
