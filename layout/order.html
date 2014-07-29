@@ -98,7 +98,7 @@
 <div class="orderdetail croped" ng-hide="showAddress" ng-show="details2"><span class="darker">{{order.customer_name}}</span> - <span >{{order.address_info}}</span><a href="" class="edit right openD" ng-click="show('showAddress')"></a></div>
 <div class="orderdetail croped order_b" ng-hide="showAddress" ng-show="details2"><button class="croped" ng-click="snap_send('modal',null,'show_art_list')" lng='Add Article'></button><button class="croped" ng-click="addLine()" lng="Add line"></button><button class="croped" ng-click="go(cancel_link)" lng="Cancel"></button><button class="croped" ng-click="save()" lng="Save"></button></div>
 <div class="lines scrolling_stuff" >
-	<div ng-model="order.article_line"><!-- ui-sortable="sortableOptions"-->
+	<div ui-sortable="sortableOptions" ng-model="order.article_line"><!-- -->
 		<div class="line" ng-repeat="line in order.article_line">
 			<div style="width:75%" class="first_td" ng-show="line.is_article_code">
 				<div class="clearfix full margin">

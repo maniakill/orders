@@ -66,9 +66,7 @@ function date_fromater(format,date){
   }
   return '';
 }
-
-//'ui.sortable',
-var app = angular.module('orders', ['ngRoute','angular-gestures','ngSanitize','ui.bootstrap','highcharts-ng']);
+var app = angular.module('orders', ['ngRoute','angular-gestures','ngSanitize','ui.bootstrap','highcharts-ng','ui.sortable']);
 app.config(function ($routeProvider) {
   $routeProvider
     .when('/',{controller: 'login',templateUrl: 'layout/login.html'})
