@@ -164,7 +164,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$('select').width($('.date').outerWidth()-17);
 	$scope.dateOptions = { 'starting-day': 1 };
 	$scope.details = false;
-	$scope.order = {'in':{serial_number:''},author_id:'',customer_name:' ',total_vat:'&nbsp;',article_line:[],total_currency_hide:true};
+	$scope.order = {'in':{serial_number:''},author_id:'',customer_name:' ',total_vat:'&nbsp;',article_line:[],total_currency_hide:true, email_language: (p.languages ? p.languages : 1) };
 	$scope.details2 = true;
 	$scope.showAddress = false;
 	$scope.style = '.,';
@@ -377,6 +377,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
       $scope.ddate = res.in.delivery_date;
 			$scope.style = res.style;
       $scope.pick_date_format = res.pick_date_format;
+      $scope.order.email_language = res.in.languages;
 			if(!$scope.order.article_line){ $scope.order.article_line = []; }
 			if(angular.isString($scope.order.show_vat_checked)){ if($scope.order.show_vat_checked == '1'){ $scope.order.show_vat_checked = true; }else{ $scope.order.show_vat_checked = false; } }
 			if($scope.order.in.apply_discount > 1){ $scope.disc_global = true; }
@@ -480,7 +481,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   }
 }]).controller('add_order', ['$scope','project','$location','$timeout','$http','vibrate', function ($scope,project,$location,$timeout,$http,vibrate){
 	var getparams = { 'do':'orders-add_order' },cpromise;
-	$scope.language_select = [{ name:"Dutch", val:3},{ name:"English", val:1},{ name:"French", val:2}];
+	$scope.language_select = [{ name:"Dutch", val:3},{ name:"English", val:1},{ name:"French", val:2},{name:"German",val:4}];
 	$scope.currency = [{ name:"EUR &euro;", val:1},{ name:"USD $", val:2},{ name:"GBP &pound;", val:3}];
 	$scope.lq = 1;
 	$scope.c = 1;
