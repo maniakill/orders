@@ -350,20 +350,22 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.order.delivery_address = '';
 		$scope.show('showAddress');
 	}
-	$scope.alert_stock = function(item){
-		var new_stock=parseFloat(item.stock) - parseFloat(item.quantity);
-		if(new_stock < parseFloat(item.threshold_value)){
-    	$scope.new_stock = new_stock;
-      $scope.threshold_value = item.threshold_value;
-      $scope.colors= 'ea7a69';
-      if(new_stock<0){
-      	$scope.colors= 'ff2100';
+	$scope.alert_stock = function(item){    
+    if($scope.order.allow_stock == 1 && $scope.order.show_stock_warning == 1){
+  		var new_stock=parseFloat(item.stock) - parseFloat(item.quantity);
+  		if(new_stock < parseFloat(item.threshold_value)){
+      	$scope.new_stock = new_stock;
+        $scope.threshold_value = item.threshold_value;
+        $scope.colors= 'ea7a69';
+        if(new_stock<0){
+        	$scope.colors= 'ff2100';
+        }
+        if(item.pending_articles) {
+        	$scope.show_pending_articles = true;
+        	$scope.pending_articles = item.pending_articles
+        }
+        $scope.show_modal = true;
       }
-      if(item.pending_articles) {
-      	$scope.show_pending_articles = true;
-      	$scope.pending_articles = item.pending_articles
-      }
-      $scope.show_modal = true;
     }
 	}
 	$scope.close_modal = function(){
