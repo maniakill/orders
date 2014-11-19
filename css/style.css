@@ -79,7 +79,7 @@ button:active { border: 2px solid #aecbdc; background: #eaf2f6; color: #5d97b9; 
 		.dropdown-menu table tr td { padding: 10px; }
 		.dropdown-menu table th { text-align: center; }
 		.dropdown-menu table th.text-center { padding-top: 10px; padding-bottom: 10px; }
-			.dropdown-menu .btn { border: 1px solid #9DABB3; border-radius: 5px; font-size: 18px; color: #4D4D4D; padding: 10px; background: #fff; }
+			.dropdown-menu .btn { border: 1px solid #5d97b9; border-radius: 5px; font-size: 18px; color: #4D4D4D; padding: 10px; background: #fff; }
 			.dropdown-menu .btn-info { background: #5D97B9; }
 			.glyphicon { position: relative; top: 1px; display: inline-block; font-family: 'Glyphicons Halflings'; font-style: normal; font-weight: bold; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 			.glyphicon-chevron-left:before { content: "<"; }
