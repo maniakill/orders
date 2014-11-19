@@ -133,14 +133,8 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   $scope.clear = function () { $scope.dt = null; };
   $scope.open = function($event,type) {
   	$event.stopPropagation();
-    /*$scope.openeds = false;
-    $scope.openede = false;
-    $scope.openedds = false;
-    $scope.openedde = false;
-    $scope[type] = true;*/
     $scope.openeds = true;
     $scope.selectedInput = type;
-    // $scope[type] = $scope.dt;
   };
   $scope.$on('selectDate',function(arg,args){
     var d = date_fromater($scope.pick_date_format,args);
@@ -148,6 +142,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     $scope.openeds = false;
     $scope.selectedInput = null;
   });
+  $scope.$on('closeDateP',function(arg){ $scope.openeds = false; });
   $scope.dateOptions = { 'starting-day': 1,'show-weeks':false, };
 /* datepicker */
   $timeout( function(){ $scope.doIt('get',getparams); });
@@ -189,6 +184,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     $scope.order.in.date = $scope.sdate;
     $scope.order.in.delivery_date = $scope.ddate;
   });
+  $scope.$on('closeDateP',function(arg){ $scope.openeds = false; });
   $scope.doIt = function(method,params,callback){
   	project.doGet(method,params).then(function(res){
   		if (callback && typeof(callback) === "function" && res.code!='error') { callback(res); }else{ $location.path('orders'); }
@@ -350,24 +346,24 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		$scope.order.delivery_address = '';
 		$scope.show('showAddress');
 	}
-	$scope.alert_stock = function(item){    
+	 $scope.alert_stock = function(item){
     if($scope.order.allow_stock == 1 && $scope.order.show_stock_warning == 1){
-  		var new_stock=parseFloat(item.stock) - parseFloat(item.quantity);
-  		if(new_stock < parseFloat(item.threshold_value)){
-      	$scope.new_stock = new_stock;
+      var new_stock=parseFloat(item.stock) - parseFloat(item.quantity);
+      if(new_stock < parseFloat(item.threshold_value)){
+        $scope.new_stock = new_stock;
         $scope.threshold_value = item.threshold_value;
         $scope.colors= 'ea7a69';
         if(new_stock<0){
-        	$scope.colors= 'ff2100';
+          $scope.colors= 'ff2100';
         }
         if(item.pending_articles) {
-        	$scope.show_pending_articles = true;
-        	$scope.pending_articles = item.pending_articles
+          $scope.show_pending_articles = true;
+          $scope.pending_articles = item.pending_articles
         }
         $scope.show_modal = true;
       }
     }
-	}
+  }
 	$scope.close_modal = function(){
 		vibrate.vib(100);
  		$scope.show_modal = false;
