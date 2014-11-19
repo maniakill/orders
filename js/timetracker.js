@@ -358,6 +358,8 @@ angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.alert", "ui.b
                 a.setFullYear(t.getFullYear(), t.getMonth(), t.getDate()), c.$setViewValue(a), c.$render()
                 rt.$broadcast('selectDate',a);
             } else d.activeDate = t, e.datepickerMode = d.modes[d.modes.indexOf(e.datepickerMode) - 1]
+        }, e.closeDateP = function(){
+            rt.$broadcast('closeDateP');
         }, e.move = function(e) {
             var t = d.activeDate.getFullYear() + e * (d.step.years || 0),
                 a = d.activeDate.getMonth() + e * (d.step.months || 0);
@@ -762,7 +764,7 @@ angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.alert", "ui.b
     }
 ]), angular.module("template/datepicker/day.html", []).run(["$templateCache",
     function(e) {
-        e.put("template/datepicker/day.html", '<table role="grid" aria-labelledby="{{uniqueId}}-title" aria-activedescendant="{{activeDateId}}">\n  <thead>\n    <tr>\n      <th><button type="button" class="btn btn-default btn-sm pull-left" ng-click="move(-1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-left"></i></button></th>\n      <th colspan="{{5 + showWeeks}}"><button id="{{uniqueId}}-title" role="heading" aria-live="assertive" aria-atomic="true" type="button" class="btn btn-default btn-sm" ng-click="toggleMode()" tabindex="-1" style="width:100%;"><strong>{{title}}</strong></button></th>\n      <th><button type="button" class="btn btn-default btn-sm pull-right" ng-click="move(1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-right"></i></button></th>\n    </tr>\n    <tr>\n      <th ng-show="showWeeks" class="text-center"></th>\n      <th ng-repeat="label in labels track by $index" class="text-center"><small aria-label="{{label.full}}">{{label.abbr}}</small></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat="row in rows track by $index">\n      <td ng-show="showWeeks" class="text-center h6"><em>{{ weekNumbers[$index] }}</em></td>\n      <td ng-repeat="dt in row track by dt.date" class="text-center" role="gridcell" id="{{dt.uid}}" >\n        <button type="button" style="width:100%;" class="btn btn-default btn-sm" ng-click="select(dt.date)" tabindex="-1"><span >{{dt.label}}</span></button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n')
+        e.put("template/datepicker/day.html", '<table role="grid" aria-labelledby="{{uniqueId}}-title" aria-activedescendant="{{activeDateId}}">\n  <thead>\n    <tr>\n      <th><button type="button" class="btn btn-default btn-sm pull-left" ng-click="move(-1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-left"></i></button></th>\n      <th colspan="{{5 + showWeeks}}"><button id="{{uniqueId}}-title" role="heading" aria-live="assertive" aria-atomic="true" type="button" class="btn btn-default btn-sm" ng-click="toggleMode()" tabindex="-1" style="width:100%;"><strong>{{title}}</strong></button></th>\n      <th><button type="button" class="btn btn-default btn-sm pull-right" ng-click="move(1)" tabindex="-1"><i class="glyphicon glyphicon-chevron-right"></i></button></th>\n    </tr>\n    <tr>\n      <th ng-show="showWeeks" class="text-center"></th>\n      <th ng-repeat="label in labels track by $index" class="text-center" style="width:12.5%"><small aria-label="{{label.full}}">{{label.abbr}}</small></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr ng-repeat="row in rows track by $index">\n      <td ng-show="showWeeks" class="text-center h6"><em>{{ weekNumbers[$index] }}</em></td>\n      <td ng-repeat="dt in row track by dt.date" class="text-center" role="gridcell" id="{{dt.uid}}" >\n        <button type="button" style="width:100%;" class="btn btn-default btn-sm" ng-click="select(dt.date)" tabindex="-1"><span >{{dt.label}}</span></button>\n      </td>\n    </tr>\n <tr><td colspan="7"></td><td> <button type="button" style="width:100%;" class="btn btn-default btn-sm" ng-click="closeDateP()" tabindex="-1"><span >Cancel</span></button></td></tr>  </tbody>\n</table>\n')
     }
 ]), angular.module("template/datepicker/popup.html", []).run(["$templateCache",
     function(e) {
@@ -829,7 +831,7 @@ angular.module('ui.sortable', [])
                 if (!!element.data('ui-sortable')) { element.sortable('refresh'); }
               });
             });
-            callbacks.start = function(e, ui) {console.log('start');
+            callbacks.start = function(e, ui) {
               ui.item.sortable = {
                 index: ui.item.index(),
                 cancel: function () { ui.item.sortable._isCanceled = true; },
