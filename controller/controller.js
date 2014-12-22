@@ -293,7 +293,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   			l.quantity = display_value(return_value(l.quantity));
   			var params = { article_id: l.article_id,price:l.price ,quantity:return_value(l.quantity), 'do': 'orders--order-get_article_quantity_price' };
 		  	$scope.doIt('get',params,function(res){
-		  		if(res.response){ l.price = res.response; return $scope.calc(l,'price'); }
+		  		if(res.response){ l.price = display_value(res.response); return $scope.calc(l,'price'); }
 		  	});
 		  	$scope.alert_stock(l);
   			break;
