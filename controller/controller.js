@@ -159,7 +159,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$('select').width($('.date').outerWidth()-17);
 	$scope.dateOptions = { 'starting-day': 1 };
 	$scope.details = false;
-	$scope.order = {'in':{serial_number:''},author_id:'',customer_name:' ',total_vat:'&nbsp;',article_line:[],total_currency_hide:true, email_language: (p.languages ? p.languages : 1) };
+	$scope.order = {'in':{serial_number:''},author_id:'',customer_name:' ',total_vat:'&nbsp;',article_line:[],total_currency_hide:true, email_language: (p.languages ? p.languages : 1),field: (p.buyer_id ? 'customer_id': 'contact_id') };
 	$scope.details2 = true;
 	$scope.showAddress = false;
 	$scope.style = '.,';
@@ -211,11 +211,12 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   			p_vat =  item.price*1 + item.price * vpercent/100,
   			pack = item.packing ? item.packing : 1,
   			sale = item.sale_unit ? item.sale_unit : 1,
-  			random = new Date().getTime();
+  			random = new Date().getTime(),
+        line_discont = return_value($scope.order.in.discount_line_gen);
   	if($scope.order.allow_article_packing == 0){ pack = 1; sale = 1;}
   	if($scope.order.allow_article_sale_unit == 0){ sale = 1; }
-  	var line_total = display_value(item.price * item.quantity * ( pack / sale ));
-  	var line = {"tr_id":"tmp" + random,"article":item.quoteformat,"article_code":item.code,"is_article_code":true,"article_id":item.article_id,"tax_for_article_id":"0","is_tax":0,"quantity_old":"1","quantity":display_value(item.quantity),"price_vat":display_value(p_vat),"price": display_value(item.price),"percent_x": display_value(item.vat),"percent":item.vat,"vat_value_x":"","vat_value":"","sale_unit_x":"1","packing_x":"1","sale_unit":item.sale_unit,"stock":item.stock,"pending_articles":item.pending_articles,"threshold_value":item.threshold_value,"packing":item.packing,"content":"0","colspan":"","disc":"0","content_class":"","line_total":line_total,"th_width":"","td_width":"","input_width":""};
+    var line_total = display_value((item.price - (item.price*line_discont/100) )  * item.quantity * ( pack / sale ));
+  	var line = {"tr_id":"tmp" + random,"article":item.quoteformat,"article_code":item.code,"is_article_code":true,"article_id":item.article_id,"tax_for_article_id":"0","is_tax":0,"quantity_old":"1","quantity":display_value(item.quantity),"price_vat":display_value(p_vat),"price": display_value(item.price),"percent_x": display_value(item.vat),"percent":item.vat,"vat_value_x":"","vat_value":"","sale_unit_x":"1","packing_x":"1","sale_unit":item.sale_unit,"stock":item.stock,"pending_articles":item.pending_articles,"threshold_value":item.threshold_value,"packing":item.packing,"content":"0","colspan":"","disc":$scope.order.in.discount_line_gen,"content_class":"","line_total":line_total,"th_width":"","td_width":"","input_width":""};
   	$scope.order.article_line.push(line);
   	$scope.calcTotal();
   	$scope.alert_stock(item);
