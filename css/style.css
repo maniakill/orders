@@ -299,3 +299,8 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 #all_orders span.greener { color: #83fa5d; }
 .filter .last_date{ margin-right: 0px; }
 .comment { margin: 10px 2.865%; font-size: 12px; color: #252525; }
+.c_details_box { font-size: 14px; padding: 15px 0px;  }
+.c_details_box h3{ border-bottom: 4px solid #a5c6d9; color: #252525; font-size: 20px; font-weight: bold; margin: 10px 0; width: 59.068%; padding-right: 20px; }
+.c_details_box p { color: #a9a9a9; width: 59.068%; padding-right: 20px; line-height: 22px; }
+.add_order_btns {  width: 59.068%; padding-right: 20px; }
+.add_order_btns .right{ margin-right: -20px;}
