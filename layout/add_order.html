@@ -4,9 +4,9 @@
 	<div class="menu"><span class="title" lng="Add New Order"></span><span class="left snap" ng-click="snap()"></span></div>
 	<div class="form_wrap">
 	<form>
-		<input type="text" ng-model="s_buyer_id" lng="Select Customer" typeahead="authors.label for authors in getLocation($viewValue,'customers_auto')"  typeahead-on-select="autos($item)" typeahead-min-length="0" typeahead-wait-ms="200" class="autocomplete margin_right" typeahead-loading="loading" typeahead-on-change="cs()">
+		<input type="text" ng-model="custname" lng="Select Customer" typeahead="authors.ref for authors in getLocation($viewValue,'customers_auto')"  typeahead-on-select="autos($item)" typeahead-min-length="0" typeahead-wait-ms="200" class="autocomplete margin_right" typeahead-loading="loading" typeahead-on-change="cs()">
 		<div ng-show="loading" class="loadingAuto">Loading</div>
-		<input type="text" ng-model="s_customer_id" lng="Select Contact" typeahead="cont.label for cont in getLocation($viewValue,'contacts_auto')"  typeahead-on-select="autosc($item)" typeahead-min-length="0" typeahead-wait-ms="200" class="autocomplete" typeahead-loading="loading1">
+		<input type="text" ng-model="s_customer_id" lng="Select Contact" typeahead="cont.label for cont in getLocation($viewValue,'contacts_auto')"  typeahead-on-select="autosc($item)" typeahead-min-length="0" typeahead-wait-ms="200" class="autocomplete" typeahead-loading="loading1" typeahead-on-change="cs2()">
 		<div ng-show="loading1" class="loadingAuto">Loading</div>
 		<div>
 			<label lng="Language"></label><select ng-model="lq">
@@ -18,8 +18,29 @@
 			<option ng-repeat="cr in currency" value="{{cr.val}}" ng-bind-html="cr.name"></option>
 			</select>
 		</div>
-		<button ng-click="go('order',true)" class="right" lng="Next"></button>
-		<button ng-click="go('orders')" lng="Cancel"></button>
+		<div class="c_details_box">
+			<div class="c_details">
+				<h3 ng-show="cStuff.comp_start">Company Details</h3>
+				<div class="" ng-show="cStuff.comp_start">
+					<p><span>{{cStuff.customer_name}}</span></p>
+					<p><span>{{cStuff.address}}</span></p>
+					<p><span>{{cStuff.zip}} {{cStuff.city}}</span></p>
+					<p><span>{{cStuff.country_dd}}</span></p>
+				</div>
+				<div class="clear"></div>
+				<h3 class="" ng-show="cStuff.c_start">Contact Details</h3>
+				<div class="" ng-show="cStuff.c_start">
+					<p><span>{{cStuff.first_name}} {{cStuff.last_name}}</span></p>
+					<p><span>{{cStuff.email}}</span></p>
+					<p><span>{{cStuff.phone}}</span></p>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="add_order_btns">
+			<button ng-click="go('order',true)" class="right" lng="Next"></button>
+			<button ng-click="go('orders')" lng="Cancel"></button>
+		</div>
 	</form>
 	</div>
 </div>
