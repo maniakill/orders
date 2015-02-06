@@ -488,7 +488,9 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.currency = [{ name:"EUR &euro;", val:1},{ name:"USD $", val:2},{ name:"GBP &pound;", val:3}];
 	$scope.lq = 1;
 	$scope.c = 1;
-	$scope.cs = function(){ $scope.buyer_id=0; $scope.s_buyer_id = ''; $scope.contact_id = 0; $scope.s_customer_id = ''; }
+  $scope.cStuff = { comp_start : false, c_start : false };
+	$scope.cs = function(){ console.log('d'); $scope.buyer_id=0; $scope.s_buyer_id = ''; $scope.contact_id = 0; $scope.s_customer_id = ''; $scope.cStuff.comp_start = false; }
+  $scope.cs2 = function(){ $scope.cStuff.c_start = false; }
 	$scope.cs();
 	$scope.snap = function(){
 		vibrate.vib(100);
@@ -499,8 +501,21 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 		});
 	}
 	$scope.handleGesture = function($event){ $scope.snap();	}
-	$scope.autos = function(item){ $scope.buyer_id=item.id; $scope.lq = item.lang_id && item.lang_id!=0 ? item.lang_id : 1 ; $scope.c=item.currency_id && item.currency_id!=0 ? item.currency_id : 1; }
-	$scope.autosc = function(item){ $scope.contact_id=item.id; $scope.s_buyer_id = item.c_name; $scope.buyer_id=item.customer_id; }
+	$scope.autos = function(item){
+    $scope.buyer_id=item.id; $scope.lq = item.lang_id && item.lang_id!=0 ? item.lang_id : 1 ; $scope.c=item.currency_id && item.currency_id!=0 ? item.currency_id : 1; $scope.custname= item.ref;
+    $scope.s_buyer_id = item.label; $scope.contact_id='';$scope.s_customer_id='';
+    var details = { 'do':'orders-xcustomer_details', c_id:item.id };
+    $scope.doIt('get',details,function(r){
+      $scope.cStuff = r;
+    });
+  }
+	$scope.autosc = function(item){
+    $scope.contact_id=item.id; $scope.s_buyer_id = item.c_name; $scope.buyer_id=item.customer_id;
+    var details = { 'do':'orders-xcustomer_details', c_id:item.customer_id,contact_id:item.id };
+    $scope.doIt('get',details,function(r){
+      $scope.cStuff = r;
+    });
+  }
 	$scope.getLocation = function(val,pag) {
 		var customer_id = $scope.buyer_id ? $scope.buyer_id : 0;
     return $http.get('https://app.salesassist.eu/pim/mobile/admin/',{params:{'do':'orders-'+pag,api_key:localStorage.Otoken,username:localStorage.Ousername,term:val, customer_id:customer_id}}).then(function(res){
@@ -510,7 +525,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     });
   };
   $scope.go = function(h,check){
-  	vibrate.vib(100);
+    vibrate.vib(100);
   	if(check === true){
   		if($scope.buyer_id || $scope.contact_id){
   			h += '/buyer_id='+$scope.buyer_id+'&s_buyer_id='+$scope.s_buyer_id+'&contact_id='+$scope.contact_id+'&s_customer_id='+$scope.s_customer_id+'&currency_type='+$scope.c+'&languages='+$scope.lq;
