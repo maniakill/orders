@@ -489,7 +489,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
 	$scope.lq = 1;
 	$scope.c = 1;
   $scope.cStuff = { comp_start : false, c_start : false };
-	$scope.cs = function(){ console.log('d'); $scope.buyer_id=0; $scope.s_buyer_id = ''; $scope.contact_id = 0; $scope.s_customer_id = ''; $scope.cStuff.comp_start = false; }
+	$scope.cs = function(){ $scope.buyer_id=0; $scope.s_buyer_id = ''; $scope.contact_id = 0; $scope.s_customer_id = ''; $scope.cStuff.comp_start = false; }
   $scope.cs2 = function(){ $scope.cStuff.c_start = false; }
 	$scope.cs();
 	$scope.snap = function(){
