@@ -945,13 +945,22 @@ app.config(function ($routeProvider) {
       return navigator.connection.type;
     })
   };
-}).factory('vibrate', function (){
+}).factory('vibrate', ['cordovaReady','$rootScope' ,function (cordovaReady,$rootScope){
   return {
     vib: function (milliseconds) {
       if(navigator.notification){ navigator.notification.vibrate(milliseconds); }
-    }
+    },
+    conf: cordovaReady(function (message, confirmCallback, title, buttonLabels) {
+        navigator.notification.confirm(message, function () {
+          var that = this,
+            args = arguments;
+          $rootScope.$apply(function () {
+            confirmCallback.apply(that, args);
+          });
+        }, title, buttonLabels);
+      })
   };
-}).factory('project', ['$http','$location','$rootScope','$q','$timeout','checkConnection', function ($http,$location,$rootScope,$q,$timeout,checkConnection) {
+}]).factory('project', ['$http','$location','$rootScope','$q','$timeout','checkConnection', function ($http,$location,$rootScope,$q,$timeout,checkConnection) {
   var project = {}, url = 'https://app.salesassist.eu/pim/mobile/admin/', key = 'api_key='+localStorage.Otoken+'&username='+localStorage.Ousername, obj = {},search='',canceler;
   project.d = '';
   /* store data */
