@@ -102,7 +102,8 @@ LANG[1]={
 	'Please select a company or a contact':'Gelieve een bedrijf of contact te selecteren',
 	'authentication required':'Uw account werd afgemeld bij SalesAssist, omdat een andere gebruiker zich met uw account heeft aangemeld op een ander toestel.',
 	'wrong username':'Foute gebruikersnaam',
-	'Comments':'Reacties'
+	'Comments':'Reacties',
+	'Are you sure you want to remove this entries?':'Weet u zeker dat u deze items wil verwijderen?'
 }
 //english
 LANG[2]={
@@ -207,7 +208,8 @@ LANG[2]={
 	'Please select a company or a contact':'Please select a company or a contact',
 	'authentication required':'You are no longer logged in to SalesAssist, because someone logged in with your account on another device.',
 	'wrong username':'Wrong username',
-	'Comments':'Comments'
+	'Comments':'Comments',
+	'Are you sure you want to remove this entries?':'Are you sure you want to remove this entries?'
 }
 //french
 LANG[3]={
@@ -312,7 +314,8 @@ LANG[3]={
 	'Please select a company or a contact':'Veuillez sélectionner une société ou contact',
 	'authentication required':'Vous n\'êtes plus connecté, car quelqu\'un a utilisé votre compte sur un autre appareil.',
 	'wrong username':'Nom d\'utilisateur incorrect',
-	'Comments':'Commentaires'
+	'Comments':'Commentaires',
+	'Are you sure you want to remove this entries?':'Confirmer le retrait de cette information ?'
 }
 //german
 LANG[4]={
@@ -417,5 +420,6 @@ LANG[4]={
 	'Please select a company or a contact':'Wählen Sie bitte eine Firma oder ein Kontakt',
 	'authentication required':'Sie sind nicht mehr in SalesAssist eingeloggt, weil jemand sich mit Ihrem Konto auf ein anderes Gerät eingeloggt hat.',
 	'wrong username':'Falschen Benutzernamen',
-	'Comments':'Kommentare'
+	'Comments':'Kommentare',
+	'Are you sure you want to remove this entries?':'Sind Sie sicher dass Sie diese Einträge entfernen möchten?'
 }
