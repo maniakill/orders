@@ -225,7 +225,16 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
   	$scope.calcTotal();
   	$scope.alert_stock(item);
   }
-  $scope.removeLine = function($i){ vibrate.vib(100); if($i > -1){ $scope.order.article_line.splice($i, 1); $scope.calcTotal(); } }
+  $scope.removeLine = function($i){ vibrate.vib(100);
+    $scope.rmline = $i;
+    vibrate.conf(LANG[project.lang]['Are you sure you want to remove this entries?'],$scope.reallyDelete,'Alert');
+    // if($i > -1){ $scope.order.article_line.splice($i, 1); $scope.calcTotal(); }
+  }
+  $scope.reallyDelete = function(btnIndex){
+    if(btnIndex == '1'){
+      if($scope.rmline > -1){ $scope.order.article_line.splice($scope.rmline, 1); $scope.calcTotal(); }
+    }
+  }
   $scope.go = function(h){ vibrate.vib(100); $location.path(h); }
   $scope.autos = function(item){ $scope.order.author_id=item.id; }
   $scope.snap = function(){
