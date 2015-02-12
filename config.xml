@@ -60,6 +60,7 @@
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.vibration" version="0.3.7" />
+    <gap:plugin name="org.apache.cordova.dialogs" version="0.2.10" />
     <content src="index.html" />
     <access origin="*" />
 </widget>
