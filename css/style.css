@@ -304,3 +304,4 @@ button.close { -webkit-appearance: none; padding: 0; cursor: pointer; background
 .c_details_box p { color: #a9a9a9; width: 59.068%; padding-right: 20px; line-height: 22px; }
 .add_order_btns {  width: 59.068%; padding-right: 20px; }
 .add_order_btns .right{ margin-right: -20px;}
+.radios { -webkit-appearance: radio; }
