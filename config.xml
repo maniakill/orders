@@ -17,6 +17,7 @@
     <preference name="Phonegap-version" value="3.7.0" />
     <preference name="Fullscreen" value="true" />
     <preference name="EnableViewportScale" value="false"/>
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
     
     <platform name="android">
         <preference name="android-minSdkVersion" value="5" />
