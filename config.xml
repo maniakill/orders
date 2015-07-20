@@ -12,6 +12,8 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="LogLevel" value="ERROR"/>
     <preference name="Orientation" value="both" />
+    <preference name="android-minSdkVersion" value="5" />
+    <preference name="android-targetSdkVersion" value="5" />
     <preference name="Phonegap-version" value="3.7.0" />
     <preference name="Fullscreen" value="true" />
     <preference name="EnableViewportScale" value="false"/>
