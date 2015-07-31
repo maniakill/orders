@@ -35,7 +35,7 @@ app.controller('login',['$scope','$http','$templateCache','$location','$timeout'
     }
   };
   $scope.closeAlert=function(index){$scope.alerts.splice(index,1);}
-  $scope.openInBrowser=function(){ window.open('https://app.salesassist.eu', '_system', 'location=yes'); }
+  // $scope.openInBrowser=function(){ window.open('https://app.salesassist.eu', '_system', 'location=yes'); }
 }]).controller('orders',['$scope','project','$filter','$timeout','$routeParams','vibrate',function ($scope,project,$filter,$timeout,$routeParams,vibrate) {
   var getparams = {'do' : 'orders-orders',view:0};
   $scope.views = [{name:'All',view:'all',active:'active',p:'0'},{name:'My orders',view:'my_order',active:'',p:'4'},{name:'Draft',view:'draft',active:'',p:'1'},{name:'Ready to deliver',view:'ready',active:'',p:'2'},{name:'Fully delivered',view:'fully',active:'',p:'3'}];
