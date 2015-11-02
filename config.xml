@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget
     id="eu.salesassist.erp"
-    version="1.91"
-    versionCode = "1.91"
+    version="1.92"
+    versionCode = "1.92"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:gap = "http://phonegap.com/ns/1.0"
     xmlns:android   = "http://schemas.android.com/apk/res/android"
@@ -14,15 +14,15 @@
     <preference name="Orientation" value="both" />
     <preference name="android-targetSdkVersion" value="5" />
     <preference name="android-minSdkVersion" value="5" />
-    <preference name="Phonegap-version" value="3.7.0" />
+    <preference name='phonegap-version' value='cli-5.2.0' />
     <preference name="Fullscreen" value="true" />
     <preference name="EnableViewportScale" value="false"/>
     <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
-    
-    <platform name="android">
+
+    <gap:platform name="android">
         <preference name="android-targetSdkVersion" value="5" />
         <preference name="android-minSdkVersion" value="5" />
-    </platform>
+    </gap:platform>
 
     <icon src="icon.png" />
     <icon src="res2/screen/ios/icons/57.png" gap:platform="ios" width="57" height="57" />
@@ -52,25 +52,28 @@
         <false/>
     </gap:config-file>
     <gap:config-file platform="ios" parent="CFBundleVersion">
-        <string>20</string>
+        <string>21</string>
     </gap:config-file>
     <gap:platform name="ios" />
-    <gap:platform name="android">
-        <preference name="android-targetSdkVersion" value="5" />
-        <preference name="android-minSdkVersion" value="5" />
-    </gap:platform>
+
+
+
     <description>
-        SalesAssist ERP application
+        Akti ERP application
     </description>
-    <author email="marius@medeeaweb.com" href="http://salesassist.eu">
+    <author email="marius@medeeaweb.com" href="http://akti.com">
         ArkWeb Team
     </author>
 
-    <gap:plugin name="org.apache.cordova.network-information" />
-    <gap:plugin name="org.apache.cordova.splashscreen" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
-    <gap:plugin name="org.apache.cordova.vibration" version="0.3.7" />
-    <gap:plugin name="org.apache.cordova.dialogs" version="0.2.10" />
+    <gap:plugin name="cordova-plugin-device" source="npm" />
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" />
+    <gap:plugin name="cordova-plugin-network-information" source="npm"  />
+    <gap:plugin name="cordova-plugin-splashscreen" source="npm" />
+    <gap:plugin name="cordova-plugin-vibration" source="npm" />
+    <gap:plugin name="cordova-plugin-dialogs" source="npm"  />
     <content src="index.html" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
     <access origin="*" />
+
 </widget>

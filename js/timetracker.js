@@ -921,6 +921,7 @@ app.config(function ($routeProvider) {
     .when('/vorder/:id',{controller: 'vorder',templateUrl: 'layout/vorder.html'})
     .when('/menu',{controller: 'menu',templateUrl: 'layout/menu.html'})
     .when('/dashboard',{controller: 'dashboard',templateUrl: 'layout/dashboard.html'})
+    .when('/dashboard2',{controller: 'dashboard2',templateUrl: 'layout/dashboard2.html'})
     .otherwise({ redirectTo: '/' });
 }).factory('cordovaReady', function() {
   return function (fn) {
