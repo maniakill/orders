@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget
     id="eu.salesassist.erp"
-    version="1.92"
-    versionCode = "1.92"
+    version="1.93"
+    versionCode = "1.93"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:gap = "http://phonegap.com/ns/1.0"
     xmlns:android   = "http://schemas.android.com/apk/res/android"
@@ -52,7 +52,7 @@
         <false/>
     </gap:config-file>
     <gap:config-file platform="ios" parent="CFBundleVersion">
-        <string>21</string>
+        <string>22</string>
     </gap:config-file>
     <gap:platform name="ios" />
 
