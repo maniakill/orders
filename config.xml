@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget
     id="eu.salesassist.erp"
-    version="1.93"
-    versionCode = "1.93"
+    version="1.94"
+    versionCode = "1.94"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:gap = "http://phonegap.com/ns/1.0"
     xmlns:android   = "http://schemas.android.com/apk/res/android"
     >
-    <name>SalesAssist ERP</name>
+    <name>Akti ERP</name>
     <preference name="target-device" value="tablet" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="LogLevel" value="ERROR"/>
@@ -52,7 +52,7 @@
         <false/>
     </gap:config-file>
     <gap:config-file platform="ios" parent="CFBundleVersion">
-        <string>22</string>
+        <string>23</string>
     </gap:config-file>
     <gap:platform name="ios" />
 
