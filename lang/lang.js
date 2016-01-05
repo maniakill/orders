@@ -100,7 +100,7 @@ LANG[1]={
 	'Last Month / This Month':'Vorige maand / Deze maand',
 	'Article added':'Artikel toegevoegd',
 	'Please select a company or a contact':'Gelieve een bedrijf of contact te selecteren',
-	'authentication required':'Uw account werd afgemeld bij SalesAssist, omdat een andere gebruiker zich met uw account heeft aangemeld op een ander toestel.',
+	'authentication required':'Uw account werd afgemeld bij Akti, omdat een andere gebruiker zich met uw account heeft aangemeld op een ander toestel.',
 	'wrong username':'Foute gebruikersnaam',
 	'Comments':'Reacties',
 	'Are you sure you want to remove this entries?':'Weet u zeker dat u deze items wil verwijderen?'
@@ -206,7 +206,7 @@ LANG[2]={
 	'Last Month / This Month':'Last Month / This Month',
 	'Article added':'Article added',
 	'Please select a company or a contact':'Please select a company or a contact',
-	'authentication required':'You are no longer logged in to SalesAssist, because someone logged in with your account on another device.',
+	'authentication required':'You are no longer logged in to Akti, because someone logged in with your account on another device.',
 	'wrong username':'Wrong username',
 	'Comments':'Comments',
 	'Are you sure you want to remove this entries?':'Are you sure you want to remove this entries?'
@@ -418,7 +418,7 @@ LANG[4]={
 	'Last Month / This Month':'Letzten Monat / Diesen Monat',
 	'Article added':'Artikel hinzugefügt',
 	'Please select a company or a contact':'Wählen Sie bitte eine Firma oder ein Kontakt',
-	'authentication required':'Sie sind nicht mehr in SalesAssist eingeloggt, weil jemand sich mit Ihrem Konto auf ein anderes Gerät eingeloggt hat.',
+	'authentication required':'Sie sind nicht mehr in Akti eingeloggt, weil jemand sich mit Ihrem Konto auf ein anderes Gerät eingeloggt hat.',
 	'wrong username':'Falschen Benutzernamen',
 	'Comments':'Kommentare',
 	'Are you sure you want to remove this entries?':'Sind Sie sicher dass Sie diese Einträge entfernen möchten?'
